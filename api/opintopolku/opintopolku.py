@@ -1,6 +1,6 @@
 import requests
 import json
-from kurssi import Kurssi
+from opintopolku import kurssi
 HEADERS = {"Caller-Id":"JokuStringivaa"}
 objs = []
 def haeDataa(hakusanat,hakutyyppi="ongoing"):
@@ -35,12 +35,12 @@ def haeKurssinTiedot(kurssin_id):
     .format(kurssin_id=kurssin_id)
     , headers=HEADERS)
     return data.json()
-def luoKurssiObjektit(data):
+def luoKurssiObjektit(data, osaaminen=None):
     print(len(data))
     for i in data:
         if i.get('id') is not None:
             kurssi_data = haeKurssinTiedot(i.get('id'))
-            kurssi_obj = Kurssi(
+            kurssi_obj = kurssi.Kurssi(
                 kurssi_data.get('name'),
                 kurssi_data.get('creditValue'),
                 kurssi_data.get('content') or kurssi_data.get('opetuksenAikaJaPaikka') or kurssi_data.get('lisatietoja'),
@@ -50,13 +50,25 @@ def luoKurssiObjektit(data):
                 kurssi_data.get('formOfTeaching') or kurssi_data.get('teachingPlaces'),
                 kurssi_data.get('availableTranslationLanguages'),
                 kurssi_data.get('applicationSystems')[0].get('applicationDates')[0].get('startDate'),
-                kurssi_data.get('applicationSystems')[0].get('applicationDates')[0].get('endDate')
+                kurssi_data.get('applicationSystems')[0].get('applicationDates')[0].get('endDate'),
+                osaaminen
                 )
             objs.append(kurssi_obj)
             if kurssi_obj.testaa():
                 print("----------------------------------")
-luoKurssiObjektit(haeDataa("avoin yo", "ongoing"))
-print(objs)
-print(objs[0])
-
-print("finished")
+def yksinkertaisempiKurssiObjektit(data):
+    for i in data:
+        kurssi_obj = kurssi.Kurssi(
+            i.get('name'),
+            5 or 0,
+            i.get('subjects'),
+            i.get('iopNames'),
+            None,
+            i.get('id'),
+            None,
+            None,
+            None,
+            None,
+            "palvelujärjestelmät"
+        )
+        objs.append(kurssi_obj)

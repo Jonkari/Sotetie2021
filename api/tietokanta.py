@@ -49,12 +49,14 @@ class Database:
                 print("Queue Full")
     def __init__(self, host, user, password, db):
         self.connection_pool = self.ConnPool(10, 800, host, user, password, db)
-    def query(self, query, params):
+    def query(self, query, params=None):
         conn = self.connection_pool.getConnection()
         if conn:
             with conn.cursor(pymysql.cursors.DictCursor) as cursor:
                 if params:
                     cursor.execute(query.format(**params))
+                else:
+                    cursor.execute(query)
         self.connection_pool.putConnection(conn)
     def getData(self, query, params=None):
         conn = self.connection_pool.getConnection()
