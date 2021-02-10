@@ -1,24 +1,30 @@
 import requests
 import json
-from opintopolku import kurssi
+if __name__ == "__main__":
+    import kurssi
+else:
+    from opintopolku import kurssi
 HEADERS = {"Caller-Id":"JokuStringivaa"}
-objs = []
-def haeDataa(hakusanat,hakutyyppi="ongoing"):
-    """Haku opintopolusta
+objs = {}
+def haeDataa(hakusanat, facetFilter="et01.05.03",hakutyyppi="ongoing"):
+    """Hakee dataa opintopolku.fi sivustosta
 
     Args:
-        hakusanat (string): Hakusanat opintopolku API rajapintaan
-        hakutyyppi (string): Tähän tulee arvot [ongoing], [upcoming] tai [upcomingLater], vakiona ongoing
+        hakusanat (str): Hakusanat, millä haetaan.
+        facetFilter (str, optional): Arvot ovat: et01.05.03 (Yliopisto) tai et01.04.03 (AMK)  Defaults to "et01.05.03".
+        hakutyyppi (str, optional): Hakutyyppi, mahdolliset arvot ovat ongoing, upcoming ja upcomingLater. Defaults to "ongoing".
+
 
     Returns:
-        dict: Palauttaa Python Dictionaryn, jonka kanssa voi työskennellä
+        dict: Data, Python Dictionaryna.
     """
     #Hak
     hakusanat = requests.utils.quote(hakusanat)
-    data = requests.get('https://opintopolku.fi/lo/search?start=0&rows=25000&lang=fi&searchType=LO&text={hakusanat}&{hakutyyppi}=true'
+    data = requests.get('https://opintopolku.fi/lo/search?start=0&rows=25000&lang=fi&searchType=LO&text={hakusanat}&{hakutyyppi}=true&&facetFilters=educationType_ffm:{facetFilter}&facetFilters=theme_ffm:teemat_12'
     .format(
         hakusanat=hakusanat,
-        hakutyyppi=hakutyyppi
+        hakutyyppi=hakutyyppi,
+        facetFilter=facetFilter
     )
     , headers=HEADERS)
     return data.json().get("results")
@@ -35,40 +41,105 @@ def haeKurssinTiedot(kurssin_id):
     .format(kurssin_id=kurssin_id)
     , headers=HEADERS)
     return data.json()
-def luoKurssiObjektit(data, osaaminen=None):
-    print(len(data))
-    for i in data:
-        if i.get('id') is not None:
-            kurssi_data = haeKurssinTiedot(i.get('id'))
-            kurssi_obj = kurssi.Kurssi(
-                kurssi_data.get('name'),
-                kurssi_data.get('creditValue'),
-                kurssi_data.get('content') or kurssi_data.get('opetuksenAikaJaPaikka') or kurssi_data.get('lisatietoja'),
-                kurssi_data.get('provider').get('name'),
-                kurssi_data.get('provider').get('visitingAddress') or kurssi_data.get('provider').get('postalAddress'),
-                kurssi_data.get('id'),
-                kurssi_data.get('formOfTeaching') or kurssi_data.get('teachingPlaces'),
-                kurssi_data.get('availableTranslationLanguages'),
-                kurssi_data.get('applicationSystems')[0].get('applicationDates')[0].get('startDate'),
-                kurssi_data.get('applicationSystems')[0].get('applicationDates')[0].get('endDate'),
-                osaaminen
-                )
-            objs.append(kurssi_obj)
-            if kurssi_obj.testaa():
-                print("----------------------------------")
-def yksinkertaisempiKurssiObjektit(data):
-    for i in data:
-        kurssi_obj = kurssi.Kurssi(
-            i.get('name'),
-            5 or 0,
-            i.get('subjects'),
-            i.get('iopNames'),
-            None,
-            i.get('id'),
-            None,
-            None,
-            None,
-            None,
-            "palvelujärjestelmät"
-        )
-        objs.append(kurssi_obj)
+def hakuTyokaluYksinkertainen():
+    hakusanat_dict = {
+        "asiakaslähtoisyys": [
+            "asiakaslähtoi",
+            "osallisuus",
+            "kohtaaminen",
+            "palvelutar",
+            "asiakasprosessi"
+        ],
+        "ohjaus- ja neuvontaosaaminen" : [
+            "ohjaus",
+            "neuvonta",
+            "palvelujärjestelmä",
+            "vuorovaikutus",
+            "kommunikaatio"
+        ],
+        "palvelujärjestelmät" : [
+            "palvelujärjestelmät",
+            "palvelujärjestelmä",
+            "palveluohjaus",
+        ],
+        "lainsäädäntö ja etiikka" : [
+            "etiikka",
+            "lainsäädäntö",
+            "tietosuoja",
+            "vastuu",
+            "eettinen"
+        ],
+        "tutkimus- ja kehittämisosaaminen" : [
+            "tutkimus",
+            "innovaatio",
+            "kehittäminen"
+        ],
+        "robotiikka ja digitalisaatio" : [
+            "robotiikka",
+            "digi",
+            "tekoäly",
+            "sote-palvelut",
+            "tietoturva",
+            "tietosuoja",
+        ],
+        "vaikuttavuus- kustannus- ja laatutietoisuus" : [
+            "laatu",
+            "laadun",
+            "vaikuttavuu",
+            "vaikutusten",
+            "kustannukset"
+        ],
+        "kestävän kehityksen osaaminen" : [
+            "kestävä",
+            "ekolog",
+            "kestävyys",
+            "kierrätys",
+            "ympäristö",
+            "energiankulutus"
+        ],
+        "viestintäosaaminen" : [
+            "viestintä",
+            "tunnetila",
+            "empatia",
+            "selkokieli",
+            "selko"
+        ],
+        "työntekijyysosaaminen" : [
+            "osaamisen",
+            "johtaminen",
+            "työhyvinvointi",
+            "muutososaaminen",
+            "muutosjoustavuus",
+            "urakehitys",
+            "verkostotyö",
+            "työyhteisö",
+            "moniammatillisuus"
+        ],
+        "monialainen yhteistoiminta" : [
+            "monialaisuu",
+            "moniammatillisuu",
+            "monitiet",
+            "yhteistyö",
+            "verkostoituminen",
+            "asiantuntijuus"
+        ]
+    }
+    for facetFilter in ['et01.05.03', 'et01.04.03']:
+        for osaaminen, hakusanat in hakusanat_dict.items():
+            for hakusana in hakusanat:
+                for i in haeDataa(hakusana, facetFilter):
+                    kurssi_obj = kurssi.Kurssi(
+                        i.get('name'),
+                        i.get('credits')[0],
+                        i.get('lopNames')[0],
+                        i.get('id'),
+                        "",
+                        osaaminen
+                    )
+                    if i.get('id') not in objs:
+                        objs[i.get('id')] = kurssi_obj
+                    else:
+                        if osaaminen not in objs[i.get('id')].osaamiset:
+                            objs[i.get('id')].osaamiset += "|"+osaaminen
+if __name__ == "__main__":
+    hakuTyokaluYksinkertainen()

@@ -15,13 +15,8 @@ api = Api(app)
 cache = Cache(app, config={
     'CACHE_TYPE':'simple'
 })
-def testiDataa():
-    data = opintopolku.haeDataa("palvelujärjestelmät")
-    opintopolku.yksinkertaisempiKurssiObjektit(data)
-    for i in opintopolku.objs:
-        db.query(i.sqlYksinkertainen())
 class News(Resource):
-    def __init__(self,):
+    def __init__(self, db):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self,):
