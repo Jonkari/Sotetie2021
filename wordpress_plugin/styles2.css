@@ -1,21 +1,11 @@
 body{
     font-family: arial, sans-serif;
+   
 }
-
 /* koko sisältö */
 #sisältö{
-width: 100%;
+width: 70%;
 background-color:lightsteelblue;
-}
-h1{
-	margin-left: 1% !important;
-}
-h2{
-	margin-bottom: 1% !important;
-	margin-left: 1% !important;
-}
-h3{
-	margin-bottom: 3% !important;
 }
 
 /* yläreinan div-valikot */
@@ -24,49 +14,13 @@ h3{
 }
 select{
     font-size: 1.5rem;
-	width: 100%;
-}
-
-.float-left {
-	padding:10px;
-	float:left;
-	width:30%; /* The width is 20%, by default */
-	margin-left: 2.5%;
-}
-  
-@media screen and (max-width:740px) {
-	select {
-	  width:100% !important;
-	}
-	#hakuvalikot{
-		width: 100%;
-	}
-	form{
-		width: 100%;
-	}
-	#sisältö{
-		width: 100%;
-	}
-	.float-left{
-		width: 100%;
-		margin-left: 0%;
-		margin-bottom: 3%;
-	}
-	.nappiKeskelle{
-		margin-top: 80% !important;
-		margin-bottom: 8% !important;
-	}
-	h2{
-		margin-left: 4% !important;
-	}
-
+    
 }
 
 /* nappi */
 .nappiKeskelle{
 text-align: center;
-   margin-top: 8%;
-   margin-bottom: 3%;
+   
 }
 .myButton {
 	box-shadow:inset 0px 1px 0px 0px #a4e271;

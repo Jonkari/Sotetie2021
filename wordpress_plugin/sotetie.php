@@ -10,7 +10,7 @@ function sotetie($content) {
     return $content;
 }
 function tiedostoLiitto() {
-    $tyyli_tiedosto = null;
+    $tyyli_tiedosto = "styles.css";
     if($tyyli_tiedosto != null) {
         wp_register_style('sotetie_haku', plugins_url($tyyli_tiedosto, __FILE__));
         wp_enqueue_style('sotetie_haku');
