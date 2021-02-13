@@ -5,12 +5,12 @@
 
 function sotetie($content) {
     if(is_page('testi')) {
-        $content .= file_get_contents(plugins_url('kayttoliittyma.html', __FILE__));
+        $content .= file_get_contents(plugin_dir_path(__FILE__).'kayttoliittyma.html');
     }
     return $content;
 }
 function tiedostoLiitto() {
-    $tyyli_tiedosto = null;
+    $tyyli_tiedosto = "styles.css";
     if($tyyli_tiedosto != null) {
         wp_register_style('sotetie_haku', plugins_url($tyyli_tiedosto, __FILE__));
         wp_enqueue_style('sotetie_haku');
