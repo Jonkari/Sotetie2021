@@ -19,9 +19,6 @@ h3{
 }
 
 /* yläreinan div-valikot */
-#hakuvalikot{
-    border: 0;
-}
 select{
     font-size: 1.5rem;
 	width: 100%;
@@ -30,16 +27,13 @@ select{
 .float-left {
 	padding:10px;
 	float:left;
-	width:30%; /* The width is 20%, by default */
+	width:30%;
 	margin-left: 2.5%;
 }
   
 @media screen and (max-width:740px) {
 	select {
 	  width:100% !important;
-	}
-	#hakuvalikot{
-		width: 100%;
 	}
 	form{
 		width: 100%;
@@ -53,7 +47,7 @@ select{
 		margin-bottom: 3%;
 	}
 	.nappiKeskelle{
-		margin-top: 80% !important;
+		margin-top: 8% !important;
 		margin-bottom: 8% !important;
 	}
 	h2{
