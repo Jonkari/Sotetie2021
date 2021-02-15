@@ -8,6 +8,12 @@
 
     <link rel="stylesheet" href="styles.css">
 
+    <!-- jquery käyttöön:
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 </head>
 
 <body>
@@ -17,23 +23,23 @@
 
 
 
-        <form action="">
+        <form >
             <!-- actioniin sivu, mihin tiedot submitistä menevät esim. "/action_page.php" -->
             <div class="Row">
                 <div class="float-left">
-                    <h3>Aihe*</h3>
+                    <h3>Aihe</h3>
                     <select name="aihe" id="aihe">
-                        <option value="aihe1">Geneerinen alue1</option>
-                        <option value="aihe2">Geneerinen alue2</option>
-                        <option value="aihe3">Geneerinen alue3</option>
-                        <option value="aihe4">Geneerinen alue4</option>
-                        <option value="aihe5">Geneerinen alue5</option>
-                        <option value="aihe6">Geneerinen alue6</option>
-                        <option value="aihe7">Geneerinen alue7</option>
-                        <option value="aihe8">Geneerinen alue8</option>
-                        <option value="aihe9">Geneerinen alue9</option>
-                        <option value="aihe10">Geneerinen alue10</option>
-                        <option value="aihe11">Geneerinen alue11</option>
+                        <option value="aihe1">Asiakaslähtöisyys</option>
+                        <option value="aihe2">Ohjaus- ja neuvontaosaaminen</option>
+                        <option value="aihe3">Palvelujärjestelmäosaaminen</option>
+                        <option value="aihe4">Lainsäädännön ja etiikan tuntemus</option>
+                        <option value="aihe5">Tutkimus- ja kehittämisosaaminen</option>
+                        <option value="aihe6">Robotiikka ja digitalisaatio</option>
+                        <option value="aihe7">Vaikuttavuus-, kustannus- ja laatutietoisuus</option>
+                        <option value="aihe8">Kestävän kehityksen mukainen ympäristöosaaminen</option>
+                        <option value="aihe9">Viestintäosaaminen</option>
+                        <option value="aihe10">Työntekijyysosaaminen</option>
+                        <option value="aihe11">Monialainen yhteistoiminta</option>
                     </select>
                 </div>
                 <div class="float-left">
@@ -61,124 +67,117 @@
                     </select>
                 </div>
             </div>
-            <!--<table id="hakuvalikot">
-                <tr>
-                    <td class="hakutd">
-                        <label for="aihe">
-                            <h3>Aihe*</h3>
-                        </label>
-<<<<<<< HEAD
-                        <select name="aihe" id="aihe" class="valikko">
-                            <option value="aihe1">Geneerinen alue1</option>
-                            <option value="aihe2">Geneerinen alue2</option>
-                            <option value="aihe3">Geneerinen alue3</option>
-                            <option value="aihe4">Geneerinen alue4</option>
-                            <option value="aihe5">Geneerinen alue5</option>
-                            <option value="aihe6">Geneerinen alue6</option>
-                            <option value="aihe7">Geneerinen alue7</option>
-                            <option value="aihe8">Geneerinen alue8</option>
-                            <option value="aihe9">Geneerinen alue9</option>
-                            <option value="aihe10">Geneerinen alue10</option>
-                            <option value="aihe11">Geneerinen alue11</option>
-=======
-                        <select name="aihe" id="aihe">
-                            <option value="aihe1">Asiakaslähtöisyys</option>
-                            <option value="aihe2">Ohjaus- ja neuvontaosaaminen</option>
-                            <option value="aihe3">Palvelujärjestelmäosaaminen</option>
-                            <option value="aihe4">Lainsäädännön ja etiikan tuntemus</option>
-                            <option value="aihe5">Tutkimus- ja kehittämisosaaminen</option>
-                            <option value="aihe6">Robotiikka ja digitalisaatio</option>
-                            <option value="aihe7">Vaikuttavuus-, kustannus- ja laatutietoisuus</option>
-                            <option value="aihe8">Kestävän kehityksen mukainen ympäristöosaaminen</option>
-                            <option value="aihe9">Viestintäosaaminen</option>
-                            <option value="aihe10">Työntekijyysosaaminen</option>
-                            <option value="aihe11">Monialainen yhteistoiminta</option>
->>>>>>> d1eb8a67272deaec467f00a710bd7f3ac7d14cb8
-                        </select>
-                    </td>
-
-                    <td class="hakutd">
-                        <label for="koulu">
-                            <h3>Korkeakoulu</h3>
-                        </label>
-                        <select name="koulu" id="koulu" class="valikko">
-                            <option value="koulu1">Korkeakoulu1</option>
-                            <option value="koulu2">Korkeakoulu2</option>
-                            <option value="koulu3">Korkeakoulu3</option>
-                            <option value="koulu4">Korkeakoulu4</option>
-                            <option value="koulu5">Korkeakoulu5</option>
-                            <option value="koulu6">Korkeakoulu6</option>
-                            <option value="koulu7">Korkeakoulu7</option>
-                            <option value="koulu8">Korkeakoulu8</option>
-                            <option value="koulu9">Korkeakoulu9</option>
-                            <option value="koulu10">Korkeakoulu10</option>
-                            <option value="koulu11">Korkeakoulu11</option>
-                        </select>
-                    </td>
-
-                    <td class="hakutd">
-                        <label for="kieli">
-                            <h3>Opetuskieli</h3>
-                        </label>
-                        <select name="kieli" id="kieli" class="valikko">
-                            <option value="koulu1">Suomi </option>
-                            <option value="koulu2">Ruotsi</option>
-                            <option value="koulu3">Englanti</option>--> <!-- mitä muita kieliä tarjonnassa on ?  -->
-                      <!-- </select>
-                    </td>
-                </tr>
-            </table>-->
 
             <br><br>
 
             <div class="nappiKeskelle">
-                <input class="myButton" type="submit" value="HAE OPINNOT">
+                <input id="haeNappi" class="myButton" type="button" value="HAE OPINNOT">
             </div>
 
             <h2>Löydetyt opintojaksot</h2>
 
-            <table>
-                <tr>
-                    <th>Opintojakson nimi</th>
-                    <th>Oppilaitos</th>
-                    <th>Opintopisteet</th>
-                </tr>
-                <tr>
-                    <td>Kurssi1</td>
-                    <td>SAVONIA</td>
-                    <td>5 op</td>
-                </tr>
-                <tr>
-                    <td>Kurssi2</td>
-                    <td>SAVONIA</td>
-                    <td>5 op</td>
-                </tr>
-                <tr>
-                    <td>Kurssi3</td>
-                    <td>Itä-Suomen Yliopisto</td>
-                    <td>5 op</td>
-                </tr>
-                <tr>
-                    <td>Kurssi4</td>
-                    <td>SAVONIA</td>
-                    <td>5 op</td>
-                </tr>
-                <tr>
-                    <td>Kurssi5</td>
-                    <td>Itä-Suomen Yliopisto</td>
-                    <td>5 op</td>
-                </tr>
-                <tr>
-                    <td>Kurssi6</td>
-                    <td>SAVONIA</td>
-                    <td>5 op</td>
-                </tr>
+            <table id="data">
+                <thead>
+                    <tr>
+                        <th>Opintojakson nimi</th>
+                        <th>Oppilaitos</th>
+                        <th>Opetuskieli</th>
+                        <th>Opintopisteet</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tbody">
+                    <!-- tbody:yn haetaan kurssit-->
+
+                </tbody>
+
             </table>
 
         </form>
 
     </div>
 
+
+    <script>
+        // tietokannasta otettava korkeakoulut valikkoon (heti kun sivu latautuu!)
+        // samoin geneeriset osa-alueet? kielet?
+
+        $(document).ready(function () {
+
+            //otetaan kiinni aihe mikä on valittu:
+            $('#haeNappi').click(() => {
+                
+                var geneerinenAlue = document.getElementById("aihe");
+                var aihe = geneerinenAlue.options[geneerinenAlue.selectedIndex].value; //antaa esim. "aihe5" eli Tutkimus...
+                fetch(aihe);
+            });
+
+            fetch = (aihe) => {
+                console.log(aihe);
+                var valinta = "";
+                if (aihe == "aihe1") {
+                    valinta = "asiakaslahtoisyys";
+                }
+                if (aihe == "aihe2") {
+                    valinta = "neuvontaosaaminen";
+                }
+                if (aihe == "aihe3") {
+                    valinta = "palvelujarjestelmat";
+                }
+                if (aihe == "aihe4") {
+                    valinta = "etiikka";
+                }
+                if (aihe == "aihe5") {
+                    valinta = "tutkimusosaaminen";
+                }
+                if (aihe == "aihe6") {
+                    valinta = "robotiikka";
+                }
+                if (aihe == "aihe7") {
+                    valinta = "laatutietoisuus";
+                }
+                if (aihe == "aihe8") {
+                    valinta = "kestavakehitys";
+                }
+                if (aihe == "aihe9") {
+                    valinta = "viestintaosaaminen";
+                }
+                if (aihe == "aihe10") {
+                    valinta = "tyontekijyysosaaminen";
+                }
+                if (aihe == "aihe11") {
+                    valinta = "yhteistoiminta";
+                }
+                console.log(aihe);
+                console.log(valinta);
+                var osoiteUrl = 'http://127.0.0.1:5000/api/' + valinta;
+                $.get({
+                    url: osoiteUrl,
+                    success: (result) => {
+                        $("#data tbody").html("");
+                        showResultInTable(result);
+                    },
+                    error: (e) => {
+                        alert("Virhe: " + e); //e selkokieliseksi, miten?
+                    }
+                });
+            }
+
+        });
+
+        //laitetaan tiedot taulukkoon:
+        showResultInTable = (result) => {
+            result.forEach(element => {
+                let opintojaksot = "<tr><td>" + element.nimi + "</td>\n";
+                opintojaksot += "<td>" + element.koulu + "</td>\n";
+                opintojaksot += "<td>" + element.kieli + "</td>\n";
+                opintojaksot += "<td>" + element.opintopisteet + "</td>\n"; 
+                opintojaksot += "</tr>\n";
+                $("#data tbody").append(opintojaksot);
+            });
+        }
+
+    </script>
 
 
 </body>
