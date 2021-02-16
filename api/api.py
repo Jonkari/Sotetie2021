@@ -1,5 +1,5 @@
 from tietokanta import Database
-from flask import json, Flask, session, request, make_response
+from flask import json, Flask, make_response
 from flask_restful import Resource, Api
 from flask_caching import Cache
 from opintopolku import opintopolku
@@ -23,16 +23,9 @@ class Asiakaslahtoisyys(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%asiakaslähtöisyys%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%asiakaslähtöi%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%osallisuus%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%kohtaaminen%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%palvelutar%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%asiakasprosessi%'"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%asiakaslähtöisyys%'"))
 api.add_resource(Asiakaslahtoisyys, '/api/asiakaslahtoisyys', resource_class_kwargs={'db' : db})
 
 class Neuvontaosaaminen(Resource):
@@ -40,16 +33,9 @@ class Neuvontaosaaminen(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%ohjaus- ja neuvontaosaaminen%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%ohjaus%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%neuvonta%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%palvelujärjestelmä%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%vuorovaikutus%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%kommunikaatio%'"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%ohjaus- ja neuvontaosaaminen%'"))
 api.add_resource(Neuvontaosaaminen, '/api/neuvontaosaaminen', resource_class_kwargs={'db' : db})
 
 class Palvelujarjestelmat(Resource):
@@ -57,13 +43,9 @@ class Palvelujarjestelmat(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%palvelujärjestelmät%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%palvelujärjestelmä%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%palveluohjaus%'"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%palvelujärjestelmät%'"))
 api.add_resource(Palvelujarjestelmat, '/api/palvelujarjestelmat', resource_class_kwargs={'db' : db})
 
 class Etiikka(Resource):
@@ -71,15 +53,9 @@ class Etiikka(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%etiikka%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%lainsäädäntö%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%tietosuoja%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%vastuu%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%eettinen%'"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%lainsäädäntö ja etiikka%'"))
 api.add_resource(Etiikka, '/api/etiikka', resource_class_kwargs={'db' : db})
 
 class Tutkimusosaaminen(Resource):
@@ -87,14 +63,9 @@ class Tutkimusosaaminen(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%tutkimus- ja kehittämisosaaminen%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%tutkimus%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%innovaatio%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%kehittäminen%'"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%tutkimus- ja kehittämisosaaminen%'"))
 api.add_resource(Tutkimusosaaminen, '/api/tutkimusosaaminen', resource_class_kwargs={'db' : db})
 
 class Robotiikka(Resource):
@@ -102,17 +73,9 @@ class Robotiikka(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%robotiikka ja digitalisaatio%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%robotiikka%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%digi%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%tekoäly%"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%sote-palvelut%"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%tietoturva%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%tietosuoja%'"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%robotiikka ja digitalisaatio%'"))
 api.add_resource(Robotiikka, '/api/robotiikka', resource_class_kwargs={'db' : db})
 
 class Laatutietoisuus(Resource):
@@ -120,16 +83,9 @@ class Laatutietoisuus(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikuttavuus- kustannus- ja laatutietoisuus%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%laatu%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%laadun%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikuttavuu%"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikutusten%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%kustannukset%"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikuttavuus- kustannus- ja laatutietoisuus%'"))
 api.add_resource(Laatutietoisuus, '/api/laatutietoisuus', resource_class_kwargs={'db' : db})
 
 class KestavaKehitys(Resource):
@@ -137,16 +93,9 @@ class KestavaKehitys(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%kestävä%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%ekolog%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%kestävyys%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%kierrätys%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%ympäristö%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%energiankulutus%"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%kestävän kehityksen osaaminen%'"))
 api.add_resource(KestavaKehitys, '/api/kestavakehitys', resource_class_kwargs={'db' : db})
 
 class Viestintaosaaminen(Resource):
@@ -154,16 +103,9 @@ class Viestintaosaaminen(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%viestintäosaaminen%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%viestintä%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%tunnetila%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%empatia%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%selkokieli%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%selko%'"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%viestintäosaaminen%'"))
 api.add_resource(Viestintaosaaminen, '/api/viestintaosaaminen', resource_class_kwargs={'db' : db})
 
 class Tyontekijyysosaaminen(Resource):
@@ -171,20 +113,9 @@ class Tyontekijyysosaaminen(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%työntekijyysosaaminen%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%osaamisen%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%johtaminen%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%työhyvinvointi%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%muutososaaminen%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%muutosjoustavuus%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%urakehitys%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%verkostotyö%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%työyhteisö%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%moniammatillisuus%'"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%työntekijyysosaaminen%'"))
 api.add_resource(Tyontekijyysosaaminen, '/api/tyontekijyysosaaminen', resource_class_kwargs={'db' : db})
 
 class Yhteistoiminta(Resource):
@@ -192,17 +123,9 @@ class Yhteistoiminta(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%monialainen yhteistoiminta%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%monialaisuu%'" 
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%moniammatillisuu%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%monitiet%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%yhteistyö%"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%verkostoituminen%'"
-        or "SELECT * FROM kurssit WHERE osaamiset LIKE '%asiantuntijuus%'"))
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%monialainen yhteistoiminta%'"))
 api.add_resource(Yhteistoiminta, '/api/yhteistoiminta', resource_class_kwargs={'db' : db})
 
 class Kaikki(Resource):
@@ -210,9 +133,7 @@ class Kaikki(Resource):
         self.db = db
         super().__init__()
     @cache.cached(timeout=3600)
-    def get(self, id=None):
-        if id:
-            return corsify(self.db.getData("SELECT * FROM kurssit WHERE id={id}"))
+    def get(self):
         return corsify(self.db.getData("SELECT * FROM kurssit"))
 api.add_resource(Kaikki, '/', '/api/', resource_class_kwargs={'db' : db})
 
