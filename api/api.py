@@ -10,13 +10,34 @@ def corsify(response):
     resp.headers.add('Access-Control-Allow-Origin', '*')
     return resp
 
-
-
 app = Flask(__name__)
 api = Api(app)
 cache = Cache(app, config={
     'CACHE_TYPE':'simple'
 })
+
+rajapinnat = {
+    "Kaikki" : "/api/",
+    "Asiakaslähtöisyys" : "/api/asiakaslahtoisyys",
+    "Neuvontaosaaminen" : "/api/neuvontaosaaminen",
+    "Palvelujärjestelmät" : "/api/palvelujarjestelmat",
+    "Lainsäädäntö ja etiikka" : "/api/etiikka",
+    "Tutkimus- ja kehittämisosaaminen" : "/api/tutkimusosaaminen",
+    "Robotiikka ja digitalisaatio" : "/api/robotiikka",
+    "Vaikuttavuus- kustannus- ja laatutietoisuus" : "/api/laatutietoisuus",
+    "Kestävän kehityksen osaaminen" : "/api/kestavakehitys",
+    "Viestintäosaaminen" : "/api/viestintaosaaminen",
+    "Työntekijyysosaaminen" : "/api/tyontekijyysosaaminen",
+    "Monialainen yhteistoiminta" : "/api/yhteistoiminta"
+}
+
+class Rajapinnat(Resource):
+    def __init__(self, db):
+        self.db = db
+        super().__init__()
+    def get(self):
+        return corsify(rajapinnat)
+api.add_resource(Rajapinnat, "/api/rajapinnat", resource_class_kwargs={'db' : db})
 
 class Asiakaslahtoisyys(Resource):
     def __init__(self, db):
