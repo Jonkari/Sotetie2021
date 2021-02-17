@@ -17,7 +17,6 @@ cache = Cache(app, config={
 })
 
 rajapinnat = {
-    "Kaikki" : "/api/",
     "Asiakaslähtöisyys" : "/api/asiakaslahtoisyys",
     "Neuvontaosaaminen" : "/api/neuvontaosaaminen",
     "Palvelujärjestelmät" : "/api/palvelujarjestelmat",
@@ -38,15 +37,6 @@ class Koulut(Resource):
     def get(self):
         return corsify(self.db.getData("SELECT distinct koulu FROM Kurssit ORDER BY koulu ASC"))
 api.add_resource(Koulut, "/api/koulut", resource_class_kwargs={'db' : db})
-
-class Osaamiset(Resource):
-    def __init__(self, db):
-        self.db = db
-        super().__init__()
-    def get(self):
-        return corsify(self.db.getData("SELECT distinct osaamiset FROM Kurssit ORDER BY osaamiset ASC"))
-api.add_resource(Osaamiset, "/api/osaamiset", resource_class_kwargs={'db' : db})
-
 
 class Kielet(Resource):
     def __init__(self, db):

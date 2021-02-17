@@ -1,4 +1,6 @@
-    <div id="sisältö">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="styles.css">
+ <div id="sisältö">
         <h1>Kurssihaku</h1>
 
 
@@ -9,7 +11,7 @@
                 <div class="float-left">
                     <h3>Aihe</h3>
                     <select name="aihe" id="aihe">
-                        <option value="aihe1">Asiakaslähtöisyys</option>
+                        <!-- <option value="aihe1">Asiakaslähtöisyys</option>
                         <option value="aihe2">Ohjaus- ja neuvontaosaaminen</option>
                         <option value="aihe3">Palvelujärjestelmäosaaminen</option>
                         <option value="aihe4">Lainsäädännön ja etiikan tuntemus</option>
@@ -19,7 +21,7 @@
                         <option value="aihe8">Kestävän kehityksen mukainen ympäristöosaaminen</option>
                         <option value="aihe9">Viestintäosaaminen</option>
                         <option value="aihe10">Työntekijyysosaaminen</option>
-                        <option value="aihe11">Monialainen yhteistoiminta</option>
+                        <option value="aihe11">Monialainen yhteistoiminta</option> -->
                     </select>
                 </div>
                 <div class="float-left">
@@ -81,9 +83,19 @@
     <script>
         // tietokannasta otettava korkeakoulut valikkoon (heti kun sivu latautuu!)
         // samoin geneeriset osa-alueet? kielet?
-
+        var genOsaamiset = null;
         $(document).ready(function () {
-
+            
+            $.get("http://127.0.0.1:5000/api/rajapinnat", function (data) {
+                    genOsaamiset = $.extend({}, {"Kaikki" : "/api/"}, data);
+                    var genOsaamiset_select = document.querySelector("#aihe")
+                    var html = ``
+                    for(var i in genOsaamiset) {
+                        var option = `<option value="${i}">${i}</option>`
+                        html += option
+                    }
+                    genOsaamiset_select.innerHTML = html
+            })
             //otetaan kiinni aihe mikä on valittu:
             $('#haeNappi').click(() => {
                 
@@ -142,7 +154,7 @@
                     }
                 });
             }
-
+            fetch("aihe1");
         });
 
         //laitetaan tiedot taulukkoon:
