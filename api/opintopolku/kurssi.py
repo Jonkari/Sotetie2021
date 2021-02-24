@@ -13,12 +13,13 @@ class Kurssi:
     def __str__(self):
         return str(self.nimi) + ", " + str(self.opintopisteet)
     def sqlYksinkertainen(self,):
-        return "INSERT INTO kurssit (id, nimi, opintopisteet, koulu, osaamiset) VALUES (\"{}\", \"{}\", \"{}\", \"{}\", \"{}\") ON DUPLICATE KEY UPDATE osaamiset=\"{}\";".format(
+        return "INSERT INTO kurssit (id, nimi, opintopisteet, koulu, osaamiset, kieli) VALUES (\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\") ON DUPLICATE KEY UPDATE osaamiset=\"{}\";".format(
             self.id,
             self.nimi,
             self.opintopisteet,
             self.koulu,
             self.osaamiset,
+            self.kieli,
             self.osaamiset
         )
 

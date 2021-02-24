@@ -141,5 +141,11 @@ def hakuTyokaluYksinkertainen():
                     else:
                         if osaaminen not in objs[i.get('id')].osaamiset:
                             objs[i.get('id')].osaamiset += "|"+osaaminen
+    haeKielet()
+def haeKielet():
+    for i, j in objs.items():
+        data = haeKurssinTiedot(i)
+        j.kieli = data.get('teachingLanguages')[0]
 if __name__ == "__main__":
     hakuTyokaluYksinkertainen()
+    haeKielet()

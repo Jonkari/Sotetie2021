@@ -20,8 +20,8 @@ if __name__ == "__main__":
         ENGINE=InnoDB
         ;
         """
-
     )
+    db.query("TRUNCATE kurssit")
     opintopolku.hakuTyokaluYksinkertainen()
     for i, j in opintopolku.objs.items():
         db.query(j.sqlYksinkertainen())
