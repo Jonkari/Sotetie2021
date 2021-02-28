@@ -1,3 +1,6 @@
+"""
+Käyttää opintopolku moduulia ja tekee tietokannan, ei ole varmaankaan viimeinen versio, taikka se mikä päivittyy viikon välein, mutta toimiva.
+"""
 if __name__ == "__main__":
     import tietokanta
     from opintopolku import opintopolku

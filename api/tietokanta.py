@@ -2,6 +2,9 @@ import time
 import pymysql.cursors
 import queue
 class Database:
+    """Tietokantaluuokka, joka helpottaa tietokannan käsittelemistä. On useammalle säikeelle tarkoitettu (FLASK).
+
+    """
     class ConnPool():
         def __init__(self, size, max_size, host, user, password, db):
             self.db_args = {
