@@ -5,18 +5,7 @@
 
     <form>
         <div class="Row">
-            <!--<div class="float-left">
-                <h3>Aihe</h3>
-            <div class="selectBox" onclick="showCheckboxes1(this)">
-                <select>
-                  <option>Valitse</option>
-                </select>
-                <div class="overSelect"></div>
-              </div>
-              <div  class="multipleSelect" name="aihe" class="aihe">-->
-                <!-- tähän koulut sivun lataamisen yhteydessä  -->
-              <!--</div>
-            </div>-->
+
             <div class="float-left">
                 <h3>Aihe</h3>
                 <select name="aihe" id="aihe" class="aihe">
@@ -37,30 +26,6 @@
               </div>
               
             </div>
-            <!--<div class="float-left">
-                <h3>Korkeakoulu</h3>
-                <select name="koulu" id="koulu">-->
-                    <!-- tähän koulut sivun lataamisen yhteydessä  -->
-               <!-- </select>
-            </div>-->
-            <!--<div class="float-left">
-                <h3>Opetuskieli</h3>
-            <div class="selectBox" onclick="showCheckboxes1(this)">
-                <select>
-                  <option>Valitse</option>
-                </select>
-                <div class="overSelect"></div>
-                <div class="multipleSelect">
-                    <label for="one">
-                      <input type="checkbox" id="one" />Suomi</label>
-                    <label for="two">
-                      <input type="checkbox" id="two" />Ruotsi</label>
-                    <label for="three">
-                      <input type="checkbox" id="three" />Englanti</label>
-                  </div>
-              </div>
-              
-            </div>-->
             <div class="float-left">
                 <h3>Opetuskieli</h3>
                 <select name="kieli" id="kieli">
@@ -155,6 +120,7 @@
     var koulut = null;
     var avattu = false;
     var valittu = true;
+    var osoite = "http://127.0.0.1:5000"
 
     $(document).ready(function () {
 
@@ -197,7 +163,7 @@
         })
 
         //haetaan aiheet valikkoon:
-        $.get("http://127.0.0.1:5000/api/rajapinnat", function (data) {
+        $.get(osoite+"/api/rajapinnat", function (data) {
             genOsaamiset = $.extend({}, { "Kaikki": "/api/" }, data);
             var genOsaamiset_select = document.querySelector(".aihe")
             var html = ``
@@ -209,7 +175,7 @@
         })
 
         //haetaan koulut valikkoon:
-        $.get("http://127.0.0.1:5000/api/koulut", function (data) {
+        $.get(osoite+"/api/koulut", function (data) {
              koulut = data;
             var korkeaKoulu_select = document.querySelector(".koulu")
             var html = `<label><input type="checkbox" checked id="kaikki"/>Kaikki / Tyhjennä</label>`
@@ -222,55 +188,13 @@
 
         //otetaan kiinni aihe mikä on valittu:
         $('#haeNappi').click(() => {
-            var geneerinenAlue = document.getElementsByClassName("aihe");
+            var geneerinenAlue = document.querySelector(".aihe");
             var aihe = geneerinenAlue.options[geneerinenAlue.selectedIndex].value; //antaa esim. "aihe5" eli Tutkimus...
             fetch(aihe);
         });
 
         fetch = (aihe) => {
-            console.log(aihe);
-            var valinta = "";
-            if (aihe == "Kaikki") {
-                valinta = "kaikki";
-            }
-            if (aihe == "Asiakaslähtöisyys") {
-                valinta = "asiakaslahtoisyys";
-            }
-            if (aihe == "Kestävän kehityksen osaaminen") {
-                valinta = "kestavakehitys";
-            }
-            if (aihe == "Lainsäädäntö ja etiikka") {
-                valinta = "etiikka";
-            }
-            if (aihe == "Monialainen yhteistoiminta") {
-                valinta = "yhteistoiminta";
-            }
-            if (aihe == "Neuvontaosaaminen") {
-                valinta = "neuvontaosaaminen";
-            }
-            if (aihe == "Palvelujärjestelmät") {
-                valinta = "palvelujarjestelmat";
-            }
-            if (aihe == "Robotiikka ja digitalisaatio") {
-                valinta = "robotiikka";
-            }
-            if (aihe == "Tutkimus- ja kehittämisosaaminen") {
-                valinta = "tutkimusosaaminen";
-            }
-            if (aihe == "Työntekijyysosaaminen") {
-                valinta = "tyontekijyysosaaminen";
-            }
-            if (aihe == "Vaikuttavuus- kustannus- ja laatutietoisuus") {
-                valinta = "laatutietoisuus";
-            }
-            if (aihe == "Viestintäosaaminen") {
-                valinta = "viestintaosaaminen";
-            }
-
-
-            console.log(aihe);
-            console.log(valinta);
-            var osoiteUrl = 'http://127.0.0.1:5000/api/' + valinta;
+            var osoiteUrl = osoite + genOsaamiset[aihe];
             $.get({
                 url: osoiteUrl,
                 success: (result) => {
@@ -282,22 +206,40 @@
                 }
             });
         }
-        fetch("aihe1");
+        fetch("Kaikki");
     });
 
     //laitetaan tiedot taulukkoon:
     showResultInTable = (result) => {
+
+        var checkBoxes = document.querySelectorAll(".checkboxKoulut")
+        var valitut = new Set();
+        for(var x of checkBoxes) {
+            if(x.checked) {
+                valitut.add(x.value)
+            }
+        }
+        console.table(valitut)
+        console.table(checkBoxes)
         var nro = 1;
+        html = ``
         result.forEach(element => {
-            let opintojaksot = "<tr><td>" + nro + "</td>\n";
-            opintojaksot += "<td>" + element.nimi + "</td>\n";   
-            opintojaksot += "<td>" + element.koulu + "</td>\n";
-            opintojaksot += "<td>" + element.kieli + "</td>\n";
-            opintojaksot += "<td>" + element.opintopisteet + "</td>\n";
-            opintojaksot += "</tr>\n";
-            $("#data tbody").append(opintojaksot);
-            nro++;
+            if(valitut.has(element.koulu)) {
+                let opintojaksot = "<tr><td>" + nro + "</td>\n";
+                    opintojaksot += `<td><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;   
+                    opintojaksot += "<td>" + element.koulu + "</td>\n";
+                    opintojaksot += "<td>" + element.kieli + "</td>\n";
+                    opintojaksot += "<td>" + element.opintopisteet + "</td>\n";
+                    opintojaksot += "</tr>\n";
+                    html += opintojaksot
+                    nro++;
+            }
+
         });
+        if (html.length == 0) {
+            html += "<h1> Ei tuloksia </h1>";
+        }
+        document.querySelector("#data tbody").innerHTML = html;
     }
 
 </script>
