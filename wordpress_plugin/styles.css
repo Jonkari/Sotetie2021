@@ -4,6 +4,7 @@ body{
 
 /* koko sisältö */
 #sisältö{
+	display: flex;
 width: 100%;
 background-color:lightsteelblue;
 }
@@ -26,7 +27,7 @@ select{
 
 .float-left {
 	padding:10px;
-	float:left;
+	
 	width:30%;
 	margin-left: 2.5%;
 }
