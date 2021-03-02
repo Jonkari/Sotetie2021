@@ -5,7 +5,7 @@
 
 function sotetie($content) {
     if(is_page('testi')) {
-        $content .= file_get_contents(plugin_dir_path(__FILE__).'kayttoliittyma2.html');
+        $content .= file_get_contents(plugin_dir_path(__FILE__).'kayttoliittyma.html');
     }
     return $content;
 }

@@ -1,13 +1,11 @@
-body{
-    font-family: arial, sans-serif;
-}
 
 /* koko sisältö */
 #sisältö{
 	display: flex;
-width: 100%;
-background-color:lightsteelblue;
+width: 80%;
 flex-flow: column wrap;
+	margin-left:auto;
+	margin-right:auto;
 }
 h1{
 	margin-left: 1% !important;
@@ -104,3 +102,9 @@ table {
   tr:nth-child(even) {
     background-color: #dddddd;
   }
+tbody a {
+	color:#000;
+}
+tbody a:hover {
+	color:blue;
+}

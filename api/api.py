@@ -35,7 +35,7 @@ class Koulut(Resource):
         self.db = db
         super().__init__()
     def get(self):
-        return corsify(self.db.getData("SELECT distinct koulu FROM Kurssit ORDER BY koulu ASC"))
+        return corsify(self.db.getData("SELECT distinct koulu FROM kurssit ORDER BY koulu ASC"))
 api.add_resource(Koulut, "/api/koulut", resource_class_kwargs={'db' : db})
 
 class Kielet(Resource):
@@ -43,7 +43,7 @@ class Kielet(Resource):
         self.db = db
         super().__init__()
     def get(self):
-        return corsify(self.db.getData("SELECT distinct kieli FROM Kurssit ORDER BY kieli ASC"))
+        return corsify(self.db.getData("SELECT distinct kieli FROM kurssit ORDER BY kieli ASC"))
 api.add_resource(Kielet, "/api/kielet", resource_class_kwargs={'db' : db})
 
 class Rajapinnat(Resource):
