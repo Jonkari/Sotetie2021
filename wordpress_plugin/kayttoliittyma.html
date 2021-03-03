@@ -47,11 +47,11 @@
         <table id="data">
             <thead>
                 <tr>
-                    <th>Nro</th>
-                    <th>Opintojakson nimi</th>
-                    <th>Oppilaitos</th>
-                    <th>Opetuskieli</th>
-                    <th>Opintopisteet</th>
+                    <th colspan="1">Nro</th>
+                    <th colspan="2">Opintojakson nimi</th>
+                    <th colspan="2">Oppilaitos</th>
+                    <th colspan="1">Opetuskieli</th>
+                    <th colspan="1">Opintopisteet</th>
                 </tr>
             </thead>
 
@@ -126,7 +126,7 @@
 
         document.addEventListener("click", function(e){
             console.log(e.target);
-            if(e.target && (e.target.matches(".overSelect") || e.target.matches(".koulu *"))){
+            if(e.target && (e.target.matches(".overSelect"))){
                 if(avattu){
                     document.querySelector(".koulu").style.display = "none";
                     avattu = false;
@@ -137,8 +137,12 @@
                 }
             }
             else{
-                document.querySelector(".koulu").style.display = "none";
-                avattu = false;
+                if(e.target && (e.target.matches(".checkboxKoulut")|| e.target.matches('.koulu *'))) {
+                    console.log(e.target)
+                } else {
+                    document.querySelector(".koulu").style.display = "none";
+                    avattu = false;
+                }
             }
         });
 
@@ -225,11 +229,11 @@
         html = ``
         result.forEach(element => {
             if(valitut.has(element.koulu)) {
-                let opintojaksot = "<tr><td>" + nro + "</td>\n";
-                    opintojaksot += `<td><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;   
-                    opintojaksot += "<td>" + element.koulu + "</td>\n";
-                    opintojaksot += "<td>" + element.kieli + "</td>\n";
-                    opintojaksot += "<td>" + element.opintopisteet + "</td>\n";
+                let opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
+                    opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;   
+                    opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
+                    opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
+                    opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
                     opintojaksot += "</tr>\n";
                     html += opintojaksot
                     nro++;
