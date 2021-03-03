@@ -11,12 +11,12 @@ if __name__ == "__main__":
         """
             CREATE TABLE IF NOT EXISTS `kurssit` (
             `id` VARCHAR(50) NOT NULL COLLATE 'latin1_swedish_ci',
-            `nimi` VARCHAR(100) NOT NULL COLLATE 'latin1_swedish_ci',
+            `nimi` VARCHAR(200) NOT NULL COLLATE 'latin1_swedish_ci',
             `kieli` VARCHAR(30) NOT NULL COLLATE 'latin1_swedish_ci',
             `kuvaus` VARCHAR(500) NOT NULL COLLATE 'latin1_swedish_ci',
             `opintopisteet` INT(11) UNSIGNED NOT NULL DEFAULT '0',
-            `koulu` VARCHAR(50) NOT NULL DEFAULT '0' COLLATE 'latin1_swedish_ci',
-            `osaamiset` VARCHAR(150) NOT NULL DEFAULT '0' COLLATE 'latin1_swedish_ci',
+            `koulu` VARCHAR(100) NOT NULL DEFAULT '0' COLLATE 'latin1_swedish_ci',
+            `osaamiset` VARCHAR(200) NOT NULL DEFAULT '0' COLLATE 'latin1_swedish_ci',
             PRIMARY KEY (`id`) USING BTREE
         )
         COLLATE='latin1_swedish_ci'

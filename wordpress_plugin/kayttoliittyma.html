@@ -47,11 +47,11 @@
         <table id="data">
             <thead>
                 <tr>
-                    <th colspan="1">Nro</th>
+                    <!--<th colspan="1">Nro</th>-->
                     <th colspan="2">Opintojakson nimi</th>
                     <th colspan="2">Oppilaitos</th>
-                    <th colspan="1">Opetuskieli</th>
-                    <th colspan="1">Opintopisteet</th>
+                    <!--<th colspan="1">Opetuskieli</th>
+                    <th colspan="1">Opintopisteet</th>-->
                 </tr>
             </thead>
 
@@ -229,11 +229,12 @@
         html = ``
         result.forEach(element => {
             if(valitut.has(element.koulu)) {
-                let opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
+                let opintojaksot = ""
+                    //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
                     opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;   
                     opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
-                    opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
-                    opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
+                    //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
+                    //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
                     opintojaksot += "</tr>\n";
                     html += opintojaksot
                     nro++;

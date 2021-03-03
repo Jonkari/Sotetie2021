@@ -1,4 +1,5 @@
 import requests
+import re
 import json
 if __name__ == "__main__":
     import kurssi
@@ -43,13 +44,15 @@ def haeKurssinTiedot(kurssin_id):
     , headers=HEADERS)
     return data.json()
 def hakuTyokaluYksinkertainen():
+    global tmp
+    global objs
     """
     Käyttää haeDataa ja haeKielet funktioita ja luo `objs` muuttujaan `Kurssi` objektit, joita käytetään tietokantaan tallentamisen yhteydessä.
     """
     try:
         hakusanat_dict = {
             "asiakaslähtoisyys": [
-                "asiakaslähtoi",
+                "asiakaslähtöi",
                 "osallisuus",
                 "kohtaaminen",
                 "palvelutar",
@@ -133,14 +136,16 @@ def hakuTyokaluYksinkertainen():
             for osaaminen, hakusanat in hakusanat_dict.items():
                 for hakusana in hakusanat:
                     for i in haeDataa(hakusana, facetFilter):
-                        kurssi_obj = kurssi.Kurssi(
-                            i.get('name'),
-                            i.get('credits')[0],
-                            i.get('lopNames')[0],
-                            i.get('id'),
-                            "",
-                            osaaminen
-                        )
+                        reg = re.match("(\d+).*", i.get('credits'))
+                        if reg:
+                            kurssi_obj = kurssi.Kurssi(
+                                i.get('name'),
+                                reg.group(1),
+                                i.get('lopNames')[0],
+                                i.get('id'),
+                                "",
+                                osaaminen
+                            )
                         if i.get('id') not in objs:
                             objs[i.get('id')] = kurssi_obj
                         else:
