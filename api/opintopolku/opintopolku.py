@@ -51,7 +51,7 @@ def hakuTyokaluYksinkertainen():
     """
     try:
         hakusanat_dict = {
-            "asiakaslähtoisyys": [
+            "asiakaslähtöisyys": [
                 "asiakaslähtöi",
                 "osallisuus",
                 "kohtaaminen",
