@@ -15,16 +15,16 @@
 
             <div class="float-left">
                 <h3>Korkeakoulu</h3>
-            <div class="selectBox">
-                <select>
-                  <option>Valitse koulu(t)</option>
-                </select>
-                <div class="overSelect"></div>
-                <div  class="multipleSelect koulu" name="koulu" id="checkboxes1">
-                    <!-- tähän koulut sivun lataamisen yhteydessä  -->
-                  </div>
-              </div>
-              
+                <div class="selectBox">
+                    <select>
+                        <option>Valitse koulu(t)</option>
+                    </select>
+                    <div class="overSelect"></div>
+                    <div class="multipleSelect koulu" name="koulu" id="checkboxes1">
+                        <!-- tähän koulut sivun lataamisen yhteydessä  -->
+                    </div>
+                </div>
+
             </div>
             <div class="float-left">
                 <h3>Opetuskieli</h3>
@@ -42,75 +42,87 @@
             <input id="haeNappi" class="myButton" type="button" value="HAE OPINNOT">
         </div>
 
-        <h2>Löydetyt opintojaksot</h2>
+        <h2 id="eiKursseja">Ei hakuehtoja vastaavia kursseja</h2>
 
-        <table id="data">
-            <thead>
-                <tr>
-                    <!--<th colspan="1">Nro</th>-->
-                    <th colspan="2">Opintojakson nimi</th>
-                    <th colspan="2">Oppilaitos</th>
-                    <!--<th colspan="1">Opetuskieli</th>
+        <section id="kurssiTaulu">
+            <h2 id="tauluOtsikko">Löydetyt opintojaksot</h2>
+
+            <table id="data">
+                <thead>
+                    <tr>
+                        <!--<th colspan="1">Nro</th>-->
+                        <th colspan="2">Opintojakson nimi</th>
+                        <th colspan="2">Oppilaitos</th>
+                        <!--<th colspan="1">Opetuskieli</th>
                     <th colspan="1">Opintopisteet</th>-->
-                </tr>
-            </thead>
+                    </tr>
+                </thead>
 
-            <tbody id="tbody">
-                <!-- tbody:yn haetaan kurssit-->
+                <tbody id="tbody">
+                    <!-- tbody:yn haetaan kurssit-->
 
-            </tbody>
+                </tbody>
 
-        </table>
+            </table>
+        </section>
 
     </form>
 
 </div>
 
 <style>
+    #kurssiTaulu {
+        display: block;
+    }
 
-.selectBox {
-  position:relative; 
-}
+    #eiKursseja {
+        display: none;
+        color: blue;
+    }
 
-.selectBox select {
-  width: 100%;
-}
+    .selectBox {
+        position: relative;
+    }
 
-.overSelect {
-  position:absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
+    .selectBox select {
+        width: 100%;
+    }
 
-#checkboxes1 {
-  display:none;
-  border: 1px #dadada solid;
-  background-color: white;
-  position:absolute;
-  font-size: 1.5rem;
-  width: 100%;
-  height: 10em;
-  overflow-y: scroll;
-  z-index: 1;
-}
+    .overSelect {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
 
-  #checkboxes1 label input {
-  margin-right: 1em;
-  width: 1.5em;
-  height: 1.5em;
-  }
+    #checkboxes1 {
+        display: none;
+        border: 1px #dadada solid;
+        background-color: white;
+        position: absolute;
+        font-size: 1.5rem;
+        width: 100%;
+        height: 10em;
+        overflow-y: scroll;
+        z-index: 1;
+    }
 
-#checkboxes1 label {
-  display: block;
-  margin-top: 1%;
-}
+    #checkboxes1 label input {
+        margin-right: 1em;
+        width: 1.5em;
+        height: 1.5em;
+    }
 
-#checkboxes1 label:hover {
-  background-color: #1e90ff;
-  color: white;
-}
+    #checkboxes1 label {
+        display: block;
+        margin-top: 1%;
+    }
+
+    #checkboxes1 label:hover {
+        background-color: #1e90ff;
+        color: white;
+    }
 </style>
 
 <script>
@@ -124,20 +136,20 @@
 
     $(document).ready(function () {
 
-        document.addEventListener("click", function(e){
+        document.addEventListener("click", function (e) {
             console.log(e.target);
-            if(e.target && (e.target.matches(".overSelect"))){
-                if(avattu){
+            if (e.target && (e.target.matches(".overSelect"))) {
+                if (avattu) {
                     document.querySelector(".koulu").style.display = "none";
                     avattu = false;
                 }
-                else{
+                else {
                     document.querySelector(".koulu").style.display = "block";
                     avattu = true;
                 }
             }
-            else{
-                if(e.target && (e.target.matches(".checkboxKoulut")|| e.target.matches('.koulu *'))) {
+            else {
+                if (e.target && (e.target.matches(".checkboxKoulut") || e.target.matches('.koulu *'))) {
                     console.log(e.target)
                 } else {
                     document.querySelector(".koulu").style.display = "none";
@@ -146,28 +158,28 @@
             }
         });
 
-        $(".koulu").on("click", "#kaikki", function() {
+        $(".koulu").on("click", "#kaikki", function () {
             console.log("moi");
             var x = document.querySelectorAll(".checkboxKoulut");
-            for (var i of x){
-                if(valittu){
+            for (var i of x) {
+                if (valittu) {
                     i.checked = false;
                 }
-                else{
+                else {
                     i.checked = true;
                 }
             }
-            
-            if(valittu){
+
+            if (valittu) {
                 valittu = false;
             }
-            else{
+            else {
                 valittu = true;
             }
         })
 
         //haetaan aiheet valikkoon:
-        $.get(osoite+"/api/rajapinnat", function (data) {
+        $.get(osoite + "/api/rajapinnat", function (data) {
             genOsaamiset = $.extend({}, { "Kaikki": "/api/" }, data);
             var genOsaamiset_select = document.querySelector(".aihe")
             var html = ``
@@ -179,12 +191,12 @@
         })
 
         //haetaan koulut valikkoon:
-        $.get(osoite+"/api/koulut", function (data) {
-             koulut = data;
+        $.get(osoite + "/api/koulut", function (data) {
+            koulut = data;
             var korkeaKoulu_select = document.querySelector(".koulu")
             var html = `<label><input type="checkbox" checked id="kaikki"/>Kaikki / Tyhjennä</label>`
             for (var i in koulut) {
-                var option = `<label><input class="checkboxKoulut" type="checkbox" checked value="${koulut[i].koulu}"/>${koulut[i].koulu}</label>` /*`<option value="${koulut[i].koulu}">${koulut[i].koulu}</option>`*/ 
+                var option = `<label><input class="checkboxKoulut" type="checkbox" checked value="${koulut[i].koulu}"/>${koulut[i].koulu}</label>` /*`<option value="${koulut[i].koulu}">${koulut[i].koulu}</option>`*/
                 html += option
             }
             korkeaKoulu_select.innerHTML = html;
@@ -218,8 +230,8 @@
 
         var checkBoxes = document.querySelectorAll(".checkboxKoulut")
         var valitut = new Set();
-        for(var x of checkBoxes) {
-            if(x.checked) {
+        for (var x of checkBoxes) {
+            if (x.checked) {
                 valitut.add(x.value)
             }
         }
@@ -228,21 +240,25 @@
         var nro = 1;
         html = ``
         result.forEach(element => {
-            if(valitut.has(element.koulu)) {
+            if (valitut.has(element.koulu)) {
                 let opintojaksot = ""
-                    //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
-                    opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;   
-                    opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
-                    //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
-                    //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
-                    opintojaksot += "</tr>\n";
-                    html += opintojaksot
-                    nro++;
+                //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
+                opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;
+                opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
+                //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
+                //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
+                opintojaksot += "</tr>\n";
+                html += opintojaksot
+                nro++;
             }
-
+            document.getElementById("tauluOtsikko").innerHTML = "Löydetyt opintojaksot (" + nro + " kpl)";
+            document.getElementById("kurssiTaulu").style.display = "block";
+            document.getElementById("eiKursseja").style.display = "none";
         });
         if (html.length == 0) {
-            html += "<h1> Ei tuloksia </h1>";
+            //html += "<h1> Ei tuloksia </h1>";
+           document.getElementById("eiKursseja").style.display = "block";
+           document.getElementById("kurssiTaulu").style.display = "none";
         }
         document.querySelector("#data tbody").innerHTML = html;
     }
