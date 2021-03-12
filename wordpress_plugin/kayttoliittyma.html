@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="styles.css">
 <div id="sisältö">
-    <h1>Kurssihaku</h1>
+    <h1>KURSSIHAKU</h1>
 
     <form>
         <div class="Row">
@@ -43,6 +43,8 @@
         </div>
 
         <h2 id="eiKursseja">Ei hakuehtoja vastaavia kursseja</h2>
+        <h2 id="eiYhteytta">Tietokantaan ei saada yhteyttä. Yritä ladata sivu uudestaan. Jos ei muutaman kerran jälkeen
+            kurssihaku onnistu, ota yhteyttä sivuston ylläpitäjään.</h2>
 
         <section id="kurssiTaulu">
             <h2 id="tauluOtsikko">Löydetyt opintojaksot</h2>
@@ -67,12 +69,21 @@
         </section>
 
     </form>
+    <br>
+    <br>
+    <br>
+    <br>
 
 </div>
 
 <style>
     #kurssiTaulu {
         display: block;
+    }
+
+    #eiYhteytta {
+        display: none;
+        color: red;
     }
 
     #eiKursseja {
@@ -134,6 +145,11 @@
     var valittu = true;
     var osoite = "http://137.74.119.216:5000"
 
+    function virheTilanne() {
+        document.getElementById("kurssiTaulu").style.display = "none";
+        document.getElementById("eiYhteytta").style.display = "block";
+    };
+
     $(document).ready(function () {
 
         document.addEventListener("click", function (e) {
@@ -178,6 +194,8 @@
             }
         })
 
+
+
         //haetaan aiheet valikkoon:
         $.get(osoite + "/api/rajapinnat", function (data) {
             genOsaamiset = $.extend({}, { "Kaikki": "/api/" }, data);
@@ -189,6 +207,9 @@
             }
             genOsaamiset_select.innerHTML = html
         })
+            .fail(virheTilanne);
+
+
 
         //haetaan koulut valikkoon:
         $.get(osoite + "/api/koulut", function (data) {
@@ -218,9 +239,9 @@
                     showResultInTable(result);
                 },
                 error: (e) => {
-                    alert("Virhe: " + e); //e selkokieliseksi, miten?
+                    alert("Virhe: " + e); //e selkokieliseksi, miten? OLIKO TÄLLÄ (error) MERKITYSTÄ, VOIKO OTTAA POIS?
                 }
-            });
+            }).fail(virheTilanne);
         }
         fetch("Kaikki");
     });
@@ -237,7 +258,7 @@
         }
         console.table(valitut)
         console.table(checkBoxes)
-        var nro = 1;
+        var nro = 0;
         html = ``
         result.forEach(element => {
             if (valitut.has(element.koulu)) {
@@ -254,11 +275,13 @@
             document.getElementById("tauluOtsikko").innerHTML = "Löydetyt opintojaksot (" + nro + " kpl)";
             document.getElementById("kurssiTaulu").style.display = "block";
             document.getElementById("eiKursseja").style.display = "none";
+            document.getElementById("eiYhteytta").style.display = "none";
         });
         if (html.length == 0) {
             //html += "<h1> Ei tuloksia </h1>";
-           document.getElementById("eiKursseja").style.display = "block";
-           document.getElementById("kurssiTaulu").style.display = "none";
+            document.getElementById("eiKursseja").style.display = "block";
+            document.getElementById("kurssiTaulu").style.display = "none";
+            document.getElementById("eiYhteytta").style.display = "none";
         }
         document.querySelector("#data tbody").innerHTML = html;
     }
