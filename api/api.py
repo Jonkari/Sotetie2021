@@ -174,5 +174,14 @@ class Kaikki(Resource):
         return corsify(self.db.getData("SELECT * FROM kurssit"))
 api.add_resource(Kaikki, '/', '/api/', resource_class_kwargs={'db' : db})
 
+class Update(Resource):
+    def __init__(self, db):
+        self.db = db
+        super().__init__()
+        @cache.cached(timeout=3600)
+        def get(self):
+            return corsify(self.db.getData("SELECT TOP 1 modify_date FROM sys.objects ORDER BY modify_date DESC"))
+api.add_resource(Update, '/api/paivitys', resource_class_kwargs={'db' : db})
+
 if __name__ == '__main__':
     app.run(debug=True)
