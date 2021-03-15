@@ -2,7 +2,6 @@
 <link rel="stylesheet" href="styles.css">
 <div id="sisältö">
     <h1>KURSSIHAKU</h1>
-    <p id="paivitys"></p>
 
     <form>
         <div class="Row">
@@ -171,12 +170,6 @@
                 html += option
             }
             korkeaKoulu_select.innerHTML = html;
-        })
-
-        //Haetaan viimeisimmän päivityksen päivämäärä:
-        $.get(osoite + "/api/paivitys", function (data){
-            var paivitys = data;
-            document.getElementByID('paivitys').innerHTML = paivitys;
         })
 
         //otetaan kiinni aihe mikä on valittu:
