@@ -139,7 +139,7 @@ def hakuTyokaluYksinkertainen():
                         reg = re.match("(\d+).*", i.get('credits'))
                         if reg:
                             kurssi_obj = kurssi.Kurssi(
-                                i.get('name'),
+                                i.get('name').replace('Avoin yo:', '').replace('Avoin yo,', '').replace('Avoin yo', ''),
                                 reg.group(1),
                                 i.get('lopNames')[0],
                                 i.get('id'),
