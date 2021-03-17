@@ -1,21 +1,29 @@
 
 /* koko sisältö */
+body{
+	background-color: #d7f9f5;
+}
+
 #sisältö{
 	display: flex;
-width: 80%;
-flex-flow: column wrap;
+    width: 80%;
+    flex-flow: column wrap;
 	margin-left:auto;
 	margin-right:auto;
 }
 h1{
 	margin-left: 1% !important;
+	letter-spacing: 3px;
+	font-size: 3rem;
 }
 h2{
 	margin-bottom: 1% !important;
 	margin-left: 1% !important;
+	color: orangered;
 }
 h3{
-	margin-bottom: 3% !important;
+	margin-bottom: 1% !important;
+	color: orangered;
 }
 
 /* yläreinan div-valikot */
@@ -25,10 +33,9 @@ select{
 }
 
 .float-left {
-	padding:10px;
-	
+	padding:10px 10px 10px 0;
 	width:80%;
-	margin-left: 2.5%;
+	
 }
   
 @media screen and (max-width:740px) {
@@ -58,16 +65,15 @@ select{
 
 /* nappi */
 .nappiKeskelle{
-text-align: center;
-   margin-top: 8%;
-   margin-bottom: 3%;
+   /*text-align: center;*/
+   margin-bottom: 10%;
 }
 .myButton {
-	box-shadow:inset 0px 1px 0px 0px #a4e271;
-	background:linear-gradient(to bottom, #89c403 5%, #77a809 100%);
-	background-color:#89c403;
+	box-shadow:inset 0px 1px 0px 0px #a4e271; /*  box-shadow:inset 0px 1px 0px 0px #a4e271;   */
+	background:linear-gradient(to bottom, #89c403 5%, #77a809 100%); /*  background:linear-gradient(to bottom, #89c403 5%, #77a809 100%);    */
+	background-color:#89c403; /*  background-color:#89c403;   */
 	border-radius:6px;
-	border:1px solid #74b807;
+	border:1px solid #74b807; /*  border:1px solid #74b807;  */
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
@@ -76,11 +82,11 @@ text-align: center;
 	font-weight:bold;
 	padding:6px 24px;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #528009;
+	text-shadow:0px 1px 0px #528009; /*  text-shadow:0px 1px 0px #528009;   */
 }
 .myButton:hover {
-	background:linear-gradient(to bottom, #77a809 5%, #89c403 100%);
-	background-color:#77a809;
+	background:linear-gradient(to bottom, #77a809 5%, #89c403 100%); /*  background:linear-gradient(to bottom, #77a809 5%, #89c403 100%);  */
+	background-color:#77a809; /*  background-color:#77a809  */
 }
 .myButton:active {
 	position:relative;
@@ -92,6 +98,7 @@ text-align: center;
 table {
     border-collapse: collapse;
     width: 100%;
+	background-color: white;
   }
   td, th {
     border: 1px solid #dddddd;
