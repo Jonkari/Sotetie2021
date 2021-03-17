@@ -361,14 +361,14 @@ class Paivitys(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    @cache.cached(timeout=3600)
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.timestamp'")
         if tmp:
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
