@@ -6,6 +6,7 @@ if __name__ == "__main__":
     from opintopolku import opintopolku
     import asetukset
     import os
+    import time
 
     db = tietokanta.Database(asetukset.palvelin, asetukset.kayttaja, asetukset.salasana, asetukset.tietokanta)
 
@@ -26,10 +27,27 @@ if __name__ == "__main__":
         ;
         """
     )
+    db.query("""
+            CREATE TABLE IF NOT EXISTS `asetukset` (
+            `tyyppi` VARCHAR(50) NOT NULL COLLATE 'latin1_swedish_ci',
+            `data` INT(10) UNSIGNED NULL DEFAULT NULL,
+            PRIMARY KEY (`tyyppi`) USING BTREE
+            )
+        COLLATE='latin1_swedish_ci'
+        ENGINE=InnoDB
+            ;
+        """
+    )
+    db.query("TRUNCATE asetukset")
+    db.query("INSERT INTO asetukset (`tyyppi`, `data`) VALUES ('paivitetty.timestamp', 0)")
+    db.query("INSERT INTO asetukset (`tyyppi`, `data`) VALUES ('paivitetty.kaynnissa', 1)")
+    
     db.query("TRUNCATE kurssit")
     opintopolku.hakuTyokaluYksinkertainen()
     for i, j in opintopolku.objs.items():
         db.query(j.sqlYksinkertainen())
+    db.query("UPDATE asetukset SET data={} WHERE tyyppi='paivitetty.kaynnissa'".format(0))
+    db.query("UPDATE asetukset SET data={} WHERE tyyppi='paivitetty.timestamp'".format(time.time()))
     path = os.path.dirname(os.path.abspath(__file__))
     fo_api_ini = open(path+"/api.ini", "w")
     fo_api_ini.write("""

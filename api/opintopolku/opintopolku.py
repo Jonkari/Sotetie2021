@@ -7,7 +7,7 @@ else:
     from opintopolku import kurssi
 HEADERS = {"Caller-Id":"JokuStringivaa"}
 objs = {}
-tmp = None
+tmp = {}
 def haeDataa(hakusanat, facetFilter="et01.05.03",hakutyyppi="ongoing"):
     """Hakee dataa opintopolku.fi sivustosta
 
@@ -144,7 +144,8 @@ def hakuTyokaluYksinkertainen():
                                 i.get('lopNames')[0],
                                 i.get('id'),
                                 "",
-                                osaaminen
+                                osaaminen,
+                                ""
                             )
                         if i.get('id') not in objs:
                             objs[i.get('id')] = kurssi_obj
@@ -153,7 +154,8 @@ def hakuTyokaluYksinkertainen():
                                 objs[i.get('id')].osaamiset += "|"+osaaminen
         haeKielet()
         tmp = objs
-    except Exception:
+    except Exception as e:
+        print(e)
         objs = tmp
 def haeKielet():
     for i, j in objs.items():
