@@ -34,9 +34,23 @@ rajapinnat = {
 class Koulut(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     def get(self):
-        return corsify(self.db.getData("SELECT distinct koulu FROM kurssit ORDER BY koulu ASC"))
+        tmp = self.db.getData("SELECT distinct koulu FROM kurssit ORDER BY koulu ASC")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Koulut, "/api/koulut", resource_class_kwargs={'db' : db})
 
 class Kielet(Resource):
@@ -44,7 +58,20 @@ class Kielet(Resource):
         self.db = db
         super().__init__()
     def get(self):
-        return corsify(self.db.getData("SELECT distinct kieli FROM kurssit ORDER BY kieli ASC"))
+        tmp = self.db.getData("SELECT distinct kieli FROM kurssit ORDER BY kieli ASC")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None        
 api.add_resource(Kielet, "/api/kielet", resource_class_kwargs={'db' : db})
 
 class Rajapinnat(Resource):
@@ -93,8 +120,20 @@ class Neuvontaosaaminen(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%ohjaus- ja neuvontaosaaminen%'"))
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%ohjaus- ja neuvontaosaaminen%'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Neuvontaosaaminen, '/api/neuvontaosaaminen', resource_class_kwargs={'db' : db})
 
 class Palvelujarjestelmat(Resource):
@@ -103,8 +142,20 @@ class Palvelujarjestelmat(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%palvelujärjestelmät%'"))
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%palvelujärjestelmät%'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Palvelujarjestelmat, '/api/palvelujarjestelmat', resource_class_kwargs={'db' : db})
 
 class Etiikka(Resource):
@@ -113,8 +164,20 @@ class Etiikka(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%lainsäädäntö ja etiikka%'"))
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%lainsäädäntö ja etiikka%'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Etiikka, '/api/etiikka', resource_class_kwargs={'db' : db})
 
 class Tutkimusosaaminen(Resource):
@@ -123,8 +186,20 @@ class Tutkimusosaaminen(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%tutkimus- ja kehittämisosaaminen%'"))
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%tutkimus- ja kehittämisosaaminen%'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Tutkimusosaaminen, '/api/tutkimusosaaminen', resource_class_kwargs={'db' : db})
 
 class Robotiikka(Resource):
@@ -133,8 +208,20 @@ class Robotiikka(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%robotiikka ja digitalisaatio%'"))
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%robotiikka ja digitalisaatio%'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Robotiikka, '/api/robotiikka', resource_class_kwargs={'db' : db})
 
 class Laatutietoisuus(Resource):
@@ -143,8 +230,20 @@ class Laatutietoisuus(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikuttavuus- kustannus- ja laatutietoisuus%'"))
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikuttavuus- kustannus ja laatutietoisuus%'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Laatutietoisuus, '/api/laatutietoisuus', resource_class_kwargs={'db' : db})
 
 class KestavaKehitys(Resource):
@@ -153,8 +252,20 @@ class KestavaKehitys(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%kestävän kehityksen osaaminen%'"))
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%kestävän kehityksen osaaminen%'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(KestavaKehitys, '/api/kestavakehitys', resource_class_kwargs={'db' : db})
 
 class Viestintaosaaminen(Resource):
@@ -163,8 +274,20 @@ class Viestintaosaaminen(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%viestintäosaaminen%'"))
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%viestintäosaaminen%'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Viestintaosaaminen, '/api/viestintaosaaminen', resource_class_kwargs={'db' : db})
 
 class Tyontekijyysosaaminen(Resource):
@@ -173,8 +296,20 @@ class Tyontekijyysosaaminen(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%työntekijyysosaaminen%'"))
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%työntekijyysosaaminen%'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Tyontekijyysosaaminen, '/api/tyontekijyysosaaminen', resource_class_kwargs={'db' : db})
 
 class Yhteistoiminta(Resource):
@@ -183,8 +318,20 @@ class Yhteistoiminta(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%monialainen yhteistoiminta%'"))
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%monialainen yhteistoiminta%'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Yhteistoiminta, '/api/yhteistoiminta', resource_class_kwargs={'db' : db})
 
 class Kaikki(Resource):
@@ -193,6 +340,20 @@ class Kaikki(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
+        tmp = self.db.getData("SELECT * FROM kurssit")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
         return corsify(self.db.getData("SELECT * FROM kurssit"))
 api.add_resource(Kaikki, '/', '/api/', resource_class_kwargs={'db' : db})
 
@@ -200,9 +361,22 @@ class Paivitys(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-        @cache.cached(timeout=3600)
-        def get(self):
-            return corsify(self.db.getData("SELECT TOP 1 modify_date FROM sys.objects ORDER BY modify_date DESC")) #MSSQL, ei toimi vielä
+    @cache.cached(timeout=3600)
+    def get(self):
+        tmp = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.timestamp'")
+        if tmp:
+            self.data = tmp
+            return corsify(self.data)
+        else:
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            if paivittymassa:
+                paivittymassa = paivittymassa[0]
+                if paivittymassa["data"] == 0:
+                    self.data = tmp
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data)
+            return None
 api.add_resource(Paivitys, '/api/paivitys', resource_class_kwargs={'db' : db})
 
 if __name__ == '__main__':

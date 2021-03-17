@@ -2,10 +2,10 @@
 <link rel="stylesheet" href="styles.css">
 <div id="sisältö">
     <h1>KURSSIHAKU</h1>
-
+    <p id="paivitys">Päivämäärä</p>
     <form>
         <div class="Row">
-            <p>päivämäärä</p>
+            
 
             <div class="float-left">
                 <h3>AIHE</h3>
@@ -173,6 +173,11 @@
             korkeaKoulu_select.innerHTML = html;
         })
 
+        //Haetaan viimeisimmän päivityksen päivämäärä:
+        $.get(osoite + "/api/paivitys", function (data) {
+            var paivitys = data;
+            document.getElementById("paivitys").innerHTML = "Päivitetty: " + paivitys;
+        })
         //otetaan kiinni aihe mikä on valittu:
         $('#haeNappi').click(() => {
             var geneerinenAlue = document.querySelector(".aihe");
