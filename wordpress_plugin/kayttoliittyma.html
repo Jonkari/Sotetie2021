@@ -5,29 +5,29 @@
 
     <form>
         <div class="Row">
+            <p>päivämäärä</p>
 
             <div class="float-left">
-                <h3>Aihe</h3>
+                <h3>AIHE</h3>
                 <select name="aihe" id="aihe" class="aihe">
                     <!--  Tähän geneeriset osa-alueet sivun lataamisen yhteydessä -->
                 </select>
             </div>
 
             <div class="float-left">
-                <h3>Korkeakoulu</h3>
+                <h3>KORKEAKOULU</h3>
                 <div class="selectBox">
-                    <select>
-                        <option>Valitse koulu(t)</option>
-                    </select>
+                    <select class="nakyvaMaara"><object>Valitse koulu(t)</object></select>
+                    <!--tähän valittujen koulujen numero-->
                     <div class="overSelect"></div>
                     <div class="multipleSelect koulu" name="koulu" id="checkboxes1">
                         <!-- tähän koulut sivun lataamisen yhteydessä  -->
                     </div>
                 </div>
-
             </div>
+
             <div class="float-left">
-                <h3>Opetuskieli</h3>
+                <h3>OPETUSKIELI</h3>
                 <select name="kieli" id="kieli">
                     <option value="koulu1">Suomi </option>
                     <option value="koulu2">Ruotsi</option>
@@ -47,7 +47,7 @@
             kurssihaku onnistu, ota yhteyttä sivuston ylläpitäjään.</h2>
 
         <section id="kurssiTaulu">
-            <h2 id="tauluOtsikko">Löydetyt opintojaksot</h2>
+            <h2 id="tauluOtsikko">LÖYDETYT OPINTOJAKSOT</h2>
 
             <table id="data">
                 <thead>
@@ -76,65 +76,6 @@
 
 </div>
 
-<style>
-    #kurssiTaulu {
-        display: block;
-    }
-
-    #eiYhteytta {
-        display: none;
-        color: red;
-    }
-
-    #eiKursseja {
-        display: none;
-        color: blue;
-    }
-
-    .selectBox {
-        position: relative;
-    }
-
-    .selectBox select {
-        width: 100%;
-    }
-
-    .overSelect {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-    }
-
-    #checkboxes1 {
-        display: none;
-        border: 1px #dadada solid;
-        background-color: white;
-        position: absolute;
-        font-size: 1.5rem;
-        width: 100%;
-        height: 10em;
-        overflow-y: scroll;
-        z-index: 1;
-    }
-
-    #checkboxes1 label input {
-        margin-right: 1em;
-        width: 1.5em;
-        height: 1.5em;
-    }
-
-    #checkboxes1 label {
-        display: block;
-        margin-top: 1%;
-    }
-
-    #checkboxes1 label:hover {
-        background-color: #1e90ff;
-        color: white;
-    }
-</style>
 
 <script>
     // tietokannasta otettava korkeakoulut valikkoon (heti kun sivu latautuu!)
@@ -144,6 +85,7 @@
     var avattu = false;
     var valittu = true;
     var osoite = "http://137.74.119.216:5000"
+    
 
     function virheTilanne() {
         document.getElementById("kurssiTaulu").style.display = "none";
@@ -175,7 +117,6 @@
         });
 
         $(".koulu").on("click", "#kaikki", function () {
-            console.log("moi");
             var x = document.querySelectorAll(".checkboxKoulut");
             for (var i of x) {
                 if (valittu) {
@@ -193,8 +134,17 @@
                 valittu = true;
             }
         })
-
-
+        
+        //kuinka monta koulua valittu
+       $("#checkboxes1").click(function() {
+            var checkboxes = $('input:checkbox:checked').length;
+            console.log(checkboxes);
+            var koulut_nro = document.querySelector(".nakyvaMaara")
+            var html = ``
+            var option = `<option>${checkboxes} koulua valittu</option>`
+            html += option
+            koulut_nro.innerHTML = html
+        })
 
         //haetaan aiheet valikkoon:
         $.get(osoite + "/api/rajapinnat", function (data) {
@@ -248,9 +198,9 @@
 
     //laitetaan tiedot taulukkoon:
     showResultInTable = (result) => {
-
-        var checkBoxes = document.querySelectorAll(".checkboxKoulut")
         var valitut = new Set();
+        var checkBoxes = document.querySelectorAll(".checkboxKoulut")
+
         for (var x of checkBoxes) {
             if (x.checked) {
                 valitut.add(x.value)
