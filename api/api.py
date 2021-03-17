@@ -58,11 +58,33 @@ api.add_resource(Rajapinnat, "/api/rajapinnat", resource_class_kwargs={'db' : db
 class Asiakaslahtoisyys(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        return corsify(self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%asiakaslähtöisyys%'"))
+        """Hakee kurssit taulusta kaikki asiakaslahtoisyyteen liittyvät kurssit
+
+        Sisältää Fail-Safe järjestelmän, joka palauttaa edellisen tuloksen 
+        JOS ei palauttanut mitään nykyisellä haulla JA tietokanta on päivittymässä.
+
+        Returns:
+            (Response or None) : Palauttaa Flask Responsen tai Nonen virhetilanteissa.
+        """
+        tmp = self.db.getData(
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%asiakaslähtöisyys%'") # Hakee kurssit
+        if tmp: # Onko kursseja haussa
+            self.data = tmp
+            return corsify(self.data)
+        else: #muussa tapauksessa
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'") # tarkistetaan paivittymassa kenttä
+            if paivittymassa: # onko tullut dataa haulla
+                paivittymassa = paivittymassa[0] # otetaan ensimmäinen (ja ainoa) rivi
+                if paivittymassa["data"] == 0: # Jos ei ole päivittymässä palautetaan tyhjä dictionary
+                    self.data = tmp # Laitetaan muistiin viime haku
+                    return corsify(tmp)
+                else:
+                    return corsify(self.data) # Jos tietokanta on päivittymässä ja on tyhjä tietokanta niin, sitten palautetaan edellinen tulos
+            return None
 api.add_resource(Asiakaslahtoisyys, '/api/asiakaslahtoisyys', resource_class_kwargs={'db' : db})
 
 class Neuvontaosaaminen(Resource):
