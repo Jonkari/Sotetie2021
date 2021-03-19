@@ -6,7 +6,7 @@ class Database:
 
     """
     class ConnPool():
-        def __init__(self, size, max_size, host, user, password, db, port):
+        def __init__(self, size, max_size, host, user, password, db, port=3306):
             self.db_args = {
                 "host" : host,
                 "user" : user,
