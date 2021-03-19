@@ -11,7 +11,7 @@ class Database:
                 "host" : host,
                 "user" : user,
                 "password" : password,
-                "db" : db
+                "db" : db,
                 "port" : port
             }
             self.max_size = max_size
