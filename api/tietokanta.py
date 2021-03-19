@@ -6,7 +6,7 @@ class Database:
 
     """
     class ConnPool():
-        def __init__(self, size, max_size, host, user, password, db, port=3306):
+        def __init__(self, size, max_size, host, user, password, db, port):
             self.db_args = {
                 "host" : host,
                 "user" : user,
@@ -53,8 +53,8 @@ class Database:
                 self.pool.put_nowait(conn)
             except queue.Full:
                 print("Queue Full")
-    def __init__(self, host, user, password, db):
-        self.connection_pool = self.ConnPool(10, 800, host, user, password, db)
+    def __init__(self, host, user, password, db, port):
+        self.connection_pool = self.ConnPool(10, 800, host, user, password, db, port)
     def query(self, query, params=None):
         conn = self.connection_pool.getConnection()
         if conn:
