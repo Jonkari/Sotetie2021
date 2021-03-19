@@ -1,5 +1,5 @@
 class Kurssi:
-    def __init__(self, nimi, opintopisteet,  koulu,  id, kieli, osaamiset):
+    def __init__(self, nimi, opintopisteet,  koulu,  id, kieli, osaamiset, opetustyyppi):
         """[summary]
 
         Args:
@@ -9,6 +9,7 @@ class Kurssi:
             id (string): Kurssin tunnus opintopolussa.
             kieli (string): Kurssin kieli.
             osaamiset (string): Kurssin osaamiset, erotettuna `|` merkillä.
+            opetustyyppi (string): 
         """
         self.nimi = nimi
         self.opintopisteet = opintopisteet
@@ -16,6 +17,7 @@ class Kurssi:
         self.id = id
         self.kieli = kieli
         self.osaamiset = osaamiset
+        self.opetustyyppi = opetustyyppi
     def opintopolku_linkki(self,):
         """Ei tällä hetkellä käytössä oleva metodi, mutta näkee periaatteen miten opintopolun linkkitoimii
 
