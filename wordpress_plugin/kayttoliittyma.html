@@ -26,8 +26,8 @@
                 </div>
             </div>
 
-            <div class="float-left">
-            <div class="radiorivi" style=" width: 50%;">
+            <div class="float-left" style="display: flex; flex-flow: column wrap;">
+            <div class="radiorivi" style="">
                 <h3>Opetuskieli</h3>
                 <input type="radio" name="kieli" value="suomi" id="suomi" checked>
                 <label for="suomi">Suomi</label> &nbsp;&nbsp;
@@ -37,7 +37,7 @@
                 <label for="englanti">Englanti</label>
             </div>
 
-            <div class="radiorivi" style=" width: 50%; margin-left: 50%; margin-top: -8.6%;">
+            <div class="radiorivi" style="">
                 <h3>Opetustapa</h3>
                 <input type="radio" name="tapa" value="kaikkiTavat" id="kaikkiTavat" checked>
                 <label for="kaikkiTavat">Kaikki</label> &nbsp;&nbsp;
@@ -97,7 +97,7 @@
     var koulut = null;
     var avattu = false;
     var valittu = true;
-    var osoite = "http://137.74.119.216:5000"
+    var osoite = "http://127.0.0.1:5000"
     
 
     function virheTilanne() {
@@ -148,17 +148,19 @@
             }
         })
         
-        //kuinka monta koulua valittu
-       $("#checkboxes1").click(function() {
-            var checkboxes = $('input:checkbox:checked').length;
+        function paivitaMaara() {
+            var checkboxes = $('input.checkboxKoulut:checked').length;
             console.log(checkboxes);
             var koulut_nro = document.querySelector(".nakyvaMaara")
             var html = ``
             var option = `<option>${checkboxes} koulua valittu</option>`
             html += option
             koulut_nro.innerHTML = html
+        }
+        //kuinka monta koulua valittu
+       $("#checkboxes1").click(function() {
+            paivitaMaara();
         })
-
         //haetaan aiheet valikkoon:
         $.get(osoite + "/api/rajapinnat", function (data) {
             genOsaamiset = $.extend({}, { "Kaikki": "/api/" }, data);
@@ -184,13 +186,17 @@
                 html += option
             }
             korkeaKoulu_select.innerHTML = html;
+            paivitaMaara();
         })
 
         //Haetaan viimeisimmän päivityksen päivämäärä:
         $.get(osoite + "/api/paivitys", function (data) {
-            var paivitys = data;
-            document.getElementById("paivitys").innerHTML = "Päivitetty: " + paivitys;
-        })
+            var paivitys = new Date(data[0].data*1000);
+            var kuukausi = paivitys.getMonth()+1;
+            var paiva = paivitys.getDate();
+            var vuosi = paivitys.getFullYear();
+            document.getElementById("paivitys").innerHTML = `Päivitetty: ${paiva}.${kuukausi}.${vuosi}`;
+        }).fail(virheTilanne)
         //otetaan kiinni aihe mikä on valittu:
         $('#haeNappi').click(() => {
             var geneerinenAlue = document.querySelector(".aihe");

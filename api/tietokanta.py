@@ -6,12 +6,13 @@ class Database:
 
     """
     class ConnPool():
-        def __init__(self, size, max_size, host, user, password, db):
+        def __init__(self, size, max_size, host, user, password, db, port):
             self.db_args = {
                 "host" : host,
                 "user" : user,
                 "password" : password,
                 "db" : db
+                "port" : port
             }
             self.max_size = max_size
             self.pool = queue.Queue(max_size)
@@ -20,7 +21,8 @@ class Database:
                         host=self.db_args["host"],
                         user=self.db_args["user"],
                         password=self.db_args["password"],
-                        db=self.db_args["db"]
+                        db=self.db_args["db"],
+                        port=self.db_args["port"]
                     )
                 conn.autocommit(True)
                 self.pool.put(
@@ -35,7 +37,8 @@ class Database:
                             host=self.db_args["host"],
                             user=self.db_args["user"],
                             password=self.db_args["password"],
-                            db=self.db_args["db"]
+                            db=self.db_args["db"],
+                            port=self.db_args["port"]
                     )
                     conn.autocommit(True)
                     self.pool.put(

@@ -139,7 +139,7 @@ def hakuTyokaluYksinkertainen():
                         reg = re.match("(\d+).*", i.get('credits'))
                         if reg:
                             kurssi_obj = kurssi.Kurssi(
-                                i.get('name').replace('Avoin yo:', '').replace('Avoin yo,', '').replace('Avoin yo', ''),
+                                re.sub(r'Avoin yo[:,\s]+', '', i.get('name')),
                                 reg.group(1),
                                 i.get('lopNames')[0],
                                 i.get('id'),
@@ -162,4 +162,5 @@ def haeKielet():
         data = haeKurssinTiedot(i)
         j.kieli = data.get('teachingLanguages')[0]
 if __name__ == "__main__":
-    hakuTyokaluYksinkertainen()
+    print("ok")
+    #hakuTyokaluYksinkertainen()

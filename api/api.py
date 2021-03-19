@@ -365,7 +365,6 @@ class Paivitys(Resource):
     @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.timestamp'")
-        dt = datetime.fromtimestamp(tmp)
         if tmp:
             self.data = tmp
             return corsify(self.data)
