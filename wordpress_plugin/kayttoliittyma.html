@@ -27,12 +27,25 @@
             </div>
 
             <div class="float-left">
-                <h3>OPETUSKIELI</h3>
-                <select name="kieli" id="kieli">
-                    <option value="koulu1">Suomi </option>
-                    <option value="koulu2">Ruotsi</option>
-                    <option value="koulu3">Englanti</option>
-                </select>
+            <div class="radiorivi" style=" width: 50%;">
+                <h3>Opetuskieli</h3>
+                <input type="radio" name="kieli" value="suomi" id="suomi" checked>
+                <label for="suomi">Suomi</label> &nbsp;&nbsp;
+                <input type="radio" name="kieli" value="ruotsi" id="ruotsi">
+                <label for="ruotsi">Ruotsi</label> &nbsp;&nbsp;
+                <input type="radio" name="kieli" value="englanti" id="englanti">
+                <label for="englanti">Englanti</label>
+            </div>
+
+            <div class="radiorivi" style=" width: 50%; margin-left: 50%; margin-top: -8.6%;">
+                <h3>Opetustapa</h3>
+                <input type="radio" name="tapa" value="kaikkiTavat" id="kaikkiTavat" checked>
+                <label for="kaikkiTavat">Kaikki</label> &nbsp;&nbsp;
+                <input type="radio" name="tapa" value="lahi" id="lahi">
+                <label for="lahi">Lähiopetus</label> &nbsp;&nbsp;
+                <input type="radio" name="tapa" value="eta" id="eta">
+                <label for="eta">Etäopetus</label>
+            </div>
             </div>
         </div>
 
