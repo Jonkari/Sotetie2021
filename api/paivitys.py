@@ -4,7 +4,7 @@ import asetukset
 
 import time
 
-db = tietokanta.Database(asetukset.palvelin, asetukset.kayttaja, asetukset.salasana, asetukset.tietokanta)
+db = tietokanta.Database(asetukset.palvelin, asetukset.kayttaja, asetukset.salasana, asetukset.tietokanta, asetukset.portti)
 db.query("TRUNCATE kurssit")
 db.query("UPDATE asetukset SET data={} WHERE tyyppi='paivitetty.kaynnissa'".format(1))
 opintopolku.hakuTyokaluYksinkertainen()

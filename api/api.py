@@ -6,7 +6,7 @@ from flask_caching import Cache
 from opintopolku import opintopolku
 import asetukset
 
-db = Database(asetukset.palvelin, asetukset.kayttaja, asetukset.salasana, asetukset.tietokanta)
+db = Database(asetukset.palvelin, asetukset.kayttaja, asetukset.salasana, asetukset.tietokanta, asetukset.portti)
 def corsify(response):
     resp = make_response(json.jsonify(response))
     resp.headers.add('Access-Control-Allow-Origin', '*')

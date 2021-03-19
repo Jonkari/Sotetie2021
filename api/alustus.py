@@ -8,7 +8,7 @@ if __name__ == "__main__":
     import os
     import time
 
-    db = tietokanta.Database(asetukset.palvelin, asetukset.kayttaja, asetukset.salasana, asetukset.tietokanta)
+    db = tietokanta.Database(asetukset.palvelin, asetukset.kayttaja, asetukset.salasana, asetukset.tietokanta, asetukset.portti)
 
     db.query(
         """
