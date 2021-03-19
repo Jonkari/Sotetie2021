@@ -1,3 +1,4 @@
+from datetime import datetime
 from tietokanta import Database
 from flask import json, Flask, make_response
 from flask_restful import Resource, Api
@@ -98,7 +99,7 @@ class Asiakaslahtoisyys(Resource):
             (Response or None) : Palauttaa Flask Responsen tai Nonen virhetilanteissa.
         """
         tmp = self.db.getData(
-            "SELECT * FROM kurssit WHERE osaamiset LIKE '%asiakaslähtöisyys%'") # Hakee kurssit
+            "SELECT * FROM kurssit WHERE osaamiset LIKE '%asiakaslähtöisyys%' ORDER BY nimi") # Hakee kurssit
         if tmp: # Onko kursseja haussa
             self.data = tmp
             return corsify(self.data)
@@ -120,7 +121,7 @@ class Neuvontaosaaminen(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%ohjaus- ja neuvontaosaaminen%'")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%ohjaus- ja neuvontaosaaminen%' ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -142,7 +143,7 @@ class Palvelujarjestelmat(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%palvelujärjestelmät%'")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%palvelujärjestelmät%' ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -164,7 +165,7 @@ class Etiikka(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%lainsäädäntö ja etiikka%'")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%lainsäädäntö ja etiikka%' ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -186,7 +187,7 @@ class Tutkimusosaaminen(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%tutkimus- ja kehittämisosaaminen%'")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%tutkimus- ja kehittämisosaaminen%' ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -208,7 +209,7 @@ class Robotiikka(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%robotiikka ja digitalisaatio%'")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%robotiikka ja digitalisaatio%' ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -230,7 +231,7 @@ class Laatutietoisuus(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikuttavuus- kustannus ja laatutietoisuus%'")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikuttavuus- kustannus ja laatutietoisuus%' ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -252,7 +253,7 @@ class KestavaKehitys(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%kestävän kehityksen osaaminen%'")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%kestävän kehityksen osaaminen%' ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -274,7 +275,7 @@ class Viestintaosaaminen(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%viestintäosaaminen%'")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%viestintäosaaminen%' ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -296,7 +297,7 @@ class Tyontekijyysosaaminen(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%työntekijyysosaaminen%'")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%työntekijyysosaaminen%' ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -318,7 +319,7 @@ class Yhteistoiminta(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%monialainen yhteistoiminta%'")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%monialainen yhteistoiminta%' ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -340,7 +341,7 @@ class Kaikki(Resource):
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit")
+        tmp = self.db.getData("SELECT * FROM kurssit ORDER BY nimi")
         if tmp:
             self.data = tmp
             return corsify(self.data)
@@ -364,6 +365,7 @@ class Paivitys(Resource):
     @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.timestamp'")
+        dt = datetime.fromtimestamp(tmp)
         if tmp:
             self.data = tmp
             return corsify(self.data)
