@@ -54,9 +54,9 @@
                 <h3>Opetustapa</h3>
                 <input type="radio" name="tapa" value="kaikkiTavat" id="kaikkiTavat" checked>
                 <label for="kaikkiTavat">Kaikki</label> &nbsp;&nbsp;
-                <input type="radio" name="tapa" value="lahi" id="lahi">
+                <input type="radio" name="tapa" value="lahiopetus" id="lahi">
                 <label for="lahi">Lähiopetus</label> &nbsp;&nbsp;
-                <input type="radio" name="tapa" value="eta" id="eta">
+                <input type="radio" name="tapa" value="etaopetus" id="eta">
                 <label for="eta">Etäopetus</label>
             </div>
             </div>
@@ -99,15 +99,16 @@
 
 
 <script>
-    // tietokannasta otettava korkeakoulut valikkoon (heti kun sivu latautuu!)
-    // samoin geneeriset osa-alueet? kielet?
+    
     var genOsaamiset = null;
     var koulut = null;
     var avattu = false;
     var valittu = true;
-    var osoite = "http://137.74.119.216:5000/";
+    var kieli = null;
+    var opetustapa = null; 
+    var osoite = "http://137.74.119.216:5000/"; //"http://137.74.119.216:5000/"
     
-
+    // näkyviin ilmoitus, jos tietokantaan ei saada yhteyttä 
     function virheTilanne() {
         document.getElementById("kurssiTaulu").style.display = "none";
         document.getElementById("eiYhteytta").style.display = "block";
@@ -165,10 +166,36 @@
             html += option
             koulut_nro.innerHTML = html
         }
+
         //kuinka monta koulua valittu
        $("#checkboxes1").click(function() {
             paivitaMaara();
         })
+
+        //asetetaan muuttujiin kieli ja opetustapa
+        $(".radiorivi").click(function(){
+            kieli = valittuKieli();
+            opetustapa = valittuOpetustapa();
+        })
+
+        //mikä kieli valittu
+        function valittuKieli() {
+            var vaihtoehdot = document.getElementsByName('kieli');
+            for(i = 0; i < vaihtoehdot.length; i++) {
+                if(vaihtoehdot[i].checked)
+                return vaihtoehdot[i].value;
+            }
+        }
+
+        //mikä opetustapa valittu
+        function valittuOpetustapa() {
+            var vaihtoehdot = document.getElementsByName('tapa');
+            for(i = 0; i < vaihtoehdot.length; i++) {
+                if(vaihtoehdot[i].checked)
+                return vaihtoehdot[i].value;
+            }
+        }
+
         //haetaan aiheet valikkoon:
         $.get(osoite + "/api/rajapinnat", function (data) {
             genOsaamiset = $.extend({}, { "Kaikki": "/api/" }, data);
@@ -205,6 +232,7 @@
             var vuosi = paivitys.getFullYear();
             document.getElementById("paivitys").innerHTML = `Päivitetty: ${paiva}.${kuukausi}.${vuosi}`;
         }).fail(virheTilanne)
+
         //otetaan kiinni aihe mikä on valittu:
         $('#haeNappi').click(() => {
             var geneerinenAlue = document.querySelector(".aihe");
@@ -228,7 +256,8 @@
         fetch("Kaikki");
     });
 
-    //laitetaan tiedot taulukkoon:
+    //laitetaan haetut tiedot Löydetyt opintojaksot -tauluun:
+    
     showResultInTable = (result) => {
         var valitut = new Set();
         var checkBoxes = document.querySelectorAll(".checkboxKoulut")
@@ -243,7 +272,7 @@
         var nro = 0;
         html = ``
         result.forEach(element => {
-            if (valitut.has(element.koulu)) {
+            if (valitut.has(element.koulu)  && element.kieli == kieli) { 
                 let opintojaksot = ""
                 //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
                 opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;
