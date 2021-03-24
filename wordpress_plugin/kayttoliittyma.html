@@ -3,6 +3,8 @@
 <div id="sisältö">
     <h1>KURSSIHAKU</h1>
     <p id="paivitys">Päivämäärä</p>
+    <br>
+    <br>
     <form>
         <div class="Row">
             <div class="float-left">
@@ -11,10 +13,12 @@
                     <!--  Tähän geneeriset osa-alueet sivun lataamisen yhteydessä -->
                 </select>
             </div>
+            <br>
+            <h4>Valitse korkeakoulut erikseen tai valitse maakunta, joka valitsee koulut puolestasi:</h4>
 
-            <div class="float-left">
-                <h3>KORKEAKOULU</h3>
+            <div class="flex-container">
                 <div class="selectBox">
+                <h3>KORKEAKOULU</h3>
                     <select class="nakyvaMaara"><object>Valitse koulu(t)</object></select>
                     <!--tähän valittujen koulujen numero-->
                     <div class="overSelect"></div>
@@ -22,11 +26,22 @@
                         <!-- tähän koulut sivun lataamisen yhteydessä  -->
                     </div>
                 </div>
-            </div>
 
+                <div class="selectBox" id="selectBoxMaakunta">
+                <h3>MAAKUNTA</h3>
+                        <select name="cars" id="cars">
+                            <option value="volvo">Ei valintaa</option>
+                            <option value="saab">Pohjois-Savo</option>
+                            <option value="opel">Päijät-Häme</option>
+                            <option value="audi">Satakunta</option>
+                          </select>
+                        <!-- tähän maakunnat sivun lataamisen yhteydessä  -->
+                </div>
+            </div>
+            <br>
             <div class="float-left" style="display: flex; flex-flow: column wrap;">
             <div class="radiorivi" style="">
-                <h3>Opetuskieli</h3>
+                <h3>OPETUSKIELI</h3>
                 <input type="radio" name="kieli" value="suomi" id="suomi" checked>
                 <label for="suomi">Suomi</label> &nbsp;&nbsp;
                 <input type="radio" name="kieli" value="ruotsi" id="ruotsi">
@@ -34,9 +49,9 @@
                 <input type="radio" name="kieli" value="englanti" id="englanti">
                 <label for="englanti">Englanti</label>
             </div>
-
+            <br>
             <div class="radiorivi" style="">
-                <h3>Opetustapa</h3>
+                <h3>OPETUSTAPA</h3>
                 <input type="radio" name="tapa" value="kaikkiTavat" id="kaikkiTavat" checked>
                 <label for="kaikkiTavat">Kaikki</label> &nbsp;&nbsp;
                 <input type="radio" name="tapa" value="lahi" id="lahi">
@@ -52,7 +67,7 @@
         <div class="nappiKeskelle">
             <input id="haeNappi" class="myButton" type="button" value="HAE OPINNOT">
         </div>
-
+        <br><br><br>
         <h2 id="eiKursseja">Ei hakuehtoja vastaavia kursseja</h2>
         <h2 id="eiYhteytta">Tietokantaan ei saada yhteyttä. Yritä ladata sivu uudestaan. Jos ei muutaman kerran jälkeen
             kurssihaku onnistu, ota yhteyttä sivuston ylläpitäjään.</h2>
@@ -64,8 +79,8 @@
                 <thead>
                     <tr>
                         <!--<th colspan="1">Nro</th>-->
-                        <th colspan="2">Opintojakson nimi</th>
-                        <th colspan="2">Oppilaitos</th>
+                        <th colspan="2">OPINTOJAKSON NIMI</th>
+                        <th colspan="2">OPPILAITOS</th>
                         <!--<th colspan="1">Opetuskieli</th>
                     <th colspan="1">Opintopisteet</th>-->
                     </tr>
@@ -90,7 +105,7 @@
     var koulut = null;
     var avattu = false;
     var valittu = true;
-    var osoite = "http://127.0.0.1:5000"
+    var osoite = "http://137.74.119.216:5000/";
     
 
     function virheTilanne() {
