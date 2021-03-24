@@ -42,7 +42,7 @@ class Maakunnat(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -64,7 +64,7 @@ class Koulut(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -85,7 +85,7 @@ class Kielet(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -125,7 +125,7 @@ class Asiakaslahtoisyys(Resource):
             self.data = tmp
             return corsify(self.data)
         else: #muussa tapauksessa
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'") # tarkistetaan paivittymassa kenttä
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'") # tarkistetaan paivittymassa kenttä
             if paivittymassa: # onko tullut dataa haulla
                 paivittymassa = paivittymassa[0] # otetaan ensimmäinen (ja ainoa) rivi
                 if paivittymassa["data"] == 0: # Jos ei ole päivittymässä palautetaan tyhjä dictionary
@@ -147,7 +147,7 @@ class Neuvontaosaaminen(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -169,7 +169,7 @@ class Palvelujarjestelmat(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -191,7 +191,7 @@ class Etiikka(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -213,7 +213,7 @@ class Tutkimusosaaminen(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -235,7 +235,7 @@ class Robotiikka(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -257,7 +257,7 @@ class Laatutietoisuus(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -279,7 +279,7 @@ class KestavaKehitys(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -301,7 +301,7 @@ class Viestintaosaaminen(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -323,7 +323,7 @@ class Tyontekijyysosaaminen(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -345,7 +345,7 @@ class Yhteistoiminta(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
@@ -367,7 +367,7 @@ class Kaikki(Resource):
             self.data = tmp
             return corsify(self.data)
         else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivittymassa'")
+            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
