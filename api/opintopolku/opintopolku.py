@@ -152,133 +152,27 @@ def hakuTyokaluYksinkertainen():
                         else:
                             if osaaminen not in objs[i.get('id')].osaamiset:
                                 objs[i.get('id')].osaamiset += "|"+osaaminen
-        haeKielet()
+        haeLisatiedot()
         tmp = objs
     except Exception as e:
         print(e)
         objs = tmp
-def hakuTyokaluYksinkertainenHaeOpetustyypit():
-    global tmp
-    global objs
-    """
-    Käyttää haeDataa ja haeKielet funktioita ja luo `objs` muuttujaan `Kurssi` objektit, joita käytetään tietokantaan tallentamisen yhteydessä.
-    """
-    try:
-        hakusanat_dict = {
-            "asiakaslähtöisyys": [
-                "asiakaslähtöi",
-                "osallisuus",
-                "kohtaaminen",
-                "palvelutar",
-                "asiakasprosessi"
-            ],
-            "ohjaus- ja neuvontaosaaminen" : [
-                "ohjaus",
-                "neuvonta",
-                "palvelujärjestelmä",
-                "vuorovaikutus",
-                "kommunikaatio"
-            ],
-            "palvelujärjestelmät" : [
-                "palvelujärjestelmät",
-                "palvelujärjestelmä",
-                "palveluohjaus",
-            ],
-            "lainsäädäntö ja etiikka" : [
-                "etiikka",
-                "lainsäädäntö",
-                "tietosuoja",
-                "vastuu",
-                "eettinen"
-            ],
-            "tutkimus- ja kehittämisosaaminen" : [
-                "tutkimus",
-                "innovaatio",
-                "kehittäminen"
-            ],
-            "robotiikka ja digitalisaatio" : [
-                "robotiikka",
-                "digi",
-                "tekoäly",
-                "sote-palvelut",
-                "tietoturva",
-                "tietosuoja",
-            ],
-            "vaikuttavuus- kustannus- ja laatutietoisuus" : [
-                "laatu",
-                "laadun",
-                "vaikuttavuu",
-                "vaikutusten",
-                "kustannukset"
-            ],
-            "kestävän kehityksen osaaminen" : [
-                "kestävä",
-                "ekolog",
-                "kestävyys",
-                "kierrätys",
-                "ympäristö",
-                "energiankulutus"
-            ],
-            "viestintäosaaminen" : [
-                "viestintä",
-                "tunnetila",
-                "empatia",
-                "selkokieli",
-                "selko"
-            ],
-            "työntekijyysosaaminen" : [
-                "osaamisen",
-                "johtaminen",
-                "työhyvinvointi",
-                "muutososaaminen",
-                "muutosjoustavuus",
-                "urakehitys",
-                "verkostotyö",
-                "työyhteisö",
-                "moniammatillisuus"
-            ],
-            "monialainen yhteistoiminta" : [
-                "monialaisuu",
-                "moniammatillisuu",
-                "monitiet",
-                "yhteistyö",
-                "verkostoituminen",
-                "asiantuntijuus"
-            ]
-        }
-        opetustyyppimaarat = {}
-        kurssit = set()
-        for facetFilter in ['et01.05.03', 'et01.04.03']:
-            for osaaminen, hakusanat in hakusanat_dict.items():
-                for hakusana in hakusanat:
-                    for i in haeDataa(hakusana, facetFilter):
-                        kurssit.add(i.get('id'))
-        for x in kurssit:
-            data = haeKurssinTiedot(x)
-            lst1 = data.get("formOfTeaching")
-            lst2 = data.get("teachingPlaces")
-            for j in lst1:
-                if j not in opetustyyppimaarat:
-                    opetustyyppimaarat[j] = 1
-                else:
-                    opetustyyppimaarat[j] += 1
-            for j in lst2:
-                if j not in opetustyyppimaarat:
-                    opetustyyppimaarat[j] = 1
-                else:
-                    opetustyyppimaarat[j] += 1
-
-        return opetustyyppimaarat
-    except Exception as e:
-        print(e)
-        objs = tmp
-def haeKielet():
+def haeLisatiedot():
     for i, j in objs.items():
         data = haeKurssinTiedot(i)
         j.kieli = data.get('teachingLanguages')[0]
+
+        opetustyyppi_tmp = data.get("teachingPlaces") + data.get("formOfTeaching")
+        for i in opetustyyppi_tmp:
+            if i in ["Etäopetus", "Verkko-opetus", "Verkko-opiskelu",]:
+                j.opetustyyppi = "etaopetus"
+                continue
+            elif i in ["Lähiopetus"]:
+                j.opetustyyppi = "lahiopetus"
+                continue
+
 if __name__ == "__main__":
     print("ok")
-    data = hakuTyokaluYksinkertainenHaeOpetustyypit()
     fo = open("test.json", "w")
     fo.write(json.dumps(data, sort_keys=True, indent=2))
     fo.close()

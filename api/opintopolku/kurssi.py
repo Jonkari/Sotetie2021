@@ -40,13 +40,14 @@ class Kurssi:
         Returns:
             string: SQL Lause tietokantaan
         """
-        return "INSERT INTO kurssit (id, nimi, opintopisteet, koulu, osaamiset, kieli) VALUES (\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\") ON DUPLICATE KEY UPDATE osaamiset=\"{}\";".format(
+        return "INSERT INTO kurssit (id, nimi, opintopisteet, koulu, osaamiset, kieli, opetustyyppi) VALUES (\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\") ON DUPLICATE KEY UPDATE osaamiset=\"{}\";".format(
             self.id,
             self.nimi,
             self.opintopisteet,
             self.koulu,
             self.osaamiset,
             self.kieli,
+            self.opetustyyppi,
             self.osaamiset
         )
 

@@ -71,10 +71,10 @@ if __name__ == "__main__":
   \n
   die-on-term = true
       """.format(path=path))
-      fo_api_ini.close()
-      fo_wsgi_py = open(path+"/wsgi.py", "w")
-      fo_wsgi_py.write("""from api import app\n
+    fo_api_ini.close()
+    fo_wsgi_py = open(path+"/wsgi.py", "w")
+    fo_wsgi_py.write("""from api import app\n
   \n
   if __name__ == "__main__":\n
       app.run()""")
-      fo_wsgi_py.close()
+    fo_wsgi_py.close()
