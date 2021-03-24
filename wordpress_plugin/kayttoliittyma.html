@@ -18,7 +18,7 @@
 
             <div class="flex-container">
                 <div class="selectBox">
-                <h3>KORKEAKOULU</h3>
+                    <h3>KORKEAKOULU</h3>
                     <select class="nakyvaMaara"><object>Valitse koulu(t)</object></select>
                     <!--tähän valittujen koulujen numero-->
                     <div class="overSelect"></div>
@@ -28,37 +28,37 @@
                 </div>
 
                 <div class="selectBox" id="selectBoxMaakunta">
-                <h3>MAAKUNTA</h3>
-                        <select name="cars" id="cars">
-                            <option value="volvo">Ei valintaa</option>
-                            <option value="saab">Pohjois-Savo</option>
-                            <option value="opel">Päijät-Häme</option>
-                            <option value="audi">Satakunta</option>
-                          </select>
-                        <!-- tähän maakunnat sivun lataamisen yhteydessä  -->
+                    <h3>MAAKUNTA</h3>
+                    <select name="cars" id="cars">
+                        <option value="volvo">Ei valintaa</option>
+                        <option value="saab">Pohjois-Savo</option>
+                        <option value="opel">Päijät-Häme</option>
+                        <option value="audi">Satakunta</option>
+                    </select>
+                    <!-- tähän maakunnat sivun lataamisen yhteydessä  -->
                 </div>
             </div>
             <br>
             <div class="float-left" style="display: flex; flex-flow: column wrap;">
-            <div class="radiorivi">
-                <h3>Opetuskieli</h3>
-                <input type="radio" name="kieli" value="suomi" id="suomi" checked>
-                <label for="suomi">Suomi</label> &nbsp;&nbsp;
-                <input type="radio" name="kieli" value="ruotsi" id="ruotsi">
-                <label for="ruotsi">Ruotsi</label> &nbsp;&nbsp;
-                <input type="radio" name="kieli" value="englanti" id="englanti">
-                <label for="englanti">Englanti</label>
-            </div>
+                <div class="radiorivi">
+                    <h3>Opetuskieli</h3>
+                    <input type="radio" name="kieli" value="suomi" id="suomi" checked>
+                    <label for="suomi">Suomi</label> &nbsp;&nbsp;
+                    <input type="radio" name="kieli" value="ruotsi" id="ruotsi">
+                    <label for="ruotsi">Ruotsi</label> &nbsp;&nbsp;
+                    <input type="radio" name="kieli" value="englanti" id="englanti">
+                    <label for="englanti">Englanti</label>
+                </div>
 
-            <div class="radiorivi">
-                <h3>Opetustapa</h3>
-                <input type="radio" name="tapa" value="kaikkiTavat" id="kaikkiTavat" checked>
-                <label for="kaikkiTavat">Kaikki</label> &nbsp;&nbsp;
-                <input type="radio" name="tapa" value="lahiopetus" id="lahi">
-                <label for="lahi">Lähiopetus</label> &nbsp;&nbsp;
-                <input type="radio" name="tapa" value="etaopetus" id="eta">
-                <label for="eta">Etäopetus</label>
-            </div>
+                <div class="radiorivi">
+                    <h3>Opetustapa</h3>
+                    <input type="radio" name="tapa" value="kaikkiTavat" id="kaikkiTavat" checked>
+                    <label for="kaikkiTavat">Kaikki</label> &nbsp;&nbsp;
+                    <input type="radio" name="tapa" value="lahiopetus" id="lahi">
+                    <label for="lahi">Lähiopetus</label> &nbsp;&nbsp;
+                    <input type="radio" name="tapa" value="etaopetus" id="eta">
+                    <label for="eta">Etäopetus</label>
+                </div>
             </div>
         </div>
 
@@ -99,15 +99,15 @@
 
 
 <script>
-    
+
     var genOsaamiset = null;
     var koulut = null;
     var avattu = false;
     var valittu = true;
     var kieli = "suomi";
-    var opetustapa = null; 
+    var opetustapa = "kaikkiTavat";
     var osoite = "http://137.74.119.216:5000/"; //"http://137.74.119.216:5000/"
-    
+
     // näkyviin ilmoitus, jos tietokantaan ei saada yhteyttä 
     function virheTilanne() {
         document.getElementById("kurssiTaulu").style.display = "none";
@@ -156,7 +156,7 @@
                 valittu = true;
             }
         })
-        
+
         function paivitaMaara() {
             var checkboxes = $('input.checkboxKoulut:checked').length;
             console.log(checkboxes);
@@ -168,12 +168,12 @@
         }
 
         //kuinka monta koulua valittu
-       $("#checkboxes1").click(function() {
+        $("#checkboxes1").click(function () {
             paivitaMaara();
         })
 
         //asetetaan muuttujiin kieli ja opetustapa
-        $(".radiorivi").click(function(){
+        $(".radiorivi").click(function () {
             kieli = valittuKieli();
             opetustapa = valittuOpetustapa();
         })
@@ -181,18 +181,18 @@
         //mikä kieli valittu
         function valittuKieli() {
             var vaihtoehdot = document.getElementsByName('kieli');
-            for(i = 0; i < vaihtoehdot.length; i++) {
-                if(vaihtoehdot[i].checked)
-                return vaihtoehdot[i].value;
+            for (i = 0; i < vaihtoehdot.length; i++) {
+                if (vaihtoehdot[i].checked)
+                    return vaihtoehdot[i].value;
             }
         }
 
         //mikä opetustapa valittu
         function valittuOpetustapa() {
             var vaihtoehdot = document.getElementsByName('tapa');
-            for(i = 0; i < vaihtoehdot.length; i++) {
-                if(vaihtoehdot[i].checked)
-                return vaihtoehdot[i].value;
+            for (i = 0; i < vaihtoehdot.length; i++) {
+                if (vaihtoehdot[i].checked)
+                    return vaihtoehdot[i].value;
             }
         }
 
@@ -226,8 +226,8 @@
 
         //Haetaan viimeisimmän päivityksen päivämäärä:
         $.get(osoite + "/api/paivitys", function (data) {
-            var paivitys = new Date(data[0].data*1000);
-            var kuukausi = paivitys.getMonth()+1;
+            var paivitys = new Date(data[0].data * 1000);
+            var kuukausi = paivitys.getMonth() + 1;
             var paiva = paivitys.getDate();
             var vuosi = paivitys.getFullYear();
             document.getElementById("paivitys").innerHTML = `Päivitetty: ${paiva}.${kuukausi}.${vuosi}`;
@@ -257,7 +257,7 @@
     });
 
     //laitetaan haetut tiedot Löydetyt opintojaksot -tauluun:
-    
+
     showResultInTable = (result) => {
         var valitut = new Set();
         var checkBoxes = document.querySelectorAll(".checkboxKoulut")
@@ -272,23 +272,44 @@
         var nro = 0;
         html = ``
         
-        result.forEach(element => {
-            if (valitut.has(element.koulu)  && element.kieli == kieli) { 
-                let opintojaksot = ""
-                //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
-                opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;
-                opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
-                //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
-                //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
-                opintojaksot += "</tr>\n";
-                html += opintojaksot
-                nro++;
-            }
-            document.getElementById("tauluOtsikko").innerHTML = "Löydetyt opintojaksot (" + nro + " kpl)";
-            document.getElementById("kurssiTaulu").style.display = "block";
-            document.getElementById("eiKursseja").style.display = "none";
-            document.getElementById("eiYhteytta").style.display = "none";
-        });
+        if (opetustapa == "kaikkiTavat") {
+            result.forEach(element => {
+                if (valitut.has(element.koulu) && element.kieli == kieli) {
+                    let opintojaksot = ""
+                    //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
+                    opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;
+                    opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
+                    //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
+                    //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
+                    opintojaksot += "</tr>\n";
+                    html += opintojaksot
+                    nro++;
+                }
+                document.getElementById("tauluOtsikko").innerHTML = "Löydetyt opintojaksot (" + nro + " kpl)";
+                document.getElementById("kurssiTaulu").style.display = "block";
+                document.getElementById("eiKursseja").style.display = "none";
+                document.getElementById("eiYhteytta").style.display = "none";
+            });
+        } else { // jos lähi- tai etäopetus on valittu
+            result.forEach(element => {
+                if (valitut.has(element.koulu) && element.kieli == kieli && element.opetustyyppi == opetustapa) {
+                    let opintojaksot = ""
+                    //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
+                    opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;
+                    opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
+                    //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
+                    //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
+                    opintojaksot += "</tr>\n";
+                    html += opintojaksot
+                    nro++;
+                }
+                document.getElementById("tauluOtsikko").innerHTML = "Löydetyt opintojaksot (" + nro + " kpl)";
+                document.getElementById("kurssiTaulu").style.display = "block";
+                document.getElementById("eiKursseja").style.display = "none";
+                document.getElementById("eiYhteytta").style.display = "none";
+            });
+        }
+
         if (html.length == 0) {
             //html += "<h1> Ei tuloksia </h1>";
             document.getElementById("eiKursseja").style.display = "block";
