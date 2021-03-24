@@ -37,7 +37,7 @@ class Maakunnat(Resource):
         self.data = None
         super().__init__()
     def get(self):
-        tmp = self.db.getData("SELECT distinct maakunta FROM maakunnat ORDER BY maakunta ASC")
+        tmp = self.db.getData("SELECT * FROM maakunnat ORDER BY maakunta ASC")
         if tmp:
             self.data = tmp
             return corsify(self.data)
