@@ -3,7 +3,9 @@
 body{
 	background-color: #d7f9f5;
 }
+div#sisältö h1 {
 
+}
 #sisältö{
 	display: flex;
     width: 80%;
@@ -11,17 +13,17 @@ body{
 	margin-left:auto;
 	margin-right:auto;
 }
-h1{
+div#sisältö h1{
 	margin-left: 1% !important;
 	letter-spacing: 3px;
 	font-size: 3rem;
 }
-h2{
+div#sisältö h2{
 	margin-bottom: 1% !important;
 	margin-left: 1% !important;
 	color: orangered;
 }
-h3{
+div#sisältö h3{
 	margin-bottom: 1% !important;
 	color: orangered;
 }
