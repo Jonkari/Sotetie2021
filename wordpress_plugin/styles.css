@@ -5,9 +5,7 @@ body{
 	background-color: #d7f9f5;
 	background-image: radial-gradient(rgb(243, 242, 231), rgb(150, 243, 228));
 }
-div#sisältö h1 {
 
-}
 #sisältö{
 	display: flex;
     width: 80%;
@@ -202,5 +200,4 @@ input[type='radio'] {
 
 .radiorivi {
 	float: left;
-
 }

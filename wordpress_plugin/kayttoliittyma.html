@@ -19,7 +19,7 @@
             <div class="flex-container">
                 <div class="selectBox">
                     <h3>KORKEAKOULU</h3>
-                    <select class="nakyvaMaara"><object>Valitse koulu(t)</object></select>
+                    <select class="nakyvaMaara"></select>
                     <!--tähän valittujen koulujen numero-->
                     <div class="overSelect"></div>
                     <div class="multipleSelect koulu" name="koulu" id="checkboxes1">
@@ -29,13 +29,10 @@
 
                 <div class="selectBox" id="selectBoxMaakunta">
                     <h3>MAAKUNTA</h3>
-                    <select name="cars" id="cars">
-                        <option value="volvo">Ei valintaa</option>
-                        <option value="saab">Pohjois-Savo</option>
-                        <option value="opel">Päijät-Häme</option>
-                        <option value="audi">Satakunta</option>
+                    <select name="maakunnat" id="maakunnat" class="maakunnat">
+                        <!-- tähän maakunnat sivun lataamisen yhteydessä  -->
                     </select>
-                    <!-- tähän maakunnat sivun lataamisen yhteydessä  -->
+                    
                 </div>
             </div>
             <br>
@@ -223,6 +220,27 @@
             korkeaKoulu_select.innerHTML = html;
             paivitaMaara();
         })
+
+        //haetaan maakunnat valikkoon:
+        var maakuntaSet = new Set();
+        $.get(osoite + "/api/maakunnat", function (data) {
+            maakunnat = $.extend({}, { "Kaikki": "/api/" }, data);
+            var maakunnat_select = document.querySelector(".maakunnat")
+            var html = `<option value="kaikki">Kaikki</option>`
+            for(var i in maakunnat){
+                maakuntaSet.add(maakunnat[i].maakunta);
+            }
+            maakuntaSet.forEach(function(value){
+                if(value != undefined){    //ONKO JÄRKEVIN TAPA???
+                var option = `<option value="${value}">${value}</option>`
+                html += option
+                }
+            })
+            maakunnat_select.innerHTML = html
+            console.table(maakuntaSet);
+        })
+            .fail(virheTilanne);
+
 
         //Haetaan viimeisimmän päivityksen päivämäärä:
         $.get(osoite + "/api/paivitys", function (data) {
