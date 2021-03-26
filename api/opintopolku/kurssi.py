@@ -1,5 +1,5 @@
 class Kurssi:
-    def __init__(self, nimi, opintopisteet,  koulu,  id, kieli, osaamiset, opetustyyppi):
+    def __init__(self, nimi, opintopisteet,  koulu,  id, kieli, osaamiset, opetustyyppi, postinumero):
         """[summary]
 
         Args:
@@ -18,6 +18,7 @@ class Kurssi:
         self.kieli = kieli
         self.osaamiset = osaamiset
         self.opetustyyppi = opetustyyppi
+        self.postinumero = postinumero
     def opintopolku_linkki(self,):
         """Ei tällä hetkellä käytössä oleva metodi, mutta näkee periaatteen miten opintopolun linkkitoimii
 
@@ -40,7 +41,7 @@ class Kurssi:
         Returns:
             string: SQL Lause tietokantaan
         """
-        return "INSERT INTO kurssit (id, nimi, opintopisteet, koulu, osaamiset, kieli, opetustyyppi) VALUES (\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\") ON DUPLICATE KEY UPDATE osaamiset=\"{}\";".format(
+        return "INSERT INTO kurssit (id, nimi, opintopisteet, koulu, osaamiset, kieli, opetustyyppi, postinumero) VALUES (\"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\", \"{}\") ON DUPLICATE KEY UPDATE osaamiset=\"{}\";".format(
             self.id,
             self.nimi,
             self.opintopisteet,
@@ -48,6 +49,7 @@ class Kurssi:
             self.osaamiset,
             self.kieli,
             self.opetustyyppi,
+            self.postinumero,
             self.osaamiset
         )
 

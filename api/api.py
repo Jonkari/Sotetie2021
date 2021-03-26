@@ -31,27 +31,7 @@ rajapinnat = {
     "Työntekijyysosaaminen" : "/api/tyontekijyysosaaminen",
     "Monialainen yhteistoiminta" : "/api/yhteistoiminta"
 }
-class Maakunnat(Resource):
-    def __init__(self, db):
-        self.db = db
-        self.data = None
-        super().__init__()
-    def get(self):
-        tmp = self.db.getData("SELECT * FROM maakunnat ORDER BY maakunta ASC")
-        if tmp:
-            self.data = tmp
-            return corsify(self.data)
-        else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
-            if paivittymassa:
-                paivittymassa = paivittymassa[0]
-                if paivittymassa["data"] == 0:
-                    self.data = tmp
-                    return corsify(tmp)
-                else:
-                    return corsify(self.data)
-            return None
-api.add_resource(Maakunnat, "/api/maakunnat", resource_class_kwargs={'db' : db})
+
 
 class Koulut(Resource):
     def __init__(self, db):
@@ -59,7 +39,7 @@ class Koulut(Resource):
         self.data = None
         super().__init__()
     def get(self):
-        tmp = self.db.getData("SELECT distinct koulu FROM kurssit ORDER BY koulu ASC")
+        tmp = self.db.getData("SELECT kurssit.koulu AS koulu, maakunnat.maakunta AS maakunta FROM kurssit JOIN postinumerot ON postinumerot.postinumero=kurssit.postinumero JOIN maakunnat ON postinumerot.postitoimipaikka=maakunnat.kunta GROUP BY kurssit.koulu ORDER BY maakunnat.maakunta;")
         if tmp:
             self.data = tmp
             return corsify(self.data)

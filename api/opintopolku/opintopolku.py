@@ -1,10 +1,7 @@
 import requests
 import re
 import json
-if __name__ == "__main__":
-    import kurssi
-else:
-    from opintopolku import kurssi
+from . import kurssi
 HEADERS = {"Caller-Id":"JokuStringivaa"}
 objs = {}
 tmp = {}
@@ -145,6 +142,7 @@ def hakuTyokaluYksinkertainen():
                                 i.get('id'),
                                 "",
                                 osaaminen,
+                                "",
                                 ""
                             )
                         if i.get('id') not in objs:
@@ -161,6 +159,7 @@ def haeLisatiedot():
     for i, j in objs.items():
         data = haeKurssinTiedot(i)
         j.kieli = data.get('teachingLanguages')[0]
+        j.postinumero = data.get('provider').get('postalAddress').get('postalCode')
 
         opetustyyppi_tmp = data.get("teachingPlaces") + data.get("formOfTeaching")
         for i in opetustyyppi_tmp:
@@ -170,10 +169,12 @@ def haeLisatiedot():
             elif i in ["Lähiopetus"]:
                 j.opetustyyppi = "lahiopetus"
                 continue
-
+def testifunktio(muuttuja):
+    return muuttuja
 if __name__ == "__main__":
-    print("ok")
-    fo = open("test.json", "w")
-    fo.write(json.dumps(data, sort_keys=True, indent=2))
-    fo.close()
+    pass
+    # print("ok")
+    # fo = open("test.json", "w")
+    # fo.write(json.dumps(data, sort_keys=True, indent=2))
+    # fo.close()
     #hakuTyokaluYksinkertainen()

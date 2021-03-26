@@ -103,7 +103,7 @@
     var valittu = true;
     var kieli = "suomi";
     var opetustapa = "kaikkiTavat";
-    var osoite = "http://137.74.119.216:5000/"; //"http://137.74.119.216:5000/"
+    var osoite = "http://127.0.0.1:5000"; //"http://137.74.119.216:5000/"
 
     // näkyviin ilmoitus, jos tietokantaan ei saada yhteyttä 
     function virheTilanne() {
@@ -209,6 +209,7 @@
 
 
         //haetaan koulut valikkoon:
+        var maakuntaSet = new Set();
         $.get(osoite + "/api/koulut", function (data) {
             koulut = data;
             var korkeaKoulu_select = document.querySelector(".koulu")
@@ -219,27 +220,21 @@
             }
             korkeaKoulu_select.innerHTML = html;
             paivitaMaara();
-        })
-
-        //haetaan maakunnat valikkoon:
-        var maakuntaSet = new Set();
-        $.get(osoite + "/api/maakunnat", function (data) {
-            maakunnat = $.extend({}, { "Kaikki": "/api/" }, data);
+            maakunnat = data
             var maakunnat_select = document.querySelector(".maakunnat")
             var html = `<option value="kaikki">Kaikki</option>`
             for(var i in maakunnat){
                 maakuntaSet.add(maakunnat[i].maakunta);
             }
             maakuntaSet.forEach(function(value){
-                if(value != undefined){    //ONKO JÄRKEVIN TAPA???
                 var option = `<option value="${value}">${value}</option>`
                 html += option
-                }
             })
             maakunnat_select.innerHTML = html
-            console.table(maakuntaSet);
         })
-            .fail(virheTilanne);
+        .fail(virheTilanne)
+
+
 
 
         //Haetaan viimeisimmän päivityksen päivämäärä:
@@ -290,12 +285,11 @@
         var nro = 0;
         html = ``
         
-        if (opetustapa == "kaikkiTavat") {
             result.forEach(element => {
-                if (valitut.has(element.koulu) && element.kieli == kieli) {
+                if (valitut.has(element.koulu) && element.kieli == kieli && (opetustapa == "kaikkiTavat" || element.opetustyyppi == opetustapa)) {
                     let opintojaksot = ""
                     //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
-                    opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;
+                    opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi} (${element.opintopisteet} op)</a></td>\n`;
                     opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
                     //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
                     //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
@@ -303,30 +297,12 @@
                     html += opintojaksot
                     nro++;
                 }
+            });
                 document.getElementById("tauluOtsikko").innerHTML = "Löydetyt opintojaksot (" + nro + " kpl)";
                 document.getElementById("kurssiTaulu").style.display = "block";
                 document.getElementById("eiKursseja").style.display = "none";
                 document.getElementById("eiYhteytta").style.display = "none";
-            });
-        } else { // jos lähi- tai etäopetus on valittu
-            result.forEach(element => {
-                if (valitut.has(element.koulu) && element.kieli == kieli && element.opetustyyppi == opetustapa) {
-                    let opintojaksot = ""
-                    //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
-                    opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi}</a></td>\n`;
-                    opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
-                    //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
-                    //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
-                    opintojaksot += "</tr>\n";
-                    html += opintojaksot
-                    nro++;
-                }
-                document.getElementById("tauluOtsikko").innerHTML = "Löydetyt opintojaksot (" + nro + " kpl)";
-                document.getElementById("kurssiTaulu").style.display = "block";
-                document.getElementById("eiKursseja").style.display = "none";
-                document.getElementById("eiYhteytta").style.display = "none";
-            });
-        }
+            
 
         if (html.length == 0) {
             //html += "<h1> Ei tuloksia </h1>";

@@ -21,6 +21,7 @@ if __name__ == "__main__":
             `koulu` VARCHAR(100) NOT NULL DEFAULT '0' COLLATE 'latin1_swedish_ci',
             `osaamiset` VARCHAR(500) NOT NULL DEFAULT '0' COLLATE 'latin1_swedish_ci',
             `opetustyyppi` VARCHAR(150) NULL DEFAULT '' COLLATE 'latin1_swedish_ci',
+            `postinumero` VARCHAR(75) NULL DEFAULT '' COLLATE 'latin1_swedish_ci',
             PRIMARY KEY (`id`) USING BTREE
         )
         COLLATE='latin1_swedish_ci'
@@ -46,8 +47,18 @@ if __name__ == "__main__":
     PRIMARY KEY (`kunta`)
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
     """)
+    db.query("""
+    CREATE TABLE `postinumerot` (
+	`postinumero` VARCHAR(50) NOT NULL DEFAULT '' COLLATE 'latin1_swedish_ci',
+	`postitoimipaikka` VARCHAR(200) NOT NULL DEFAULT '' COLLATE 'latin1_swedish_ci',
+	PRIMARY KEY (`postinumero`) USING BTREE
+    )
+    COLLATE='latin1_swedish_ci'
+    ENGINE=InnoDB
+    ;
+    """)
     db.query(" ".join(open("api/maakunnat.sql", "r", encoding="utf-8").readlines()))
-
+    db.query(" ".join(open("api/postinumerot.sql", "r", encoding="utf-8").readlines()))
     db.query("TRUNCATE asetukset")
     db.query("INSERT INTO asetukset (`tyyppi`, `data`) VALUES ('paivitetty.timestamp', 0)")
     db.query("INSERT INTO asetukset (`tyyppi`, `data`) VALUES ('paivitetty.kaynnissa', 1)")
