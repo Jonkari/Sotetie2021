@@ -103,7 +103,7 @@
     var valittu = true;
     var kieli = "suomi";
     var opetustapa = "kaikkiTavat";
-    var osoite = "http://127.0.0.1:5000"; //"http://137.74.119.216:5000/"
+    var osoite = "http://137.74.119.216:5000"; //"http://137.74.119.216:5000/"
 
     // näkyviin ilmoitus, jos tietokantaan ei saada yhteyttä 
     function virheTilanne() {
@@ -114,7 +114,6 @@
     $(document).ready(function () {
 
         document.addEventListener("click", function (e) {
-            console.log(e.target);
             if (e.target && (e.target.matches(".overSelect"))) {
                 if (avattu) {
                     document.querySelector(".koulu").style.display = "none";
@@ -127,7 +126,6 @@
             }
             else {
                 if (e.target && (e.target.matches(".checkboxKoulut") || e.target.matches('.koulu *'))) {
-                    console.log(e.target)
                 } else {
                     document.querySelector(".koulu").style.display = "none";
                     avattu = false;
@@ -156,7 +154,6 @@
 
         function paivitaMaara() {
             var checkboxes = $('input.checkboxKoulut:checked').length;
-            console.log(checkboxes);
             var koulut_nro = document.querySelector(".nakyvaMaara")
             var html = ``
             var option = `<option>${checkboxes} koulua valittu</option>`
@@ -203,8 +200,13 @@
                 html += option
             }
             genOsaamiset_select.innerHTML = html
+            if(valmisHaku !== undefined) {
+                valmisHaku()
+            }
+            fetch(genOsaamiset_select.options[genOsaamiset_select.selectedIndex].value);
         })
             .fail(virheTilanne);
+        
 
 
 
@@ -266,7 +268,6 @@
                 }
             }).fail(virheTilanne);
         }
-        fetch("Kaikki");
     });
 
     //laitetaan haetut tiedot Löydetyt opintojaksot -tauluun:
@@ -280,8 +281,6 @@
                 valitut.add(x.value)
             }
         }
-        console.table(valitut)
-        console.table(checkBoxes)
         var nro = 0;
         html = ``
         
