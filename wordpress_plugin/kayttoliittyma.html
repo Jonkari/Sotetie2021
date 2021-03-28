@@ -1,7 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="styles.css">
 <div id="sisältö">
-    <h1>KURSSIHAKU</h1>
+    <h1 id="isoOtsikko">KURSSIHAKU</h1>
     <p id="paivitys">Päivämäärä</p>
     <br>
     <br>
@@ -32,13 +32,13 @@
                     <select name="maakunnat" id="maakunnat" class="maakunnat">
                         <!-- tähän maakunnat sivun lataamisen yhteydessä  -->
                     </select>
-                    
+
                 </div>
             </div>
             <br>
             <div class="float-left" style="display: flex; flex-flow: column wrap;">
                 <div class="radiorivi">
-                    <h3>Opetuskieli</h3>
+                    <h3>OPETUSKIELI</h3>
                     <input type="radio" name="kieli" value="suomi" id="suomi" checked>
                     <label for="suomi">Suomi</label> &nbsp;&nbsp;
                     <input type="radio" name="kieli" value="ruotsi" id="ruotsi">
@@ -46,9 +46,9 @@
                     <input type="radio" name="kieli" value="englanti" id="englanti">
                     <label for="englanti">Englanti</label>
                 </div>
-
+                <br>
                 <div class="radiorivi">
-                    <h3>Opetustapa</h3>
+                    <h3>OPETUSTAPA</h3>
                     <input type="radio" name="tapa" value="kaikkiTavat" id="kaikkiTavat" checked>
                     <label for="kaikkiTavat">Kaikki</label> &nbsp;&nbsp;
                     <input type="radio" name="tapa" value="lahiopetus" id="lahi">
@@ -200,13 +200,13 @@
                 html += option
             }
             genOsaamiset_select.innerHTML = html
-            if(valmisHaku !== undefined) {
+            if (valmisHaku !== undefined) {
                 valmisHaku(genOsaamiset)
             }
             fetch(genOsaamiset_select.options[genOsaamiset_select.selectedIndex].value);
         })
             .fail(virheTilanne);
-        
+
 
 
 
@@ -225,16 +225,16 @@
             maakunnat = data
             var maakunnat_select = document.querySelector(".maakunnat")
             var html = `<option value="kaikki">Kaikki</option>`
-            for(var i in maakunnat){
+            for (var i in maakunnat) {
                 maakuntaSet.add(maakunnat[i].maakunta);
             }
-            maakuntaSet.forEach(function(value){
+            maakuntaSet.forEach(function (value) {
                 var option = `<option value="${value}">${value}</option>`
                 html += option
             })
             maakunnat_select.innerHTML = html
         })
-        .fail(virheTilanne)
+            .fail(virheTilanne)
 
 
 
@@ -283,25 +283,25 @@
         }
         var nro = 0;
         html = ``
-        
-            result.forEach(element => {
-                if (valitut.has(element.koulu) && element.kieli == kieli && (opetustapa == "kaikkiTavat" || element.opetustyyppi == opetustapa)) {
-                    let opintojaksot = ""
-                    //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
-                    opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi} (${element.opintopisteet} op)</a></td>\n`;
-                    opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
-                    //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
-                    //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
-                    opintojaksot += "</tr>\n";
-                    html += opintojaksot
-                    nro++;
-                }
-            });
-                document.getElementById("tauluOtsikko").innerHTML = "Löydetyt opintojaksot (" + nro + " kpl)";
-                document.getElementById("kurssiTaulu").style.display = "block";
-                document.getElementById("eiKursseja").style.display = "none";
-                document.getElementById("eiYhteytta").style.display = "none";
-            
+
+        result.forEach(element => {
+            if (valitut.has(element.koulu) && element.kieli == kieli && (opetustapa == "kaikkiTavat" || element.opetustyyppi == opetustapa)) {
+                let opintojaksot = ""
+                //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
+                opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi} (${element.opintopisteet} op)</a></td>\n`;
+                opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
+                //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
+                //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
+                opintojaksot += "</tr>\n";
+                html += opintojaksot
+                nro++;
+            }
+        });
+        document.getElementById("tauluOtsikko").innerHTML = "Löydetyt opintojaksot (" + nro + " kpl)";
+        document.getElementById("kurssiTaulu").style.display = "block";
+        document.getElementById("eiKursseja").style.display = "none";
+        document.getElementById("eiYhteytta").style.display = "none";
+
 
         if (html.length == 0) {
             //html += "<h1> Ei tuloksia </h1>";

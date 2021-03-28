@@ -13,10 +13,9 @@ body{
 	margin-left:auto;
 	margin-right:auto;
 }
-div#sisältö h1{
-	margin-left: 1% !important;
-	letter-spacing: 3px;
-	font-size: 3rem;
+#isoOtsikko{
+	letter-spacing: 4px;
+	font-size: 4rem;
 }
 div#sisältö h2{
 	margin-bottom: 1% !important;
@@ -93,7 +92,7 @@ select{
 
 .myButton{
 	background-color: white;
-	font-size: 20px;
+	font-size: 30px;
 	padding: 14px 40px;
 	border-radius: 12px;
 	color: orangered;
