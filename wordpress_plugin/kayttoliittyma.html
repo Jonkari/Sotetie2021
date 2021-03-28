@@ -201,7 +201,7 @@
             }
             genOsaamiset_select.innerHTML = html
             if(valmisHaku !== undefined) {
-                valmisHaku()
+                valmisHaku(genOsaamiset)
             }
             fetch(genOsaamiset_select.options[genOsaamiset_select.selectedIndex].value);
         })
