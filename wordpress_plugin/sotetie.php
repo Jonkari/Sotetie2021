@@ -8,7 +8,7 @@ function sotetie($content) {
         if ( get_query_var('haku') ) {
             $content .= "
             <script>
-            var valmisHaku = function() {document.querySelector(\".aihe\").value = \"".get_query_var('haku')."\"}
+            var valmisHaku = function(genOsaamiset) {if(\"".get_query_var('haku')."\" in genOsaamiset) {document.querySelector(\".aihe\").value = \"".get_query_var('haku')."\"}}
             </script>
             ";
             }
