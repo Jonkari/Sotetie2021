@@ -14,8 +14,8 @@ body{
 	margin-right:auto;
 }
 #isoOtsikko{
-	letter-spacing: 4px;
-	font-size: 4rem;
+	letter-spacing: 4px !important;
+	font-size: 4rem ;
 }
 div#sisältö h2{
 	margin-bottom: 1% !important;
@@ -51,6 +51,38 @@ select{
 #selectBoxMaakunta{
 	margin-left: 20px;
 }
+
+/*  infotekstit */
+.tooltip1, .tooltip2{
+	position: relative;
+	display: inline-block;
+	/*border-bottom: 1px dotted black;*/
+  }
+
+  
+  .tooltip1 .tooltiptext1, .tooltip2 .tooltiptext2 {
+	visibility: hidden;
+	width: 250px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 5px;
+  
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
+	bottom: 100%;
+	left: 50%;
+	margin-left: -60px;
+  }
+  
+  .tooltip1:hover .tooltiptext1 {
+	visibility: visible;
+  }
+  .tooltip2:hover .tooltiptext2 {
+	visibility: visible;
+  }
 
   
 @media screen and (max-width:740px) {

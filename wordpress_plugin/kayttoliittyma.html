@@ -1,9 +1,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="styles.css">
 <div id="sisältö">
-    <h1 id="isoOtsikko">KURSSIHAKU</h1>
+    <h1 style="font-size: 7rem;" id="">KURSSIHAKU</h1>
     <p id="paivitys">Päivämäärä</p>
     <br>
+
     <br>
     <form>
         <div class="Row">
@@ -15,6 +16,7 @@
             </div>
             <br>
             <h4>Valitse korkeakoulut erikseen tai valitse maakunta, joka valitsee koulut puolestasi:</h4>
+
 
             <div class="flex-container">
                 <div class="selectBox">
@@ -28,7 +30,16 @@
                 </div>
 
                 <div class="selectBox" id="selectBoxMaakunta">
-                    <h3>MAAKUNTA</h3>
+                    <h3>MAAKUNTA
+                        <div class="tooltip1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path
+                                    d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                            </svg>
+                            <span class="tooltiptext1">Maakuntajaottelussa voi esiintyä epätarkkuuksia.</span>
+                        </div>
+                    </h3>
                     <select name="maakunnat" id="maakunnat" class="maakunnat">
                         <!-- tähän maakunnat sivun lataamisen yhteydessä  -->
                     </select>
@@ -48,7 +59,17 @@
                 </div>
                 <br>
                 <div class="radiorivi">
-                    <h3>OPETUSTAPA</h3>
+                    <h3>OPETUSTAPA <div class="tooltip2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path
+                                    d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                            </svg>
+                            <span class="tooltiptext2">"Etäopetus" sisältää etä- ja verkko-opetuksen sekä verkko-opiskelun. "Kaikki" sisältää 
+                                mm. monimuoto-opiskelun.
+                            </span>
+                        </div>
+                    </h3>
                     <input type="radio" name="tapa" value="kaikkiTavat" id="kaikkiTavat" checked>
                     <label for="kaikkiTavat">Kaikki</label> &nbsp;&nbsp;
                     <input type="radio" name="tapa" value="lahiopetus" id="lahi">
@@ -62,7 +83,7 @@
         <br><br>
 
         <div class="nappiKeskelle">
-            <input id="haeNappi" class="myButton" type="button" value="HAE OPINNOT">
+            <input style="font-size: 3rem;" id="haeNappi" class="myButton" type="button" value="HAE OPINNOT">
         </div>
         <br><br><br>
         <h2 id="eiKursseja">Ei hakuehtoja vastaavia kursseja</h2>
