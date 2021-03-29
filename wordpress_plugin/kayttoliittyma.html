@@ -124,6 +124,7 @@
     var valittu = true;
     var kieli = "suomi";
     var opetustapa = "kaikkiTavat";
+    var maakuntaMap = new Map();
     var osoite = "http://137.74.119.216:5000"; //"http://137.74.119.216:5000/"
 
     // näkyviin ilmoitus, jos tietokantaan ei saada yhteyttä 
@@ -154,6 +155,32 @@
             }
         });
 
+        //maakuntavalikon klikkaus
+        $(".maakunnat").on("click", function () {
+            var koulut = document.querySelectorAll(".checkboxKoulut");
+            
+            if(this.value == "kaikki"){
+                for(var x of koulut){
+                    x.checked = true;
+                }
+                document.querySelector("#kaikki").checked = true;
+                valittu = true;
+            }
+            else{
+            document.querySelector("#kaikki").checked = false;
+            for(var x of koulut){
+                if(maakuntaMap.get(this.value).includes(x.value)){
+                    x.checked = true;
+                }
+                else{
+                    x.checked = false;
+                }
+            }
+            valittu = false;
+            }
+            paivitaMaara();
+        })
+
         $(".koulu").on("click", "#kaikki", function () {
             var x = document.querySelectorAll(".checkboxKoulut");
             for (var i of x) {
@@ -164,13 +191,15 @@
                     i.checked = true;
                 }
             }
-
+        
             if (valittu) {
                 valittu = false;
             }
             else {
                 valittu = true;
+                document.querySelector(".maakunnat").value = "kaikki";
             }
+            
         })
 
         function paivitaMaara() {
@@ -243,9 +272,11 @@
             }
             korkeaKoulu_select.innerHTML = html;
             paivitaMaara();
+
+            //haetaan maakunnat valikkoon:
             maakunnat = data
             var maakunnat_select = document.querySelector(".maakunnat")
-            var html = `<option value="kaikki">Kaikki</option>`
+            var html = `<option value="kaikki">Kaikki</option>` //`<option value="kaikki">Kaikki</option>`
             for (var i in maakunnat) {
                 maakuntaSet.add(maakunnat[i].maakunta);
             }
@@ -254,10 +285,20 @@
                 html += option
             })
             maakunnat_select.innerHTML = html
+
+            //maakunnat valikon toiminnallisuus:
+            //maakuntaMap
+            
+            for(var i in maakunnat){
+                    if(maakuntaMap.has(maakunnat[i].maakunta)){
+                        maakuntaMap.get(maakunnat[i].maakunta).push(maakunnat[i].koulu);
+                    }
+                    else{
+                        maakuntaMap.set(maakunnat[i].maakunta, [maakunnat[i].koulu]);
+                    }
+            }
         })
             .fail(virheTilanne)
-
-
 
 
         //Haetaan viimeisimmän päivityksen päivämäärä:
