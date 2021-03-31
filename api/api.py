@@ -58,6 +58,7 @@ api.add_resource(Koulut, "/api/koulut", resource_class_kwargs={'db' : db})
 class Kielet(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     def get(self):
         tmp = self.db.getData("SELECT distinct kieli FROM kurssit ORDER BY kieli ASC")
@@ -119,6 +120,7 @@ api.add_resource(Asiakaslahtoisyys, '/api/asiakaslahtoisyys', resource_class_kwa
 class Neuvontaosaaminen(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -141,6 +143,7 @@ api.add_resource(Neuvontaosaaminen, '/api/neuvontaosaaminen', resource_class_kwa
 class Palvelujarjestelmat(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -163,6 +166,7 @@ api.add_resource(Palvelujarjestelmat, '/api/palvelujarjestelmat', resource_class
 class Etiikka(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -185,6 +189,7 @@ api.add_resource(Etiikka, '/api/etiikka', resource_class_kwargs={'db' : db})
 class Tutkimusosaaminen(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -207,6 +212,7 @@ api.add_resource(Tutkimusosaaminen, '/api/tutkimusosaaminen', resource_class_kwa
 class Robotiikka(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -229,6 +235,7 @@ api.add_resource(Robotiikka, '/api/robotiikka', resource_class_kwargs={'db' : db
 class Laatutietoisuus(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -251,6 +258,7 @@ api.add_resource(Laatutietoisuus, '/api/laatutietoisuus', resource_class_kwargs=
 class KestavaKehitys(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -273,6 +281,7 @@ api.add_resource(KestavaKehitys, '/api/kestavakehitys', resource_class_kwargs={'
 class Viestintaosaaminen(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -295,6 +304,7 @@ api.add_resource(Viestintaosaaminen, '/api/viestintaosaaminen', resource_class_k
 class Tyontekijyysosaaminen(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -317,6 +327,7 @@ api.add_resource(Tyontekijyysosaaminen, '/api/tyontekijyysosaaminen', resource_c
 class Yhteistoiminta(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -339,6 +350,7 @@ api.add_resource(Yhteistoiminta, '/api/yhteistoiminta', resource_class_kwargs={'
 class Kaikki(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=3600)
     def get(self):
@@ -362,6 +374,7 @@ api.add_resource(Kaikki, '/', '/api/', resource_class_kwargs={'db' : db})
 class Paivitys(Resource):
     def __init__(self, db):
         self.db = db
+        self.data = None
         super().__init__()
     @cache.cached(timeout=600)
     def get(self):

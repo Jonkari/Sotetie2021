@@ -122,6 +122,30 @@
         document.getElementById("kurssiTaulu").style.display = "none";
         document.getElementById("eiYhteytta").style.display = "block";
     };
+    function valittuKieli() {
+        var vaihtoehdot = document.getElementsByName('kieli');
+        for (i = 0; i < vaihtoehdot.length; i++) {
+            if (vaihtoehdot[i].checked)
+                return vaihtoehdot[i].value;
+        }
+    }
+
+    //mikä opetustapa valittu
+    function valittuOpetustapa() {
+        var vaihtoehdot = document.getElementsByName('tapa');
+        for (i = 0; i < vaihtoehdot.length; i++) {
+            if (vaihtoehdot[i].checked)
+                return vaihtoehdot[i].value;
+        }
+    }
+    function paivitaMaara() {
+        var checkboxes = $('input.checkboxKoulut:checked').length;
+        var koulut_nro = document.querySelector(".nakyvaMaara")
+        var html = ``
+        var option = `<option>${checkboxes} koulua valittu</option>`
+        html += option
+        koulut_nro.innerHTML = html
+    }
 
     $(document).ready(function () {
 
@@ -192,14 +216,6 @@
             
         })
 
-        function paivitaMaara() {
-            var checkboxes = $('input.checkboxKoulut:checked').length;
-            var koulut_nro = document.querySelector(".nakyvaMaara")
-            var html = ``
-            var option = `<option>${checkboxes} koulua valittu</option>`
-            html += option
-            koulut_nro.innerHTML = html
-        }
 
         //kuinka monta koulua valittu
         $("#checkboxes1").click(function () {
@@ -213,22 +229,7 @@
         })
 
         //mikä kieli valittu
-        function valittuKieli() {
-            var vaihtoehdot = document.getElementsByName('kieli');
-            for (i = 0; i < vaihtoehdot.length; i++) {
-                if (vaihtoehdot[i].checked)
-                    return vaihtoehdot[i].value;
-            }
-        }
 
-        //mikä opetustapa valittu
-        function valittuOpetustapa() {
-            var vaihtoehdot = document.getElementsByName('tapa');
-            for (i = 0; i < vaihtoehdot.length; i++) {
-                if (vaihtoehdot[i].checked)
-                    return vaihtoehdot[i].value;
-            }
-        }
 
         //haetaan aiheet valikkoon:
         $.get(osoite + "/api/rajapinnat", function (data) {
@@ -314,9 +315,6 @@
                 success: (result) => {
                     $("#data tbody").html("");
                     showResultInTable(result);
-                },
-                error: (e) => {
-                    alert("Virhe: " + e); //e selkokieliseksi, miten? OLIKO TÄLLÄ (error) MERKITYSTÄ, VOIKO OTTAA POIS?
                 }
             }).fail(virheTilanne);
         }
@@ -363,5 +361,20 @@
         }
         document.querySelector("#data tbody").innerHTML = html;
     }
-
+    
+    /**/
+    $(document).ready(function () {
+        
+        function testiTapaus(funktio, muuttuja, boolean, testinro) {
+            if(boolean) {
+                console.assert(funktio() == muuttuja, `testi ${testinro}: ${muuttuja} != true`)
+            } else {
+                console.assert(funktio() != muuttuja, `testi ${testinro}: ${muuttuja} == true`)
+            }
+        }
+        testiTapaus(valittuKieli, "suomi", false, 1);
+        testiTapaus(valittuKieli, "ruotsi", true, 2);
+        setTimeout(virheTilanne, 4000)
+    });
+    /**/
 </script>

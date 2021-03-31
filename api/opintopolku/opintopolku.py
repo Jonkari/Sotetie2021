@@ -16,7 +16,7 @@ def haeDataa(hakusanat, facetFilter="et01.05.03",hakutyyppi="ongoing"):
 
 
     Returns:
-        dict: Data, Python Dictionaryna.
+        list: Data, Python Listana.
     """
     #Hak
     hakusanat = requests.utils.quote(hakusanat)
@@ -69,7 +69,11 @@ def hakuTyokaluYksinkertainen():
                     "klientprocess"
                 ],
                 "en" : [
-
+                    "customer oriented",
+                    "participation",
+                    "meeting",
+                    "service",
+                    "customer process",
                 ]
             },
             "ohjaus- ja neuvontaosaaminen" : {
@@ -92,7 +96,13 @@ def hakuTyokaluYksinkertainen():
                     "kommunikation"
                 ],
                 "en" : [
-
+                    "guidance",
+                    "advice",
+                    "information",
+                    "counseling",
+                    "service system",
+                    "interaction",
+                    "communication",
                 ]
             },
             "palvelujärjestelmät" : {
@@ -111,7 +121,12 @@ def hakuTyokaluYksinkertainen():
                     "serviceproducent",
                 ],
                 "en" : [
-
+                    "service system",
+                    "service guidance",
+                    "advice",
+                    "service connections",
+                    "service network",
+                    "service producer",
                 ]
             },
             "lainsäädäntö ja etiikka" : {
@@ -132,7 +147,12 @@ def hakuTyokaluYksinkertainen():
                     "etisk",
                 ],
                 "en" : [
-
+                    "ethics",
+                    "law/legislation",
+                    "confidentiality"
+                    "privacy protection",
+                    "responsibility",
+                    "ethical",
                 ]
             },
             "tutkimus- ja kehittämisosaaminen" : {
@@ -147,7 +167,9 @@ def hakuTyokaluYksinkertainen():
                     "utveckling",
                 ],
                 "en" : [
-
+                    "research",
+                    "innovation",
+                    "development",
                 ]
             },
             "robotiikka ja digitalisaatio" : {
@@ -169,7 +191,12 @@ def hakuTyokaluYksinkertainen():
                     "informationssäkerhet",
                 ],
                 "en" : [
-
+                    "robotics",
+                    "digi",
+                    "artificial intelligence",
+                    "social and health services",
+                    "information security",
+                    "information privacy",
                 ]
             },
             "vaikuttavuus- kustannus- ja laatutietoisuus" : {
@@ -188,7 +215,10 @@ def hakuTyokaluYksinkertainen():
                     "kostnader",
                 ],
                 "en" : [
-
+                    "quality",
+                    "effective",
+                    "effect",
+                    "cost"
                 ]
             },
             "kestävän kehityksen osaaminen" : {
@@ -210,7 +240,12 @@ def hakuTyokaluYksinkertainen():
                     "energiförbrukning",
                 ],
                 "en" : [
-
+                    "sustainable",
+                    "ecolog",
+                    "sustainability",
+                    "recycling",
+                    "environment",
+                    "energy consumption",
                 ]
             },
             "viestintäosaaminen" : {
@@ -229,7 +264,10 @@ def hakuTyokaluYksinkertainen():
                     "klarhet",
                 ],
                 "en" : [
-
+                    "communication",
+                    "mood",
+                    "emotional state",
+                    "empathy",
                 ]
             },
             "työntekijyysosaaminen" : {
@@ -261,7 +299,21 @@ def hakuTyokaluYksinkertainen():
                     "mångprof",
                 ],
                 "en" : [
-
+                    "competence",
+                    "know-how",
+                    "lead",
+                    "leading",
+                    "management",
+                    "managing",
+                    "well-being at work",
+                    "occupational health",
+                    "industrial health",
+                    "change skills",
+                    "flexibility for change",
+                    "change flexibility",
+                    "career development",
+                    "networking",
+                    "working community",
                 ]
             },
             "monialainen yhteistoiminta" : {
@@ -290,7 +342,19 @@ def hakuTyokaluYksinkertainen():
                     "specialist",
                 ],
                 "en" : [
-
+                    "multidisciplinary",
+                    "multivocationality",
+                    "multiprofessionalism",
+                    "interprofessionalism",
+                    "multidisciplinary",
+                    "multi-disciplinary",
+                    "cooperation",
+                    "collaboration",
+                    "co-operation",
+                    "teamwork",
+                    "liaison",
+                    "networking",
+                    "expertise",
                 ]
             },
         }
@@ -324,10 +388,10 @@ def hakuTyokaluYksinkertainen():
 def haeLisatiedot():
     for i, j in objs.items():
         data = haeKurssinTiedot(i)
-        j.kieli = data.get('teachingLanguages')[0]
-        if data.get('teachingLanguages')[0] in ['svenska']:
+        j.kieli = data.get('teachingLanguages')[0].lower()
+        if data.get('teachingLanguages')[0].lower() in ['svenska']:
             j.kieli = "ruotsi"
-        elif data.get('teachingLanguages')[0] in ['english']:
+        elif data.get('teachingLanguages')[0].lower() in ['english']:
             j.kieli = "englanti"
         
         j.postinumero = data.get('provider').get('postalAddress').get('postalCode')
@@ -340,8 +404,6 @@ def haeLisatiedot():
             elif i in ["Lähiopetus"]:
                 j.opetustyyppi = "lahiopetus"
                 continue
-def testifunktio(muuttuja):
-    return muuttuja
 if __name__ == "__main__":
     pass
     # print("ok")
