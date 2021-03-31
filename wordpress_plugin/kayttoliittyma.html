@@ -122,6 +122,8 @@
         document.getElementById("kurssiTaulu").style.display = "none";
         document.getElementById("eiYhteytta").style.display = "block";
     };
+
+    //mikä kieli valittu
     function valittuKieli() {
         var vaihtoehdot = document.getElementsByName('kieli');
         for (i = 0; i < vaihtoehdot.length; i++) {
@@ -138,6 +140,7 @@
                 return vaihtoehdot[i].value;
         }
     }
+
     function paivitaMaara() {
         var checkboxes = $('input.checkboxKoulut:checked').length;
         var koulut_nro = document.querySelector(".nakyvaMaara")
@@ -228,8 +231,6 @@
             opetustapa = valittuOpetustapa();
         })
 
-        //mikä kieli valittu
-
 
         //haetaan aiheet valikkoon:
         $.get(osoite + "/api/rajapinnat", function (data) {
@@ -318,6 +319,8 @@
                 }
             }).fail(virheTilanne);
         }
+
+
     });
 
     //laitetaan haetut tiedot Löydetyt opintojaksot -tauluun:
@@ -372,8 +375,20 @@
                 console.assert(funktio() != muuttuja, `testi ${testinro}: ${muuttuja} == true`)
             }
         }
-        testiTapaus(valittuKieli, "suomi", false, 1);
+        testiTapaus(valittuKieli, "suomi", false, 1); /*tutlkitaan onko heti sivustolle tullessa suunniteltu kielivalinta*/
+        
+        
+        $(".radiorivi").click(function () {
+        testiTapaus(valittuKieli, "suomi", false, 1); /*antaako klikkaillessa oikean kielivalinnan*/
         testiTapaus(valittuKieli, "ruotsi", true, 2);
+        testiTapaus(valittuKieli, "englanti", true, 3);
+
+        testiTapaus(valittuOpetustapa, "kaikkiTavat", false, 4);
+        testiTapaus(valittuOpetustapa, "lahiopetus", true, 5);
+        testiTapaus(valittuOpetustapa, "etaopetus", true, 6);
+        console.log("testausta");
+        })
+        
         setTimeout(virheTilanne, 4000)
     });
     /**/
