@@ -37,7 +37,7 @@ def haeKurssinTiedot(kurssin_id):
     Returns:
         dict: Palauttaa kurssin tiedot
     """
-    data = requests.get('https://opintopolku.fi/lo/koulutus/{kurssin_id}'
+    data = requests.get('https://opintopolku.fi/lo/koulutus/{kurssin_id}?uiLang=fi'
     .format(kurssin_id=kurssin_id)
     , headers=HEADERS)
     return data.json()

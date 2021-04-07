@@ -57,6 +57,7 @@ class Database:
         self.connection_pool = self.ConnPool(10, 800, host, user, password, db, port)
     def query(self, query, params=None):
         conn = self.connection_pool.getConnection()
+        conn.ping(reconnect=True)
         if conn:
             with conn.cursor(pymysql.cursors.DictCursor) as cursor:
                 if params:
@@ -66,7 +67,7 @@ class Database:
         self.connection_pool.putConnection(conn)
     def getData(self, query, params=None):
         conn = self.connection_pool.getConnection()
-        conn.ping()
+        conn.ping(reconnect=True)
         data = None
         if conn:
             with conn.cursor(pymysql.cursors.DictCursor) as cursor:
@@ -79,6 +80,7 @@ class Database:
         return data
     def escape(self, var):
         conn = self.connection_pool.getConnection()
+        conn.ping(reconnect=True)
         data = conn.escape(var)
         self.connection_pool.putConnection(conn)
         return data
