@@ -1,10 +1,10 @@
-import api
+
 import requests
 from testitapaus import testi_tapaus
 import time
 import threading
 lista = []
-threadien_maara = 30
+threadien_maara = 200
 tmp = []
 lopeta = False
 for i in range(threadien_maara):

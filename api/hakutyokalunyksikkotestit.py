@@ -5,6 +5,7 @@ try:
     testi_tapaus(type(opintopolku.haeDataa("testi")), list, True, 1)
     testi_tapaus(len(opintopolku.haeDataa("asdasdasdasdasdasdasdasdasdasda")), 0, True, 2)
     testi_tapaus(len(opintopolku.haeDataa("asdasdasdasdasdasdasdasdasdasda")), 5454, False, 3)
+    testi_tapaus(len(opintopolku.haeDataa("asdasdas") > 0, False, True, 4))
     count = 4
     for i in data:
         try:
