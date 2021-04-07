@@ -16,7 +16,7 @@ def haeDataa(hakusanat, facetFilter="et01.05.03",hakutyyppi="ongoing"):
 
 
     Returns:
-        list: Data, Python Listana.
+        dict: Data, Python Dictionaryna.
     """
     #Hak
     hakusanat = requests.utils.quote(hakusanat)
@@ -388,11 +388,18 @@ def hakuTyokaluYksinkertainen():
 def haeLisatiedot():
     for i, j in objs.items():
         data = haeKurssinTiedot(i)
-        j.kieli = data.get('teachingLanguages')[0].lower()
-        if data.get('teachingLanguages')[0].lower() in ['svenska']:
-            j.kieli = "ruotsi"
-        elif data.get('teachingLanguages')[0].lower() in ['english']:
-            j.kieli = "englanti"
+        tmp = []
+        for i in data.get('teachingLanguages'):
+        # j.kieli = data.get('teachingLanguages')[0].lower()
+            if i.lower() in ['svenska',]:
+                tmp.append("ruotsi")
+            #     j.kieli = "ruotsi"
+            elif i.lower() in ['english']:
+                tmp.append("englanti")
+            elif i.lower() in ['finnish']:
+                tmp.append("suomi")
+            #     j.kieli = "englanti"
+        j.kieli = "|".join(tmp)
         
         j.postinumero = data.get('provider').get('postalAddress').get('postalCode')
 
@@ -404,6 +411,8 @@ def haeLisatiedot():
             elif i in ["Lähiopetus"]:
                 j.opetustyyppi = "lahiopetus"
                 continue
+def testifunktio(muuttuja):
+    return muuttuja
 if __name__ == "__main__":
     pass
     # print("ok")
