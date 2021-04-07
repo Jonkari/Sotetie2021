@@ -341,7 +341,7 @@
             if (valitut.has(element.koulu) && element.kieli == kieli && (opetustapa == "kaikkiTavat" || element.opetustyyppi == opetustapa)) {
                 let opintojaksot = ""
                 //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
-                opintojaksot += `<td colspan="2"><a href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi} (${element.opintopisteet} op)</a></td>\n`;
+                opintojaksot += `<td colspan="2"><a target="_blank" href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi} (${element.opintopisteet} op)</a></td>\n`;
                 opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
                 //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
                 //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
@@ -376,7 +376,7 @@
             }
         }
         testiTapaus(valittuKieli, "suomi", false, 1); /*tutlkitaan onko heti sivustolle tullessa suunniteltu kielivalinta*/
-        
+        testiTapaus(valittuOpetustapa, "kaikkiTavat", false, 4);
         
         $(".radiorivi").click(function () {
         testiTapaus(valittuKieli, "suomi", false, 1); /*antaako klikkaillessa oikean kielivalinnan*/
