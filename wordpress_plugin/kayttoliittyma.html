@@ -242,9 +242,11 @@
                 html += option
             }
             genOsaamiset_select.innerHTML = html
-            if (valmisHaku !== undefined) {
-                valmisHaku(genOsaamiset)
-            }
+            try {
+                if (valmisHaku !== undefined) {
+                    valmisHaku(genOsaamiset)
+                }
+            } catch(error) {}
             fetch(genOsaamiset_select.options[genOsaamiset_select.selectedIndex].value);
         })
             .fail(virheTilanne);
@@ -295,11 +297,21 @@
 
         //Haetaan viimeisimmän päivityksen päivämäärä:
         $.get(osoite + "/api/paivitys", function (data) {
-            var paivitys = new Date(data[0].data * 1000);
+            let onkokaynnissa = 0;
+            let paivitystimestamp = 0;
+            for(let asetus of data) {
+                if(asetus.tyyppi == "paivitetty.kaynnissa") {
+                    onkokaynnissa = asetus.data
+                } else if(asetus.tyyppi == "paivitetty.timestamp") {
+                    paivitystimestamp = asetus.data
+                }
+            }
+            var paivitys = new Date(paivitystimestamp * 1000);
             var kuukausi = paivitys.getMonth() + 1;
             var paiva = paivitys.getDate();
             var vuosi = paivitys.getFullYear();
-            document.getElementById("paivitys").innerHTML = `Päivitetty: ${paiva}.${kuukausi}.${vuosi}`;
+            var paivittymassa = onkokaynnissa == 1 ? "Tietokanta on päivittymässä" : "" ;
+            document.getElementById("paivitys").innerHTML = `${paivittymassa}<br>Päivitetty: ${paiva}.${kuukausi}.${vuosi}`;
         }).fail(virheTilanne)
 
         //otetaan kiinni aihe mikä on valittu:
@@ -365,31 +377,5 @@
         document.querySelector("#data tbody").innerHTML = html;
     }
     
-    /**/
-    $(document).ready(function () {
-        
-        function testiTapaus(funktio, muuttuja, boolean, testinro) {
-            if(boolean) {
-                console.assert(funktio() == muuttuja, `testi ${testinro}: ${muuttuja} != true`)
-            } else {
-                console.assert(funktio() != muuttuja, `testi ${testinro}: ${muuttuja} == true`)
-            }
-        }
-        testiTapaus(valittuKieli, "suomi", false, 1); /*tutlkitaan onko heti sivustolle tullessa suunniteltu kielivalinta*/
-        testiTapaus(valittuOpetustapa, "kaikkiTavat", false, 4);
-        
-        $(".radiorivi").click(function () {
-        testiTapaus(valittuKieli, "suomi", false, 1); /*antaako klikkaillessa oikean kielivalinnan*/
-        testiTapaus(valittuKieli, "ruotsi", true, 2);
-        testiTapaus(valittuKieli, "englanti", true, 3);
 
-        testiTapaus(valittuOpetustapa, "kaikkiTavat", false, 4);
-        testiTapaus(valittuOpetustapa, "lahiopetus", true, 5);
-        testiTapaus(valittuOpetustapa, "etaopetus", true, 6);
-        console.log("testausta");
-        })
-        
-        setTimeout(virheTilanne, 4000)
-    });
-    /**/
 </script>

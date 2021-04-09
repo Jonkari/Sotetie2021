@@ -40,17 +40,18 @@ class Koulut(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT kurssit.koulu AS koulu, maakunnat.maakunta AS maakunta FROM kurssit JOIN postinumerot ON postinumerot.postinumero=kurssit.postinumero JOIN maakunnat ON postinumerot.postitoimipaikka=maakunnat.kunta GROUP BY kurssit.koulu ORDER BY maakunnat.maakunta;")
         if tmp:
-            self.db.query(cache_query_ins.format(key="koulut", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="koulut", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="koulut", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="koulut", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("koulut",))
@@ -58,32 +59,11 @@ class Koulut(Resource):
             return None
 api.add_resource(Koulut, "/api/koulut", resource_class_kwargs={'db' : db})
 
-class Kielet(Resource):
-    def __init__(self, db):
-        self.db = db
-        super().__init__()
-    def get(self):
-        tmp = self.db.getData("SELECT distinct kieli FROM kurssit ORDER BY kieli ASC")
-        if tmp:
-            self.db.query(cache_query_ins.format(key="kielet", value=json.dumps(tmp)))
-            return corsify(tmp)
-        else:
-            paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
-            if paivittymassa:
-                paivittymassa = paivittymassa[0]
-                if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="kielet", value=json.dumps(tmp)))
-                    return corsify(tmp)
-                else:
-                    data = self.db.getData(cache_query_sel.format("kielet",))
-                    return corsify(json.loads(data[0]["value"]))
-            return None        
-api.add_resource(Kielet, "/api/kielet", resource_class_kwargs={'db' : db})
-
 class Rajapinnat(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
+    @cache.cached(timeout=3600)
     def get(self):
         return corsify(rajapinnat)
 api.add_resource(Rajapinnat, "/api/rajapinnat", resource_class_kwargs={'db' : db})
@@ -92,7 +72,7 @@ class Asiakaslahtoisyys(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         """Hakee kurssit taulusta kaikki asiakaslahtoisyyteen liittyvät kurssit
 
@@ -104,14 +84,14 @@ class Asiakaslahtoisyys(Resource):
         """
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%asiakaslähtöisyys%' ORDER BY nimi") # Hakee kurssit
         if tmp: # Onko kursseja haussa
-            self.db.query(cache_query_ins.format(key="asiakaslähtöisyys", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="asiakaslähtöisyys", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else: #muussa tapauksessa
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'") # tarkistetaan paivittymassa kenttä
             if paivittymassa: # onko tullut dataa haulla
                 paivittymassa = paivittymassa[0] # otetaan ensimmäinen (ja ainoa) rivi
                 if paivittymassa["data"] == 0: # Jos ei ole päivittymässä palautetaan tyhjä dictionary
-                    self.db.query(cache_query_ins.format(key="asiakaslähtöisyys", value=json.dumps(tmp)))# Laitetaan muistiin viime haku
+                    self.db.query(cache_query_ins.format(key="asiakaslähtöisyys", value=json.dumps(tmp, ensure_ascii=False)))# Laitetaan muistiin viime haku
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("asiakaslähtöisyys",))
@@ -123,18 +103,18 @@ class Neuvontaosaaminen(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%ohjaus- ja neuvontaosaaminen%' ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="neuvontaosaaminen", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="neuvontaosaaminen", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="neuvontaosaaminen", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="neuvontaosaaminen", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("neuvontaosaaminen",))
@@ -146,18 +126,18 @@ class Palvelujarjestelmat(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%palvelujärjestelmät%' ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="palvelujarjestelmat", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="palvelujarjestelmat", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="palvelujarjestelmat", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="palvelujarjestelmat", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("palvelujarjestelmat",))
@@ -169,18 +149,18 @@ class Etiikka(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%lainsäädäntö ja etiikka%' ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="etiikka", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="etiikka", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="etiikka", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="etiikka", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("etiikka",))
@@ -192,18 +172,18 @@ class Tutkimusosaaminen(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%tutkimus- ja kehittämisosaaminen%' ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="tutkimusosaaminen", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="tutkimusosaaminen", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="tutkimusosaaminen", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="tutkimusosaaminen", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("tutkimusosaaminen",))
@@ -215,18 +195,18 @@ class Robotiikka(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%robotiikka ja digitalisaatio%' ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="robotiikka", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="robotiikka", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="robotiikka", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="robotiikka", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("robotiikka",))
@@ -238,18 +218,18 @@ class Laatutietoisuus(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikuttavuus- kustannus ja laatutietoisuus%' ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="laatutietoisuus", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="laatutietoisuus", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="laatutietoisuus", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="laatutietoisuus", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("laatutietoisuus",))
@@ -261,18 +241,18 @@ class KestavaKehitys(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%kestävän kehityksen osaaminen%' ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="kestavakehitys", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="kestavakehitys", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="kestavakehitys", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="kestavakehitys", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("kestavakehitys",))
@@ -284,18 +264,18 @@ class Viestintaosaaminen(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%viestintäosaaminen%' ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="viestintäosaaminen", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="viestintäosaaminen", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="viestintäosaaminen", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="viestintäosaaminen", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("viestintaosaaminen",))
@@ -307,18 +287,18 @@ class Tyontekijyysosaaminen(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%työntekijyysosaaminen%' ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="tyontekijyysosaaminen", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="tyontekijyysosaaminen", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="tyontekijyysosaaminen", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="tyontekijyysosaaminen", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("tyontekijyysosaaminen",))
@@ -330,18 +310,18 @@ class Yhteistoiminta(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%monialainen yhteistoiminta%' ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="yhteistoiminta", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="yhteistoiminta", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="yhteistoiminta", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="yhteistoiminta", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("yhteistoiminta",))
@@ -353,18 +333,18 @@ class Kaikki(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
-    
+    @cache.cached(timeout=600)
     def get(self):
         tmp = self.db.getData("SELECT * FROM kurssit ORDER BY nimi")
         if tmp:
-            self.db.query(cache_query_ins.format(key="kaikki", value=json.dumps(tmp)))
+            self.db.query(cache_query_ins.format(key="kaikki", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)
         else:
             paivittymassa = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.kaynnissa'")
             if paivittymassa:
                 paivittymassa = paivittymassa[0]
                 if paivittymassa["data"] == 0:
-                    self.db.query(cache_query_ins.format(key="kaikki", value=json.dumps(tmp)))
+                    self.db.query(cache_query_ins.format(key="kaikki", value=json.dumps(tmp, ensure_ascii=False)))
                     return corsify(tmp)
                 else:
                     data = self.db.getData(cache_query_sel.format("kaikki",))
@@ -377,6 +357,7 @@ class Paivitys(Resource):
     def __init__(self, db):
         self.db = db
         super().__init__()
+    @cache.cached(timeout=10)
     def get(self):
         tmp = self.db.getData("SELECT * FROM asetukset WHERE tyyppi='paivitetty.timestamp' OR tyyppi='paivitetty.kaynnissa'")
         return corsify(tmp)

@@ -390,7 +390,6 @@ def haeLisatiedot():
         data = haeKurssinTiedot(i)
         tmp = []
         for x in data.get('teachingLanguages'):
-            print(x)
         # j.kieli = data.get('teachingLanguages')[0].lower()
             if x.lower() in ['svenska', 'ruotsi']:
                 tmp.append("ruotsi")
@@ -401,7 +400,6 @@ def haeLisatiedot():
                 tmp.append("suomi")
             #     j.kieli = "englanti"
         j.kieli = "|".join(tmp)
-        print(tmp)
         
         j.postinumero = data.get('provider').get('postalAddress').get('postalCode')
 
