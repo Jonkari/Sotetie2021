@@ -41,6 +41,16 @@ if __name__ == "__main__":
         """
     )
     db.query("""
+    CREATE TABLE `cache` (
+	`key` VARCHAR(75) NOT NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
+	`value` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`key`) USING BTREE
+    )
+    COLLATE='utf8mb4_general_ci'
+    ENGINE=InnoDB
+    ;
+    """)
+    db.query("""
     CREATE TABLE IF NOT EXISTS `maakunnat` (
     `kunta` varchar(50) NOT NULL,
     `maakunta` varchar(50) NOT NULL,

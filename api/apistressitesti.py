@@ -4,7 +4,7 @@ from testitapaus import testi_tapaus
 import time
 import threading
 lista = []
-threadien_maara = 200
+threadien_maara = 5
 tmp = []
 lopeta = False
 for i in range(threadien_maara):

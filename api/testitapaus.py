@@ -2,7 +2,6 @@
 
 
 def testi_tapaus(testattava, muuttuja, totuusarvo, nro, lisatieto=""):
-    print(totuusarvo)
     if totuusarvo:
         assert testattava == muuttuja, "testi nro{} {}!={}, {}".format(nro, muuttuja, totuusarvo, lisatieto)
     else:
