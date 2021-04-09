@@ -62,8 +62,8 @@ select{
   
   .tooltip1 .tooltiptext1, .tooltip2 .tooltiptext2 {
 	visibility: hidden;
-	width: 250px;
-	background-color: black;
+	width: 400px;
+	background-color: orangered;
 	color: #fff;
 	text-align: center;
 	border-radius: 6px;
