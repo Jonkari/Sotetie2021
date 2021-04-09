@@ -389,17 +389,19 @@ def haeLisatiedot():
     for i, j in objs.items():
         data = haeKurssinTiedot(i)
         tmp = []
-        for i in data.get('teachingLanguages'):
+        for x in data.get('teachingLanguages'):
+            print(x)
         # j.kieli = data.get('teachingLanguages')[0].lower()
-            if i.lower() in ['svenska',]:
+            if x.lower() in ['svenska', 'ruotsi']:
                 tmp.append("ruotsi")
             #     j.kieli = "ruotsi"
-            elif i.lower() in ['english']:
+            elif x.lower() in ['english', 'englanti']:
                 tmp.append("englanti")
-            elif i.lower() in ['finnish']:
+            elif x.lower() in ['finnish', 'suomi']:
                 tmp.append("suomi")
             #     j.kieli = "englanti"
         j.kieli = "|".join(tmp)
+        print(tmp)
         
         j.postinumero = data.get('provider').get('postalAddress').get('postalCode')
 
