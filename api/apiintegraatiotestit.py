@@ -5,10 +5,20 @@ import json
 def test_rajapinta(client, rajapinta, count):
     response = client.get(rajapinta)
     data = json.loads(response.get_data().decode(sys.getdefaultencoding()))
-    
-    testi_tapaus(data != None, True, True, count)
+    try:
+        testi_tapaus(data != None, True, True, count, rajapinta)
+    except AssertionError as e:
+        print(e)
     count += 1
-    testi_tapaus(type(data) == list, True, True, count)
+    try:
+        testi_tapaus(type(data) == list, True, True, count, rajapinta)
+    except AssertionError as e:
+        print(e)
+    count += 1
+    try:
+        testi_tapaus(len(data) > 0, True, True, count, rajapinta)
+    except AssertionError as e:
+        print(e)
     count += 1
 client = api.app.test_client()
 count = 1
