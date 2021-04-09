@@ -41,7 +41,7 @@ if __name__ == "__main__":
         """
     )
     db.query("""
-    CREATE TABLE `cache` (
+    CREATE TABLE IF NOT EXISTS `cache` (
 	`key` VARCHAR(75) NOT NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
 	`value` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
 	PRIMARY KEY (`key`) USING BTREE
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
     """)
     db.query("""
-    CREATE TABLE `postinumerot` (
+    CREATE TABLE IF NOT EXISTS `postinumerot` (
 	`postinumero` VARCHAR(50) NOT NULL DEFAULT '' COLLATE 'latin1_swedish_ci',
 	`postitoimipaikka` VARCHAR(200) NOT NULL DEFAULT '' COLLATE 'latin1_swedish_ci',
 	PRIMARY KEY (`postinumero`) USING BTREE
@@ -67,9 +67,12 @@ if __name__ == "__main__":
     ENGINE=InnoDB
     ;
     """)
-    db.query(" ".join(open("api/maakunnat.sql", "r", encoding="utf-8").readlines()))
-    db.query(" ".join(open("api/postinumerot.sql", "r", encoding="utf-8").readlines()))
+    db.query(" ".join(open("maakunnat.sql", "r", encoding="utf-8").readlines()))
+    db.query(" ".join(open("postinumerot.sql", "r", encoding="utf-8").readlines()))
     db.query("TRUNCATE asetukset")
+    db.query("TRUNCATE cache")
+    db.query("TRUNCATE postinumerot")
+    db.query("TRUNCATE maakunnat")
     db.query("INSERT INTO asetukset (`tyyppi`, `data`) VALUES ('paivitetty.timestamp', 0)")
     db.query("INSERT INTO asetukset (`tyyppi`, `data`) VALUES ('paivitetty.kaynnissa', 1)")
     db.query("TRUNCATE kurssit")
