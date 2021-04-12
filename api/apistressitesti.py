@@ -6,19 +6,22 @@ import threading
 lista = []
 threadien_maara = 100
 tmp = []
+count = 1
 lopeta = False
 for i in range(threadien_maara):
     tmp.append(False)
 def testi(ind):
     global tmp
     global lista
+    global count
     url = 'http://137.74.119.216:5000'
     try:
         data = requests.get(url+"/api")
         testi_tapaus(data.status_code == 200, True, True, 1, "Status 200")
+        count += 1
         data = requests.get(url+"/api/rajapinnat")
         testi_tapaus(data.status_code == 200, True, True, 2, "Status 200")
-        count = 3
+        count += 1
         for i in range(1):
             for nimi, rajapinta in data.json().items():
                 try:
