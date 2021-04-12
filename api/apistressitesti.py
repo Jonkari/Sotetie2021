@@ -4,7 +4,7 @@ from testitapaus import testi_tapaus
 import time
 import threading
 lista = []
-threadien_maara = 100
+threadien_maara = 50
 tmp = []
 count = 1
 lopeta = False

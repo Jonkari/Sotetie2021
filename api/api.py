@@ -220,7 +220,7 @@ class Laatutietoisuus(Resource):
         super().__init__()
     @cache.cached(timeout=600)
     def get(self):
-        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikuttavuus- kustannus ja laatutietoisuus%' ORDER BY nimi")
+        tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%vaikuttavuus- kustannus- ja laatutietoisuus%' ORDER BY nimi")
         if tmp:
             self.db.query(cache_query_ins.format(key="laatutietoisuus", value=json.dumps(tmp, ensure_ascii=False)))
             return corsify(tmp)

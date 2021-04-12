@@ -1,5 +1,6 @@
 from opintopolku import opintopolku
 from testitapaus import testi_tapaus
+import traceback
 count = 0
 hakusanat = [
     "monialainen yhteistoiminta",
@@ -26,4 +27,5 @@ for x in hakusanat:
             testi_tapaus('creditValue' in kurssintiedot and type(kurssintiedot.get('creditValue')) == str, True, True, count, i.get('id'))
             count += 1
         except AssertionError as e:
+            traceback.print_exc()
             print(e)

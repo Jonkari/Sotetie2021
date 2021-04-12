@@ -2,7 +2,7 @@ import time
 import pymysql.cursors
 import queue
 class Database:
-    """Tietokantaluuokka, joka helpottaa tietokannan käsittelemistä. On useammalle säikeelle tarkoitettu (FLASK).
+    """Tietokantaluokka, joka helpottaa tietokannan käsittelemistä. On useammalle säikeelle tarkoitettu (FLASK).
 
     """
     class ConnPool():
