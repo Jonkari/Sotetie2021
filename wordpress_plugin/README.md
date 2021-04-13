@@ -113,11 +113,11 @@ vacuum = true
 
 die-on-term = true
 ```
-(Korjaa myös api/wsgi.py tyhjät merkit, että if lause)tm
-
-Käynnistä uWSGI sovellus, jos olet repositoryn kansiossa, niin
+Tämän jälkeen voidaan aloittaa käynnistäminen.
+Käynnistä uWSGI sovellus, jos olet repositoryn kansiossa, niin pitää mennä apin kansioon, missä on myös api.ini
 ```
-uwsgi --ini api/api.ini
+cd api/
+uwsgi --ini api.ini
 ```
 
 
