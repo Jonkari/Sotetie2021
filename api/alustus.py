@@ -67,8 +67,9 @@ if __name__ == "__main__":
     ENGINE=InnoDB
     ;
     """)
-    db.query(" ".join(open("maakunnat.sql", "r", encoding="utf-8").readlines()))
-    db.query(" ".join(open("postinumerot.sql", "r", encoding="utf-8").readlines()))
+    path = os.path.dirname(os.path.abspath(__file__))
+    db.query(" ".join(open(path+"/maakunnat.sql", "r", encoding="utf-8").readlines()))
+    db.query(" ".join(open(path+"/postinumerot.sql", "r", encoding="utf-8").readlines()))
     db.query("TRUNCATE asetukset")
     db.query("TRUNCATE cache")
     db.query("TRUNCATE postinumerot")
@@ -81,7 +82,7 @@ if __name__ == "__main__":
         db.query(j.sqlYksinkertainen())
     db.query("UPDATE asetukset SET data={} WHERE tyyppi='paivitetty.kaynnissa'".format(0))
     db.query("UPDATE asetukset SET data={} WHERE tyyppi='paivitetty.timestamp'".format(time.time()))
-    path = os.path.dirname(os.path.abspath(__file__))
+    
     fo_api_ini = open(path+"/api.ini", "w")
     fo_api_ini.write("""
   [uwsgi]\n
@@ -98,7 +99,7 @@ if __name__ == "__main__":
     fo_api_ini.close()
     fo_wsgi_py = open(path+"/wsgi.py", "w")
     fo_wsgi_py.write("""from api import app\n
-  \n
-  if __name__ == "__main__":\n
-      app.run()""")
+\n
+if __name__ == "__main__":\n
+    app.run()""")
     fo_wsgi_py.close()
