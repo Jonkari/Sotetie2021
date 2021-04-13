@@ -1,5 +1,5 @@
 # Sotetie Hakutyökalu
-Hakutyökalu käy hakemassa https://opintopolku.fi/swagger/ API rajapinnasta kurssit ja niiden tiedot. Postinumerot ja kunta tiedot ovat posti.fi sivuilta saatuja tietoja muokattu oikeaan muotoon.
+Hakutyökalu käy hakemassa https://opintopolku.fi/swagger/ API rajapinnasta kurssit ja niiden tiedot. Postinumerot ja kunta tiedot ovat posti.fi sivuilta saatuja tietoja ja muokattu oikeaan muotoon.
 ## Vaatimukset & Infoa
 Asennusohjeet ovat Debian pohjaisille Linux Distribuutioille.
 Tarkista mikä Python versio on asennettuna valmiina, tämä sovellus tarvitsee vähintään Python 3.6.0
@@ -49,7 +49,7 @@ CREATE USER sotetie@localhost IDENTIFIED BY ‘salasana’;
 GRANT ALL ON sotetie2021.* TO sotetie@localhost;
 ```
 
-Tämän jälkeen on tietokannan osalta kaikki (on) kunnossa.
+Tämän jälkeen on tietokannan osalta kaikki on kunnossa.
 Sovellus itse ottaa yhteyden tietokantaan ja lisää sisällön.
 
 ## API
