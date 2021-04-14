@@ -1,66 +1,87 @@
 
-/* koko sisältö */
+/* koko sisältö 
 body{
 	
 	background-color: #d7f9f5;
 	background-image: radial-gradient(rgb(243, 242, 231), rgb(150, 243, 228));
 }
+*/
 
+/*
 #sisältö{
 	display: flex;
     width: 80%;
     flex-flow: column wrap;
 	margin-left:auto;
 	margin-right:auto;
-}
+} 
+*/
+
+/*
 #isoOtsikko{
 	letter-spacing: 4px !important;
 	font-size: 4rem ;
 }
+*/
+
+/*
 div#sisältö h2{
 	margin-bottom: 1% !important;
 	margin-left: 1% !important;
 	color: orangered;
 }
+*/
+
+/* TÄMÄ PITÄÄ OLLA CSS:SSÄ*/
 div#sisältö h3{
 	margin-bottom: 1% !important;
 	color: orangered;
 }
 
-/* yläreunan div-valikot */
+
+/* yläreunan div-valikot */ /* TÄMÄ PITÄÄ OLLA CSS:SSÄ*/
 select{
     font-size: 1.5rem;
 	width: 100%;
 }
 
+/*
 .osio {
 	padding:10px;
 	padding:10px 0px 10px 0;
 }
-/* päivitys lähelle pääotsikkoa  */
+*/
+
+/* päivitys lähelle pääotsikkoa  
 #paivitys{
 	margin-top: 0;
 }
-/* koulu- ja maakuntavalikot vierekkäin */
+*/
+
+/* koulu- ja maakuntavalikot vierekkäin *//* TÄMÄ PITÄÄ OLLA CSS:SSÄ*/
 .kouluOsio{
 	display: flex;
 }
+
+/* TÄMÄ PITÄÄ OLLA CSS:SSÄ*/
 .valikko{
 	width: 50%;
 }
+
+/* TÄMÄ PITÄÄ OLLA CSS:SSÄ*/
 #valikkoMaakunta{
 	margin-left: 20px;
 }
+
 
 /*  infotekstit */
 .infoMaakunta, .infoOpetustapa{
 	position: relative;
 	display: inline-block;
-	/*border-bottom: 1px dotted black;*/
   }
-
   
-  .infoMaakunta .infoTekstiMaakunta, .infoOpetustapa .infoTekstiOpetustapa {
+  
+.infoMaakunta .infoTekstiMaakunta, .infoOpetustapa .infoTekstiOpetustapa {
 	visibility: hidden;
 	width: 400px;
 	background-color: orangered;
@@ -77,52 +98,65 @@ select{
 	margin-left: -60px;
   }
   
+  
   .infoMaakunta:hover .infoTekstiMaakunta {
 	visibility: visible;
   }
+
+
   .infoOpetustapa:hover .infoTekstiOpetustapa {
 	visibility: visible;
   }
 
   
 @media screen and (max-width:740px) {
+	
 	.kouluOsio{
 		display: block;
 	}
+	
 	.valikko{
 		width: 100%;
 	}
+	
 	#valikkoMaakunta{
 		margin-left: 0;
 	}
-
+    /*
 	select {
 	  width:100% !important;
-	}
+	}*/
+	
 	form{
 		width: 100%;
 	}
+	/*
 	#sisältö{
 		width: 100%;
-	}
+	}*/
+
+	
 	.osio{
 		width: 100%;
 		margin-left: 0%;
 		margin-bottom: 3%;
 	}
+	/*
 	.nappiKeskelle{
 		margin-top: 8% !important;
 		margin-bottom: 8% !important;
 	}
+	*/
+	/*
 	h2{
 		margin-left: 4% !important;
 	}
-
+*/
 }
 
 /* nappi */
 
-.haeNappi{
+/*.haeNappi{
 	background-color: white;
 	font-size: 30px;
 	padding: 14px 40px;
@@ -135,7 +169,7 @@ select{
 	background-color: orangered;
 	color: white;
 	border: 2px solid white; 
-}
+}*/
 
 
 /* kurssitaulu */
@@ -164,23 +198,23 @@ tbody a:hover {
 	display: block;
 }
 
-#eiYhteytta {
+#eiYhteytta, #eiKursseja {
 	display: none;
-	color: red;
+	/*color: red;*/
 }
 
-#eiKursseja {
+/*#eiKursseja {
 	display: none;
 	color: blue;
-}
+}*/
 
 .valikko {
 	position: relative;
 }
 
-.valikko select {
+/*.valikko select {
 	width: 100%;
-}
+}*/
 
 .kouluLista {
 	position: absolute;
@@ -198,7 +232,7 @@ tbody a:hover {
 	position: absolute;
 	font-size: 1.5rem;
 	width: 100%;
-	height: 10em;
+	height: 20em;
 	overflow-y: scroll;
 	z-index: 1;
 }
@@ -220,15 +254,15 @@ tbody a:hover {
 }
 
 /*radiobuttonit*/
-label{
+/*label{
 	font-size: 1.5rem;
 	font-family: Arial;
-}
+}*/
 
-input[type='radio'] { 
+/*input[type='radio'] { 
 	transform: scale(1.5); 
-}
+}*/
 
-.painikkeet {
+/*.painikkeet {
 	float: left;
-}
+}*/
