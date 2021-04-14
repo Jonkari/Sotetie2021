@@ -3,7 +3,7 @@ Käyttää opintopolku moduulia ja tekee tietokannan, ei ole varmaankaan viimein
 """
 if __name__ == "__main__":
     import tietokanta
-    from opintopolku import opintopolku
+    from opintopolku import hakutyokalu
     import asetukset
     import os
     import time
@@ -77,8 +77,8 @@ if __name__ == "__main__":
     db.query("INSERT INTO asetukset (`tyyppi`, `data`) VALUES ('paivitetty.timestamp', 0)")
     db.query("INSERT INTO asetukset (`tyyppi`, `data`) VALUES ('paivitetty.kaynnissa', 1)")
     db.query("TRUNCATE kurssit")
-    opintopolku.hakuTyokaluYksinkertainen()
-    for i, j in opintopolku.objs.items():
+    hakutyokalu.hakuTyokaluYksinkertainen()
+    for i, j in hakutyokalu.objs.items():
         db.query(j.sqlYksinkertainen())
     db.query("UPDATE asetukset SET data={} WHERE tyyppi='paivitetty.kaynnissa'".format(0))
     db.query("UPDATE asetukset SET data={} WHERE tyyppi='paivitetty.timestamp'".format(time.time()))

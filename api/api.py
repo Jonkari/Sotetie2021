@@ -5,7 +5,6 @@ import flask
 from flask import Flask, make_response, g
 from flask_restful import Resource, Api
 from flask_caching import Cache
-from opintopolku import opintopolku
 import asetukset
 
 db = Database(asetukset.palvelin, asetukset.kayttaja, asetukset.salasana, asetukset.tietokanta, asetukset.portti)
