@@ -1,4 +1,4 @@
-from opintopolku import opintopolku
+from opintopolku import hakutyokalu
 from testitapaus import testi_tapaus
 import traceback
 count = 0
@@ -16,10 +16,10 @@ hakusanat = [
     "innovaatio",
 ]
 for x in hakusanat:
-    data = opintopolku.haeDataa(x)
+    data = hakutyokalu.haeDataa(x)
     for i in data:
         try:
-            kurssintiedot = opintopolku.haeKurssinTiedot(i.get('id'))
+            kurssintiedot = hakutyokalu.haeKurssinTiedot(i.get('id'))
             testi_tapaus('id' in kurssintiedot, True, True, count, "idtarkistus")
             count += 1
             testi_tapaus('idasdasdasdsa' in kurssintiedot, True, False, count, "vaarakentta")
