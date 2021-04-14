@@ -62,6 +62,9 @@ def test_rajapinta(client, rajapinta):
 client = api.app.test_client()
 for x  in range(3):
     for i, j in api.rajapinnat.items():
-        test_rajapinta(client, j)
+        try:
+            test_rajapinta(client, j)
+        except Exception as e:
+            print(e)
 print("Kaikki testit tehty, {} testiä, joista {} ei päässyt läpi".format(count, failures))
         
