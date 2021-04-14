@@ -33,7 +33,7 @@ select{
 	width: 100%;
 }
 
-.float-left {
+.osio {
 	padding:10px;
 	padding:10px 0px 10px 0;
 }
@@ -42,25 +42,25 @@ select{
 	margin-top: 0;
 }
 /* koulu- ja maakuntavalikot vierekkäin */
-.flex-container{
+.kouluOsio{
 	display: flex;
 }
-.selectBox{
+.valikko{
 	width: 50%;
 }
-#selectBoxMaakunta{
+#valikkoMaakunta{
 	margin-left: 20px;
 }
 
 /*  infotekstit */
-.tooltip1, .tooltip2{
+.infoMaakunta, .infoOpetustapa{
 	position: relative;
 	display: inline-block;
 	/*border-bottom: 1px dotted black;*/
   }
 
   
-  .tooltip1 .tooltiptext1, .tooltip2 .tooltiptext2 {
+  .infoMaakunta .infoTekstiMaakunta, .infoOpetustapa .infoTekstiOpetustapa {
 	visibility: hidden;
 	width: 400px;
 	background-color: orangered;
@@ -77,22 +77,22 @@ select{
 	margin-left: -60px;
   }
   
-  .tooltip1:hover .tooltiptext1 {
+  .infoMaakunta:hover .infoTekstiMaakunta {
 	visibility: visible;
   }
-  .tooltip2:hover .tooltiptext2 {
+  .infoOpetustapa:hover .infoTekstiOpetustapa {
 	visibility: visible;
   }
 
   
 @media screen and (max-width:740px) {
-	.flex-container{
+	.kouluOsio{
 		display: block;
 	}
-	.selectBox{
+	.valikko{
 		width: 100%;
 	}
-	#selectBoxMaakunta{
+	#valikkoMaakunta{
 		margin-left: 0;
 	}
 
@@ -105,7 +105,7 @@ select{
 	#sisältö{
 		width: 100%;
 	}
-	.float-left{
+	.osio{
 		width: 100%;
 		margin-left: 0%;
 		margin-bottom: 3%;
@@ -122,7 +122,7 @@ select{
 
 /* nappi */
 
-.myButton{
+.haeNappi{
 	background-color: white;
 	font-size: 30px;
 	padding: 14px 40px;
@@ -131,7 +131,7 @@ select{
 	font-weight: bold;
 	border: 2px solid orangered; 
 }
-.myButton:hover{
+.haeNappi:hover{
 	background-color: orangered;
 	color: white;
 	border: 2px solid white; 
@@ -174,15 +174,15 @@ tbody a:hover {
 	color: blue;
 }
 
-.selectBox {
+.valikko {
 	position: relative;
 }
 
-.selectBox select {
+.valikko select {
 	width: 100%;
 }
 
-.overSelect {
+.kouluLista {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -191,7 +191,7 @@ tbody a:hover {
 }
 
 /*Korkeakoulu valikon tyylit*/
-#checkboxes1 {
+#kouluValikko {
 	display: none;
 	border: 1px #dadada solid;
 	background-color: white;
@@ -203,18 +203,18 @@ tbody a:hover {
 	z-index: 1;
 }
 
-#checkboxes1 label input {
+#kouluValikko label input {
 	margin-right: 1em;
 	width: 1.5em;
 	height: 1.5em;
 }
 
-#checkboxes1 label {
+#kouluValikko label {
 	display: block;
 	margin-top: 1%;
 }
 
-#checkboxes1 label:hover {
+#kouluValikko label:hover {
 	background-color: #1e90ff;
 	color: white;
 }
@@ -229,6 +229,6 @@ input[type='radio'] {
 	transform: scale(1.5); 
 }
 
-.radiorivi {
+.painikkeet {
 	float: left;
 }

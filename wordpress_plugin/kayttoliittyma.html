@@ -1,14 +1,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="styles.css">
 <div id="sisältö">
-    <h1 style="font-size: 6rem;" id="">KURSSIHAKU</h1>
+    <h1 style="font-size: 6rem;">KURSSIHAKU</h1>
     <p id="paivitys">Päivämäärä</p>
     <br>
 
     <br>
     <form>
-        <div class="Row">
-            <div class="float-left">
+        <div>
+            <div class="osio">
                 <h3>AIHE</h3>
                 <select name="aihe" id="aihe" class="aihe">
                     <!--  Tähän geneeriset osa-alueet sivun lataamisen yhteydessä -->
@@ -18,21 +18,22 @@
             <h4>Valitse korkeakoulut erikseen tai valitse maakunta, joka valitsee koulut puolestasi:</h4>
 
 
-            <div class="flex-container">
-                <div class="selectBox">
+            <div class="kouluOsio">
+                <div class="valikko">
                     <h3>KORKEAKOULU</h3>
                     <select class="nakyvaMaara"></select>
                     <!--tähän valittujen koulujen numero-->
-                    <div class="overSelect"></div>
-                    <div class="multipleSelect koulu" name="koulu" id="checkboxes1">
+                    <div class="kouluLista"></div>
+                    <div class="koulu" name="koulu" id="kouluValikko">
                         <!-- tähän koulut sivun lataamisen yhteydessä  -->
                     </div>
                 </div>
 
-                <div class="selectBox" id="selectBoxMaakunta">
+                <div class="valikko" id="valikkoMaakunta">
                     <h3>MAAKUNTA
-                        <div class="tooltip1">🛈
-                            <span style="font-size: 2rem; background-color: orangered;" class="tooltiptext1">Maakuntajaottelussa voi esiintyä epätarkkuuksia.</span>
+                        <div class="infoMaakunta">🛈
+                            <span style="font-size: 2rem; background-color: orangered;"
+                                class="infoTekstiMaakunta">Maakuntajaottelussa voi esiintyä epätarkkuuksia.</span>
                         </div>
                     </h3>
                     <select name="maakunnat" id="maakunnat" class="maakunnat">
@@ -42,8 +43,8 @@
                 </div>
             </div>
             <br>
-            <div class="float-left" style="display: flex; flex-flow: column wrap;">
-                <div class="radiorivi">
+            <div class="osio" style="display: flex; flex-flow: column wrap;">
+                <div class="painikkeet">
                     <h3>OPETUSKIELI</h3>
                     <input type="radio" name="kieli" value="suomi" id="suomi" checked>
                     <label for="suomi">Suomi</label> &nbsp;&nbsp;
@@ -53,9 +54,11 @@
                     <label for="englanti">Englanti</label>
                 </div>
                 <br>
-                <div class="radiorivi">
-                    <h3>OPETUSTAPA <div class="tooltip2">🛈
-                            <span style="font-size: 2rem; background-color: orangered;" class="tooltiptext2">"Etäopetus" sisältää etä- ja verkko-opetuksen sekä verkko-opiskelun. "Kaikki" sisältää 
+                <div class="painikkeet">
+                    <h3>OPETUSTAPA <div class="infoOpetustapa">🛈
+                            <span style="font-size: 2rem; background-color: orangered;"
+                                class="infoTekstiOpetustapa">"Etäopetus" sisältää etä- ja verkko-opetuksen sekä
+                                verkko-opiskelun. "Kaikki" sisältää
                                 myös monimuoto-opiskelun.
                             </span>
                         </div>
@@ -73,7 +76,7 @@
         <br><br>
 
         <div class="nappiKeskelle">
-            <input style="font-size: 3rem;" id="haeNappi" class="myButton" type="button" value="HAE OPINNOT">
+            <input style="font-size: 3rem;" id="haeNappi" class="haeNappi" type="button" value="HAE OPINNOT">
         </div>
         <br><br><br>
         <h2 id="eiKursseja">Ei hakuehtoja vastaavia kursseja</h2>
@@ -153,7 +156,7 @@
     $(document).ready(function () {
 
         document.addEventListener("click", function (e) {
-            if (e.target && (e.target.matches(".overSelect"))) {
+            if (e.target && (e.target.matches(".kouluLista"))) {
                 if (avattu) {
                     document.querySelector(".koulu").style.display = "none";
                     avattu = false;
@@ -175,25 +178,25 @@
         //maakuntavalikon klikkaus
         $(".maakunnat").on("click", function () {
             var koulut = document.querySelectorAll(".checkboxKoulut");
-            
-            if(this.value == "kaikki"){
-                for(var x of koulut){
+
+            if (this.value == "kaikki") {
+                for (var x of koulut) {
                     x.checked = true;
                 }
                 document.querySelector("#kaikki").checked = true;
                 valittu = true;
             }
-            else{
-            document.querySelector("#kaikki").checked = false;
-            for(var x of koulut){
-                if(maakuntaMap.get(this.value).includes(x.value)){
-                    x.checked = true;
+            else {
+                document.querySelector("#kaikki").checked = false;
+                for (var x of koulut) {
+                    if (maakuntaMap.get(this.value).includes(x.value)) {
+                        x.checked = true;
+                    }
+                    else {
+                        x.checked = false;
+                    }
                 }
-                else{
-                    x.checked = false;
-                }
-            }
-            valittu = false;
+                valittu = false;
             }
             paivitaMaara();
         })
@@ -208,7 +211,7 @@
                     i.checked = true;
                 }
             }
-        
+
             if (valittu) {
                 valittu = false;
             }
@@ -216,21 +219,19 @@
                 valittu = true;
                 document.querySelector(".maakunnat").value = "kaikki";
             }
-            
+
         })
 
-
         //kuinka monta koulua valittu
-        $("#checkboxes1").click(function () {
+        $("#kouluValikko").click(function () {
             paivitaMaara();
         })
 
         //asetetaan muuttujiin kieli ja opetustapa
-        $(".radiorivi").click(function () {
+        $(".painikkeet").click(function () {
             kieli = valittuKieli();
             opetustapa = valittuOpetustapa();
         })
-
 
         //haetaan aiheet valikkoon:
         $.get(osoite + "/api/rajapinnat", function (data) {
@@ -246,13 +247,10 @@
                 if (valmisHaku !== undefined) {
                     valmisHaku(genOsaamiset)
                 }
-            } catch(error) {}
+            } catch (error) { }
             fetch(genOsaamiset_select.options[genOsaamiset_select.selectedIndex].value);
         })
             .fail(virheTilanne);
-
-
-
 
         //haetaan koulut valikkoon:
         var maakuntaSet = new Set();
@@ -270,7 +268,7 @@
             //haetaan maakunnat valikkoon:
             maakunnat = data
             var maakunnat_select = document.querySelector(".maakunnat")
-            var html = `<option value="kaikki">Kaikki</option>` //`<option value="kaikki">Kaikki</option>`
+            var html = `<option value="kaikki">Kaikki</option>` 
             for (var i in maakunnat) {
                 maakuntaSet.add(maakunnat[i].maakunta);
             }
@@ -282,27 +280,26 @@
 
             //maakunnat valikon toiminnallisuus:
             //maakuntaMap
-            
-            for(var i in maakunnat){
-                    if(maakuntaMap.has(maakunnat[i].maakunta)){
-                        maakuntaMap.get(maakunnat[i].maakunta).push(maakunnat[i].koulu);
-                    }
-                    else{
-                        maakuntaMap.set(maakunnat[i].maakunta, [maakunnat[i].koulu]);
-                    }
+
+            for (var i in maakunnat) {
+                if (maakuntaMap.has(maakunnat[i].maakunta)) {
+                    maakuntaMap.get(maakunnat[i].maakunta).push(maakunnat[i].koulu);
+                }
+                else {
+                    maakuntaMap.set(maakunnat[i].maakunta, [maakunnat[i].koulu]);
+                }
             }
         })
             .fail(virheTilanne)
-
 
         //Haetaan viimeisimmän päivityksen päivämäärä:
         $.get(osoite + "/api/paivitys", function (data) {
             let onkokaynnissa = 0;
             let paivitystimestamp = 0;
-            for(let asetus of data) {
-                if(asetus.tyyppi == "paivitetty.kaynnissa") {
+            for (let asetus of data) {
+                if (asetus.tyyppi == "paivitetty.kaynnissa") {
                     onkokaynnissa = asetus.data
-                } else if(asetus.tyyppi == "paivitetty.timestamp") {
+                } else if (asetus.tyyppi == "paivitetty.timestamp") {
                     paivitystimestamp = asetus.data
                 }
             }
@@ -310,14 +307,14 @@
             var kuukausi = paivitys.getMonth() + 1;
             var paiva = paivitys.getDate();
             var vuosi = paivitys.getFullYear();
-            var paivittymassa = onkokaynnissa == 1 ? "Tietokanta on päivittymässä" : "" ;
+            var paivittymassa = onkokaynnissa == 1 ? "Tietokanta on päivittymässä" : "";
             document.getElementById("paivitys").innerHTML = `${paivittymassa}<br>Päivitetty: ${paiva}.${kuukausi}.${vuosi}`;
         }).fail(virheTilanne)
 
         //otetaan kiinni aihe mikä on valittu:
         $('#haeNappi').click(() => {
             var geneerinenAlue = document.querySelector(".aihe");
-            var aihe = geneerinenAlue.options[geneerinenAlue.selectedIndex].value; //antaa esim. "aihe5" eli Tutkimus...
+            var aihe = geneerinenAlue.options[geneerinenAlue.selectedIndex].value; //antaa esim. "aihe5" eli Tutkimus.
             fetch(aihe);
         });
 
@@ -331,7 +328,6 @@
                 }
             }).fail(virheTilanne);
         }
-
 
     });
 
@@ -352,11 +348,8 @@
         result.forEach(element => {
             if (valitut.has(element.koulu) && element.kieli.includes(kieli) && (opetustapa == "kaikkiTavat" || element.opetustyyppi == opetustapa)) {
                 let opintojaksot = ""
-                //opintojaksot = "<tr><td colspan=\"1\">" + nro + "</td>\n";
                 opintojaksot += `<td colspan="2"><a target="_blank" href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi} (${element.opintopisteet} op)</a></td>\n`;
                 opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
-                //opintojaksot += "<td colspan=\"1\">" + element.kieli + "</td>\n";
-                //opintojaksot += "<td colspan=\"1\">" + element.opintopisteet + "</td>\n";
                 opintojaksot += "</tr>\n";
                 html += opintojaksot
                 nro++;
@@ -369,13 +362,12 @@
 
 
         if (html.length == 0) {
-            //html += "<h1> Ei tuloksia </h1>";
             document.getElementById("eiKursseja").style.display = "block";
             document.getElementById("kurssiTaulu").style.display = "none";
             document.getElementById("eiYhteytta").style.display = "none";
         }
         document.querySelector("#data tbody").innerHTML = html;
     }
-    
+
 
 </script>
