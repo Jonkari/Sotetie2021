@@ -38,7 +38,16 @@ def test_rajapinta(client, rajapinta):
         print(rajapinta)
     count += 1
     try:
-        testi_tapaus("" in random.choice(data)["koulu"], False, True, count, rajapinta)
+        testi_tapaus(random.choice(data)["koulu"] == "", False, True, count, rajapinta)
+    except AssertionError as e:
+        traceback.print_exc()
+        print(e)
+        failures += 1
+    except IndexError as e:
+        print(rajapinta)
+    count += 1
+    try:
+        testi_tapaus(random.choice(data)["opintopisteet"] == "", False, True, count, rajapinta)
     except AssertionError as e:
         traceback.print_exc()
         print(e)

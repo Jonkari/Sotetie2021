@@ -156,7 +156,7 @@ select{
 
 /* nappi */
 
-.haeNappi{
+/*.haeNappi{
 	background-color: white;
 	font-size: 30px;
 	padding: 14px 40px;
@@ -169,7 +169,7 @@ select{
 	background-color: orangered;
 	color: white;
 	border: 2px solid white; 
-}
+}*/
 
 
 /* kurssitaulu */
@@ -198,23 +198,23 @@ tbody a:hover {
 	display: block;
 }
 
-#eiYhteytta {
+#eiYhteytta, #eiKursseja {
 	display: none;
-	color: red;
+	/*color: red;*/
 }
 
-#eiKursseja {
+/*#eiKursseja {
 	display: none;
 	color: blue;
-}
+}*/
 
 .valikko {
 	position: relative;
 }
 
-.valikko select {
+/*.valikko select {
 	width: 100%;
-}
+}*/
 
 .kouluLista {
 	position: absolute;
@@ -232,7 +232,7 @@ tbody a:hover {
 	position: absolute;
 	font-size: 1.5rem;
 	width: 100%;
-	height: 10em;
+	height: 20em;
 	overflow-y: scroll;
 	z-index: 1;
 }
@@ -254,15 +254,15 @@ tbody a:hover {
 }
 
 /*radiobuttonit*/
-label{
+/*label{
 	font-size: 1.5rem;
 	font-family: Arial;
-}
+}*/
 
-input[type='radio'] { 
+/*input[type='radio'] { 
 	transform: scale(1.5); 
-}
+}*/
 
-.painikkeet {
+/*.painikkeet {
 	float: left;
-}
+}*/
