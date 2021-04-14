@@ -29,6 +29,24 @@ def test_rajapinta(client, rajapinta):
         print(rajapinta)
     count += 1
     try:
+        testi_tapaus("Avoin yo" in random.choice(data)["nimi"], True, False, count, rajapinta)
+    except AssertionError as e:
+        traceback.print_exc()
+        print(e)
+        failures += 1
+    except IndexError as e:
+        print(rajapinta)
+    count += 1
+    try:
+        testi_tapaus("" in random.choice(data)["koulu"], False, True, count, rajapinta)
+    except AssertionError as e:
+        traceback.print_exc()
+        print(e)
+        failures += 1
+    except IndexError as e:
+        print(rajapinta)
+    count += 1
+    try:
         testi_tapaus(type(data) == list, True, True, count, rajapinta)
     except AssertionError as e:
         failures += 1
@@ -46,6 +64,4 @@ for x  in range(3):
     for i, j in api.rajapinnat.items():
         test_rajapinta(client, j)
 print("Kaikki testit tehty, {} testiä, joista {} ei päässyt läpi".format(count, failures))
-
-
         
