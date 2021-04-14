@@ -3,7 +3,7 @@ Käyttää opintopolku moduulia ja tekee tietokannan, ei ole varmaankaan viimein
 """
 if __name__ == "__main__":
     import tietokanta
-    from opintopolku import opintopolku
+    from opintopolku import hakutyokalu
     import asetukset
     import os
     import time
@@ -67,8 +67,9 @@ if __name__ == "__main__":
     ENGINE=InnoDB
     ;
     """)
-    db.query(" ".join(open("maakunnat.sql", "r", encoding="utf-8").readlines()))
-    db.query(" ".join(open("postinumerot.sql", "r", encoding="utf-8").readlines()))
+    path = os.path.dirname(os.path.abspath(__file__))
+    db.query(" ".join(open(path+"/maakunnat.sql", "r", encoding="utf-8").readlines()))
+    db.query(" ".join(open(path+"/postinumerot.sql", "r", encoding="utf-8").readlines()))
     db.query("TRUNCATE asetukset")
     db.query("TRUNCATE cache")
     db.query("TRUNCATE postinumerot")
@@ -76,12 +77,12 @@ if __name__ == "__main__":
     db.query("INSERT INTO asetukset (`tyyppi`, `data`) VALUES ('paivitetty.timestamp', 0)")
     db.query("INSERT INTO asetukset (`tyyppi`, `data`) VALUES ('paivitetty.kaynnissa', 1)")
     db.query("TRUNCATE kurssit")
-    opintopolku.hakuTyokaluYksinkertainen()
-    for i, j in opintopolku.objs.items():
+    hakutyokalu.hakuTyokaluYksinkertainen()
+    for i, j in hakutyokalu.objs.items():
         db.query(j.sqlYksinkertainen())
     db.query("UPDATE asetukset SET data={} WHERE tyyppi='paivitetty.kaynnissa'".format(0))
     db.query("UPDATE asetukset SET data={} WHERE tyyppi='paivitetty.timestamp'".format(time.time()))
-    path = os.path.dirname(os.path.abspath(__file__))
+    
     fo_api_ini = open(path+"/api.ini", "w")
     fo_api_ini.write("""
   [uwsgi]\n
@@ -98,7 +99,7 @@ if __name__ == "__main__":
     fo_api_ini.close()
     fo_wsgi_py = open(path+"/wsgi.py", "w")
     fo_wsgi_py.write("""from api import app\n
-  \n
-  if __name__ == "__main__":\n
-      app.run()""")
+\n
+if __name__ == "__main__":\n
+    app.run()""")
     fo_wsgi_py.close()

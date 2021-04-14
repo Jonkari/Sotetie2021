@@ -5,7 +5,6 @@ import flask
 from flask import Flask, make_response, g
 from flask_restful import Resource, Api
 from flask_caching import Cache
-from opintopolku import opintopolku
 import asetukset
 
 db = Database(asetukset.palvelin, asetukset.kayttaja, asetukset.salasana, asetukset.tietokanta, asetukset.portti)
@@ -56,7 +55,7 @@ class Koulut(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("koulut",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(Koulut, "/api/koulut", resource_class_kwargs={'db' : db})
 
 class Rajapinnat(Resource):
@@ -80,7 +79,7 @@ class Asiakaslahtoisyys(Resource):
         JOS ei palauttanut mitään nykyisellä haulla JA tietokanta on päivittymässä.
 
         Returns:
-            (Response or None) : Palauttaa Flask Responsen tai Nonen virhetilanteissa.
+            (Response) : Palauttaa Flask Responsen.
         """
         tmp = self.db.getData("SELECT * FROM kurssit WHERE osaamiset LIKE '%asiakaslähtöisyys%' ORDER BY nimi") # Hakee kurssit
         if tmp: # Onko kursseja haussa
@@ -96,7 +95,7 @@ class Asiakaslahtoisyys(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("asiakaslähtöisyys",))
                     return corsify(json.loads(data[0]["value"])) # Jos tietokanta on päivittymässä ja on tyhjä tietokanta niin, sitten palautetaan edellinen tulos
-            return None
+            return corsify([])
 api.add_resource(Asiakaslahtoisyys, '/api/asiakaslahtoisyys', resource_class_kwargs={'db' : db})
 
 class Neuvontaosaaminen(Resource):
@@ -119,7 +118,7 @@ class Neuvontaosaaminen(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("neuvontaosaaminen",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(Neuvontaosaaminen, '/api/neuvontaosaaminen', resource_class_kwargs={'db' : db})
 
 class Palvelujarjestelmat(Resource):
@@ -142,7 +141,7 @@ class Palvelujarjestelmat(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("palvelujarjestelmat",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(Palvelujarjestelmat, '/api/palvelujarjestelmat', resource_class_kwargs={'db' : db})
 
 class Etiikka(Resource):
@@ -165,7 +164,7 @@ class Etiikka(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("etiikka",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(Etiikka, '/api/etiikka', resource_class_kwargs={'db' : db})
 
 class Tutkimusosaaminen(Resource):
@@ -188,7 +187,7 @@ class Tutkimusosaaminen(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("tutkimusosaaminen",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(Tutkimusosaaminen, '/api/tutkimusosaaminen', resource_class_kwargs={'db' : db})
 
 class Robotiikka(Resource):
@@ -211,7 +210,7 @@ class Robotiikka(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("robotiikka",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(Robotiikka, '/api/robotiikka', resource_class_kwargs={'db' : db})
 
 class Laatutietoisuus(Resource):
@@ -234,7 +233,7 @@ class Laatutietoisuus(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("laatutietoisuus",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(Laatutietoisuus, '/api/laatutietoisuus', resource_class_kwargs={'db' : db})
 
 class KestavaKehitys(Resource):
@@ -257,7 +256,7 @@ class KestavaKehitys(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("kestavakehitys",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(KestavaKehitys, '/api/kestavakehitys', resource_class_kwargs={'db' : db})
 
 class Viestintaosaaminen(Resource):
@@ -280,7 +279,7 @@ class Viestintaosaaminen(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("viestintaosaaminen",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(Viestintaosaaminen, '/api/viestintaosaaminen', resource_class_kwargs={'db' : db})
 
 class Tyontekijyysosaaminen(Resource):
@@ -303,7 +302,7 @@ class Tyontekijyysosaaminen(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("tyontekijyysosaaminen",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(Tyontekijyysosaaminen, '/api/tyontekijyysosaaminen', resource_class_kwargs={'db' : db})
 
 class Yhteistoiminta(Resource):
@@ -326,7 +325,7 @@ class Yhteistoiminta(Resource):
                 else:
                     data = self.db.getData(cache_query_sel.format("yhteistoiminta",))
                     return corsify(json.loads(data[0]["value"]))
-            return None
+            return corsify([])
 api.add_resource(Yhteistoiminta, '/api/yhteistoiminta', resource_class_kwargs={'db' : db})
 
 class Kaikki(Resource):
