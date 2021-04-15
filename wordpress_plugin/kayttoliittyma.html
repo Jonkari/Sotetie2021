@@ -86,11 +86,8 @@
             <table id="data">
                 <thead>
                     <tr>
-                        <!--<th colspan="1">Nro</th>-->
                         <th colspan="2">OPINTOJAKSON NIMI</th>
                         <th colspan="2">OPPILAITOS</th>
-                        <!--<th colspan="1">Opetuskieli</th>
-                    <th colspan="1">Opintopisteet</th>-->
                     </tr>
                 </thead>
 
@@ -115,7 +112,6 @@
     var kieli = "suomi";
     var opetustapa = "kaikkiTavat";
     var maakuntaMap = new Map();
-    //var osoite = "http://137.74.119.216:5000"; //"http://137.74.119.216:5000/"
 
     // näkyviin ilmoitus, jos tietokantaan ei saada yhteyttä 
     function virheTilanne() {
@@ -151,7 +147,6 @@
     }
 
     $(document).ready(function () {
-
         document.addEventListener("click", function (e) {
             if (e.target && (e.target.matches(".kouluLista"))) {
                 if (avattu) {
@@ -276,8 +271,6 @@
             maakunnat_select.innerHTML = html
 
             //maakunnat valikon toiminnallisuus:
-            //maakuntaMap
-
             for (var i in maakunnat) {
                 if (maakuntaMap.has(maakunnat[i].maakunta)) {
                     maakuntaMap.get(maakunnat[i].maakunta).push(maakunnat[i].koulu);
@@ -311,7 +304,7 @@
         //otetaan kiinni aihe mikä on valittu:
         $('#haeNappi').click(() => {
             var geneerinenAlue = document.querySelector(".aihe");
-            var aihe = geneerinenAlue.options[geneerinenAlue.selectedIndex].value; //antaa esim. "aihe5" eli Tutkimus.
+            var aihe = geneerinenAlue.options[geneerinenAlue.selectedIndex].value;
             fetch(aihe);
         });
 
@@ -329,7 +322,6 @@
     });
 
     //laitetaan haetut tiedot Löydetyt opintojaksot -tauluun:
-
     showResultInTable = (result) => {
         var valitut = new Set();
         var checkBoxes = document.querySelectorAll(".checkboxKoulut")
