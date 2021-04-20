@@ -404,13 +404,19 @@ def haeLisatiedot():
         j.postinumero = data.get('provider').get('postalAddress').get('postalCode')
 
         opetustyyppi_tmp = data.get("teachingPlaces") + data.get("formOfTeaching")
+        opetustyypit = set()
         for i in opetustyyppi_tmp:
             if i in ["Etäopetus", "Verkko-opetus", "Verkko-opiskelu",]:
-                j.opetustyyppi = "etaopetus"
-                continue
-            elif i in ["Lähiopetus"]:
-                j.opetustyyppi = "lahiopetus"
-                continue
+                opetustyypit.add("etaopetus")
+            if i in ["Lähiopetus"]:
+                opetustyypit.add("lahiopetus")
+            if i in ["Itsenäinen opiskelu"]:
+                opetustyypit.add("itsenainenopiskelu")
+            if i in ["Ohjattu opiskelu"]:
+                opetustyypit.add("ohjattuopiskelu")
+            if i in ["Monimuoto", "Monimuoto-opetus"]:
+                opetustyypit.add("monimuoto")
+        j.opetustyyppi = "|".join(opetustyypit)
 def testifunktio(muuttuja):
     return muuttuja
 if __name__ == "__main__":

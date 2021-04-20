@@ -234,7 +234,8 @@
         html = ``
 
         result.forEach(element => {
-            if (valitut.has(element.koulu) && element.kieli.includes(kieli) && (opetustapa == "kaikkiTavat" || element.opetustyyppi == opetustapa)) {
+
+            if (valitut.has(element.koulu) && element.kieli.includes(kieli) && (opetustapa == "kaikkiTavat" || element.opetustyyppi.includes(opetustapa))) {
                 let opintojaksot = ""
                 opintojaksot += `<td colspan="2"><a target="_blank" href="https://opintopolku.fi/app/#!/koulutus/${element.id}">${element.nimi} (${element.opintopisteet} op)</a></td>\n`;
                 opintojaksot += "<td colspan=\"2\">" + element.koulu + "</td>\n";
