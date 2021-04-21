@@ -62,9 +62,16 @@ select{
 .kouluOsio{
 	display: flex;
 }
+.valikkoOsio{
+	display: flex;
+}
 
 /* TÄMÄ PITÄÄ OLLA CSS:SSÄ*/
 .valikko{
+	width: 50%;
+}
+
+.valikko2{
 	width: 50%;
 }
 
@@ -114,8 +121,12 @@ select{
 	.kouluOsio{
 		display: block;
 	}
+
+	.valikkoOsio{
+		display: block;
+	}
 	
-	.valikko{
+	.valikko, .valikko2{
 		width: 100%;
 	}
 	
@@ -209,6 +220,10 @@ tbody a:hover {
 }*/
 
 .valikko {
+	position: relative;
+}
+
+.valikko2 {
 	position: relative;
 }
 
