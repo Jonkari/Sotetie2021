@@ -146,7 +146,8 @@ location / {
 
 ```
 Tiedosto muokataan tälläisen näköiseksi.
-Muokkaa uwsgi_passissa oleva tiedostolokaatio oikeaksi. `api.sock` tiedosto tulee siihen kansioon, missä `api.ini` sijaitsee, vakiona `api/` kansio
+Muokkaa uwsgi_passissa oleva tiedostolokaatio oikeaksi. `api.sock` tiedosto tulee siihen kansioon, mistä käynnistetään sovellus uWSGI avulla.
+Linux Servicessä määritellään WorkingDirectory suoraan api kansioon (toki voi muuttaa).
 ```python
 server {
 listen 80 default_server;
